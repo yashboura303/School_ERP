@@ -1,0 +1,311 @@
+{% extends 'base.html' %}
+
+{% block title %}Form{% endblock %}
+
+{% block content %}
+
+    {% include 'message.html' %}
+
+    <style type="text/css" media="print">
+        .no-print { display: none; }
+     </style>
+
+<form class="container" id="myForm" method="POST" action = {% url 'recordForm' %} 
+enctype="multipart/form-data">
+    {% csrf_token %}
+	<div>
+    <h3 class="my-2 text-info">Student Details</h3>
+    <hr>
+
+    <div class="form-group">
+        <label for="username">Attributes</label>
+        <input type="text" class="form-control" id="attributes" aria-describedby="emailHelp" name="attributes">
+    </div>
+    <div class="form-group">
+        <label for="username">First Name</label>
+        <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname">
+    </div>
+    <div class="form-group">
+        <label for="username">Last Name</label>
+        <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="lastname">
+    </div>
+    <div class="form-group">
+        <label class="pr-1" for="exampleFormControlSelect2">Gender:</label>
+        <select name="gender" class="form-control mr-2" id="exampleFormControlSelect2">
+            <option selected="true" value="">Select</option>
+            <option value="Teacher">Male</option>
+            <option value="Tutor">Female</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="username">DOB</label>
+        <input type="date" class="form-control" id="sDOB" aria-describedby="" name="sDOB">
+    </div>
+    <div class="form-group">
+        <label for="username">Class Section</label>
+        <input type="text" class="form-control" id="classsection" name="classsection">
+    </div>
+    <div class="form-group">
+        <label for="username">Admission Number</label>
+        <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber">
+    </div>
+    <div class="form-group">
+        <label for="username">Phone Number</label>
+        <input type="number" class="form-control" id="phonenumber" name="phonenumber">
+    </div>
+    </div>
+    <div class="form-group">
+        <label for="inputAddress">Current Address</label>
+        <input type="text" class="form-control" id="inputAddress" name="currentinputAddress" placeholder="">
+    </div>
+    <div class="form-group">
+        <label for="inputAddress2">Current Address 2</label>
+        <input type="text" class="form-control" id="inputAddress2" name="currentinputAddress2"placeholder="">
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputCity">City</label>
+            <input type="text" class="form-control" id="inputCity" name="inputCity">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputState">State</label>
+            <input type="text" class="form-control" id="inputState" name="inputState">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="inputZip" name="inputZip">
+        </div>
+    </div>
+
+
+
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="customCheck1" id="customCheck1" onclick="FillAddress(this.form)">
+        <label class="custom-control-label" for="customCheck1"> Current Address is same as Permanent Address</label>
+      </div>
+
+
+
+    <div class="form-group">
+        <label for="preminputAddress">Permanent Address</label>
+        <input type="text" class="form-control" id="perminputAddress" name="perminputAddress" placeholder="">
+    </div>
+    <div class="form-group">
+        <label for="preminputAddress2">Permanent Address 2</label>
+        <input type="text" class="form-control" id="perminputAddress2" name="perminputAddress2" placeholder="">
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputCity">City</label>
+            <input type="text" class="form-control" id="perminputCity" name="perminputCity">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputState">State</label>
+            <input type="text" class="form-control" id="perminputState" name="perminputState">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="perminputZip" name="perminputZip">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="username">Religion</label>
+        <input type="text" class="form-control" id="religion" name="religion">
+    </div>
+    <div class="form-group">
+        <label for="caste">Caste</label>
+        <input type="text" class="form-control" id="caste" name="caste">
+    </div>
+    <div class="form-group">
+        <label for="tcnumber">Transfer Certificate Number</label>
+        <input type="number" class="form-control" id="tcnumber" name="tcnumber">
+    </div>
+    <div class="form-group">
+        <label for="anumber">Aadhar Number</label>
+        <input type="number" class="form-control" id="anumber" name="anumber">
+    </div>
+    <div class="form-group">
+        <label for="feeCategory">Fee Waiver Category</label>
+        <input type="text" class="form-control" id="feeCategory" name="feeCategory">
+    </div>
+    <div class="form-group">
+        <label for="siblingid">Sibling ID</label>
+        <input type="number" class="form-control" id="siblingid" name="siblingid">
+    </div>
+    <div class="form-group mb-5">
+        <label for="prevschoolname">Previous School Name</label>
+        <input type="text" class="form-control" id="prevschoolname" name="prevschoolname">
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h3 class="my-2 text-info">Parent Details	</h3>
+    <hr>
+    <div class="form-group">
+        <label for="pattributes">Attributes</label>
+        <input type="text" class="form-control" id="pattributes" aria-describedby="emailHelp" name="pattributes">
+    </div>
+    <div class="form-group">
+        <label for="fathername">Father Name</label>
+        <input type="text" class="form-control" id="fathername" aria-describedby="emailHelp" name="fathername">
+    </div>
+    <div class="form-group">
+        <label for="mothername">Mother Name</label>
+        <input type="text" class="form-control" id="mothername" aria-describedby="emailHelp" name="mothername">
+    </div>
+    <div class="form-group">
+        <label for="username">Father DOB</label>
+        <input type="date" class="form-control" id="fDOB" aria-describedby="" name="fDOB">
+    </div>
+    <div class="form-group">
+        <label for="username">Mother DOB</label>
+        <input type="date" class="form-control" id="mDOB" aria-describedby="" name="mDOB">
+    </div>
+
+    <div class="form-group">
+        <label for="username">Admission Number</label>
+        <input type="number" class="form-control" id="paddmissionnumber" name="paddmissionnumber">
+    </div>
+    <div class="form-group">
+        <label for="username">Phone Number</label>
+        <input type="number" class="form-control" id="pphonenumber" name="pphonenumber">
+    </div>
+    <div class="form-group">
+        <label for="username">Alternate Phone Number</label>
+        <input type="number" class="form-control" id="alt_pphonenumber" name="alt_pphonenumber">
+    </div>
+		<div class="form-group">
+        <label for="mothername">Guardian Name</label>
+        <input type="text" class="form-control" id="gname" aria-describedby="" name="gname">
+    </div>
+		<div class="form-group">
+        <label for="mothername">Guardian Qualification</label>
+        <input type="text" class="form-control" id="g_qual" aria-describedby="emailHelp" name="g_qual">
+    </div>
+        <div class="form-group">
+        <label for="mothername">Guardian Occuptation</label>
+        <input type="text" class="form-control" id="g_occup" aria-describedby="emailHelp" name="g_occup">
+    </div>
+    <div class="form-group">
+        <label for="prevschoolname">E-Mail</label>
+        <input type="pemail" class="form-control" id="pemail" name="pemail">
+    </div>
+    <div class="form-group">
+        <label for="mothername">Mother Qualification</label>
+        <input type="text" class="form-control" id="m_qual" aria-describedby="emailHelp" name="m_qual">
+    </div>
+        <div class="form-group mb-5">
+        <label for="mothername">Mother Occuptation</label>
+        <input type="text" class="form-control" id="m_occup" aria-describedby="emailHelp" name="m_occup">
+    </div>
+
+
+
+
+
+    <h3 class="my-2 text-info">Documents</h3>
+    <hr>
+    <div class="form-group">
+        <label for="photgraph">Photograph</label>
+        <input onchange="ValidateSize(this)"type="file" class="form-control-file no-print " id="photgraph" name="photgraph">
+      </div>
+      <div class="form-group">
+        <label for="idproof">ID Proof</label>
+        <input onchange="ValidateSize(this)" type="file" class="form-control-file no-print " id="idproof" name="idproof">
+      </div><div class="form-group">
+        <label for="castcert">Caste Certificate</label>
+        <input onchange="ValidateSize(this)" type="file" class="form-control-file no-print " id="castcert" name="castcert">
+      </div><div class="form-group">
+        <label for="domicile">Domicile</label>
+        <input onchange="ValidateSize(this)" type="file" class="form-control-file no-print " id="domicile" name="domicile">
+      </div><div class="form-group">
+        <label onchange="ValidateSize(this)" for="tc">T.C</label>
+        <input type="file" class="form-control-file" id="tc" name="tc">
+      </div><div class="form-group">
+        <label for="charcert">Character Certificate</label>
+        <input onchange="ValidateSize(this)" type="file" class="form-control-file no-print " id="charcert" name="charcert">
+      </div>
+
+    <div class="row justify-content-around">
+        <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
+    <input type="button" class="col-4 mt-5  container  btn btn-info" onclick="printDiv('myForm')" value="Print">
+    </div>
+    
+</form>
+<script>
+    function FillAddress(f) {
+        console.log(999)
+        if(f.customCheck1.checked == true) {
+            f.perminputAddress.value = f.currentinputAddress.value;
+            f.perminputAddress2.value = f.currentinputAddress2.value;
+            f.perminputCity.value = f.inputCity.value
+            f.perminputState.value = f.inputState.value
+            f.perminputZip.value = f.inputZip.value
+        }
+      }
+      function ValidateSize(file) {
+        var FileSize = file.files[0].size / 1024 / 1024; // in MB
+        if (FileSize > 2) {
+            alert('File size exceeds 2 MB !');
+        } else {
+
+        }
+    }
+        
+       
+
+
+           function printDiv(divName) {
+            //alert('s');
+            var printContents = '<h2>Form Data </h2><div id="print-content"><form><table bordercolor=black border=2 width="30%"><tbody>';
+             var inputs, index;
+           
+           inputs = document.getElementsByClassName('form-control');
+           for (index = 0; index < inputs.length - 1; ++index) {
+           
+              var fieldName = inputs[index].name.toUpperCase();
+              var fieldValue = inputs[index].value;
+           
+             printContents +='<tr><td><label>'+fieldName+'</label></td>';
+             printContents +='<td>'+fieldValue+'</td></tr>';
+           }
+           
+           var z = 8; 
+           inputs = document.getElementsByTagName('textarea');
+           for (index = 0; index < inputs.length; ++index) {
+           
+               var fieldName = document.getElementsByTagName('label')[z].textContent;
+              var fieldValue = inputs[index].value;
+           
+             printContents +='<tr><td colspan="2"><label>'+fieldName+'</label><br>'+fieldValue+'</td></tr>';
+           ++z;
+           }
+           
+              printContents +='</tbody></table>';
+           
+            w=window.open();
+            w.document.write(printContents);
+            w.print();
+            w.close();
+           }
+           </script>
+    
+      
+</script>
+
+
+{% endblock %}
