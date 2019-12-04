@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Form{% endblock %}
+
+{% block content %}
+
+
+{% include 'navBar.html' %}
+{% include 'message.html' %}
+<div class="container">
+<form class="container w-75" id="myForm" method="POST" action={% url 'updateInfo' %} ></form>
+<h3 class="my-2 text-info ">Update Student Details</h3>
+
+
+<div class="form-group w-50">
+    <label for="username" class="font-weight-bold">Admission Number of Student to Update</label>
+    <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber">
+</div>
+<hr>
+
+<!-- <p class="mt-5">(Leave Blank if no changes required)</p> -->
+<div class="form-group ">
+    <label for="username">Attributes</label>
+    <input type="text" class="form-control" id="attributes" aria-describedby="emailHelp" name="attributes">
+</div>
+<div class="form-group">
+    <label for="username">First Name</label>
+    <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname">
+</div>
+<div class="form-group">
+    <label for="username">Last Name</label>
+    <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="lastname">
+</div>
+<div class="form-group">
+    <label class="pr-1" for="exampleFormControlSelect2">Gender:</label>
+    <select name="gender" class="form-control mr-2" id="exampleFormControlSelect2">
+        <option selected="true" value="">Select</option>
+        <option value="Teacher">Male</option>
+        <option value="Tutor">Female</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="username">DOB</label>
+    <input type="date" class="form-control" id="sDOB" aria-describedby="" name="sDOB">
+</div>
+<div class="form-group">
+    <label for="username">Class Section</label>
+    <input type="text" class="form-control" id="classsection" name="classsection">
+</div>
+
+<div class="form-group">
+    <label for="username">Phone Number</label>
+    <input type="number" class="form-control" id="phonenumber" name="phonenumber">
+</div>
+<div class="form-group">
+<label for="inputAddress">Current Address</label>
+<input type="text" class="form-control" id="inputAddress" name="currentinputAddress" placeholder="">
+</div>
+<div class="form-group">
+<label for="inputAddress2">Current Address 2</label>
+<input type="text" class="form-control" id="inputAddress2" name="currentinputAddress2" placeholder="">
+</div>
+<div class="form-row">
+<div class="form-group col-md-6">
+    <label for="inputCity">City</label>
+    <input type="text" class="form-control" id="inputCity" name="inputCity">
+</div>
+<div class="form-group col-md-4">
+    <label for="inputState">State</label>
+    <input type="text" class="form-control" id="inputState" name="inputState">
+</div>
+<div class="form-group col-md-2">
+    <label for="inputZip">Zip</label>
+    <input type="text" class="form-control" id="inputZip" name="inputZip">
+</div>
+</div>
+
+
+
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" name="customCheck1" id="customCheck1"
+    onclick="FillAddress(this.form)">
+<label class="custom-control-label" for="customCheck1"> Current Address is same as Permanent Address</label>
+</div>
+
+
+
+<div class="form-group">
+<label for="preminputAddress">Permanent Address</label>
+<input type="text" class="form-control" id="perminputAddress" name="perminputAddress" placeholder="">
+</div>
+<div class="form-group">
+<label for="preminputAddress2">Permanent Address 2</label>
+<input type="text" class="form-control" id="perminputAddress2" name="perminputAddress2" placeholder="">
+</div>
+<div class="form-row">
+<div class="form-group col-md-6">
+    <label for="inputCity">City</label>
+    <input type="text" class="form-control" id="perminputCity" name="perminputCity">
+</div>
+<div class="form-group col-md-4">
+    <label for="inputState">State</label>
+    <input type="text" class="form-control" id="perminputState" name="perminputState">
+</div>
+<div class="form-group col-md-2">
+    <label for="inputZip">Zip</label>
+    <input type="text" class="form-control" id="perminputZip" name="perminputZip">
+</div>
+</div>
+<div class="form-group">
+<label for="username">Religion</label>
+<input type="text" class="form-control" id="religion" name="religion">
+</div>
+<div class="form-group">
+<label for="caste">Caste</label>
+<input type="text" class="form-control" id="caste" name="caste">
+</div>
+<div class="form-group">
+<label for="tcnumber">Transfer Certificate Number</label>
+<input type="number" class="form-control" id="tcnumber" name="tcnumber">
+</div>
+<div class="form-group">
+<label for="anumber">Aadhar Number</label>
+<input type="number" class="form-control" id="anumber" name="anumber">
+</div>
+<div class="form-group">
+<label for="feeCategory">Fee Waiver Category</label>
+<input type="text" class="form-control" id="feeCategory" name="feeCategory">
+</div>
+<div class="form-group">
+<label for="siblingid">Sibling ID</label>
+<input type="number" class="form-control" id="siblingid" name="siblingid">
+</div>
+<div class="form-group mb-5">
+<label for="prevschoolname">Previous School Name</label>
+<input type="text" class="form-control" id="prevschoolname" name="prevschoolname">
+</div>
+</div>
+</form>
+
+
+
+
+
+
+
+{% endblock %}

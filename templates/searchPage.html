@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Form{% endblock %}
+
+{% block content %}
+
+{% include 'navBar.html' %}
+{% include 'message.html' %}
+
+<div class="jumbotron jumbotron-fluid mt-5">
+    <div class="container">
+        <h2 class="display-5">Search Students</h2>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'searchPage'%}" method="GET">
+            <input class="form-control mr-sm-2" type="search" name="name" placeholder="Name" aria-label="Search"
+                value="{{values.name}}">
+            <input class="form-control mr-sm-2" type="search" name="fname" placeholder="Father's Name"
+                aria-label="Search" value="{{values.fname}}">
+            <input class="form-control mr-sm-2" type="search" name="addNumber" placeholder="Admission Number"
+                aria-label="Search" value="{{values.addNumber}}">
+            <input class="form-control mr-sm-2" type="search" name="classSection" placeholder="Class Section"
+                aria-label="Search" value="{{values.classSection}}">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+
+{% for student in students %}
+<div class="container my-3 py-2 bg-secondary">
+
+   
+    <p class="font-weight-bold border-bottom border-dark">First Name:<span class="font-weight-normal">{{ student.firstName }}</span></p>
+    <p class="font-weight-bold border-bottom border-dark">Last Name:<span class="font-weight-normal">{{student.lastName}}</span></p>
+    <p class="font-weight-bold border-bottom border-dark">Gender :<span class="font-weight-normal">{{ student.gender }}</span></p>
+    <p class="font-weight-bold border-bottom border-dark">Mobile Number :<span class="font-weight-normal">{{ student.mobileNumber }}</span></p>
+    <p class="font-weight-bold border-bottom border-dark">DOB : <span class="font-weight-normal">{{ student.dob }}</span>
+    </p>
+    <p class="font-weight-bold border-bottom border-dark">Class Section : <span class="font-weight-normal">{{ student.classSection }}</span>
+    </p>
+    <p class="font-weight-bold border-bottom border-dark">Admission Number: <span class="font-weight-normal">{{ student.admissionNumber }}</span>
+    </p>
+    <p class="font-weight-bold border-bottom border-dark">Permantent Address :{{permAdd.address}}</p>
+    <!-- <p class="font-weight-bold border-bottom border-dark">Current Address:{{currentAdd.address}}</p>
+    <p class="font-weight-bold border-bottom border-dark">Fee Waiver Category : <span
+            class="font-weight-normal">{{ student.feeWaiverCategory }}</span>
+    </p>
+    <p class="font-weight-bold border-bottom border-dark">Aadhar Number: <span class="font-weight-normal">{{ student.aadharNumber }}</span>
+    </p>
+    <p class="font-weight-bold border-bottom border-dark">Sibling ID : <span class="font-weight-normal">{{ student.siblingID }}</span>
+    </p>
+    <p class="font-weight-bold border-bottom border-dark">Previous School Name : <span
+            class="font-weight-normal">{{ student.prevSchoolName }}</span>
+    </p> -->
+
+
+</div>
+{% endfor %}
+
+{% endblock %}

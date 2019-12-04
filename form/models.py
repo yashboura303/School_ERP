@@ -3,15 +3,14 @@ from PIL import Image
 
 # Create your models here.
 class StudentInfo(models.Model):
-    attributes = models.CharField(max_length=50)
     firstName = models.CharField(max_length=20)
     lastName = models.CharField(max_length=20)
+    fullName = models.CharField(max_length=50)
+    fName = models.CharField(max_length=50)
     gender = models.CharField(max_length=20)
     dob = models.DateField(null=True)
     classSection = models.CharField(max_length=20)
-    admissionNumber = models.BigIntegerField(primary_key=True,default=0)
-    
-    permanentAddress = models.CharField(max_length =80)
+    admissionNumber = models.BigIntegerField(primary_key=True,default=0)   
     mobileNumber = models.BigIntegerField(default=0)
     religion= models.CharField(max_length=20)
     caste= models.CharField(max_length=20)
@@ -22,21 +21,20 @@ class StudentInfo(models.Model):
     prevSchoolName = models.CharField(max_length=20)
 
 class CurrentAddress(models.Model):
-    admissionNumber = models.OneToOneField(StudentInfo,primary_key=True, on_delete=models.CASCADE)
+    student = models.OneToOneField(StudentInfo,primary_key=True, on_delete=models.CASCADE)
     Address = models.CharField(max_length=100)
     zipCode = models.BigIntegerField(default=0)
     state = models.CharField(max_length=20)
 
 class PermanentAddress(models.Model):
-    admissionNumber = models.OneToOneField(StudentInfo,primary_key=True, on_delete=models.CASCADE)
+    student = models.OneToOneField(StudentInfo,primary_key=True, on_delete=models.CASCADE)
     Address = models.CharField(max_length=100)
     zipCode = models.BigIntegerField(default=0)
     state = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
 
 class ParentInfo(models.Model):
-    admissionNumber = models.OneToOneField(StudentInfo,primary_key=True, on_delete=models.CASCADE)
-    attributes = models.CharField(max_length=50)
+    student = models.OneToOneField(StudentInfo,primary_key=True, on_delete=models.CASCADE,related_name = 'parent')
     fatherName = models.CharField(max_length=20)
     motherName = models.CharField(max_length=20)
     Fatherdob = models.DateField(null=True)
