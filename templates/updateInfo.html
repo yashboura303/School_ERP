@@ -14,22 +14,18 @@
 
 <div class="form-group w-50">
     <label for="username" class="font-weight-bold">Admission Number of Student to Update</label>
-    <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber">
+    <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber" value = {{student.admissionNumber}}>
 </div>
 <hr>
 
 <!-- <p class="mt-5">(Leave Blank if no changes required)</p> -->
-<div class="form-group ">
-    <label for="username">Attributes</label>
-    <input type="text" class="form-control" id="attributes" aria-describedby="emailHelp" name="attributes">
-</div>
 <div class="form-group">
     <label for="username">First Name</label>
-    <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname">
+    <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname" value = {{student.firstName}}>
 </div>
 <div class="form-group">
     <label for="username">Last Name</label>
-    <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="lastname">
+    <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="lastname" value = {{student.lastName}}>
 </div>
 <div class="form-group">
     <label class="pr-1" for="exampleFormControlSelect2">Gender:</label>
@@ -41,99 +37,92 @@
 </div>
 <div class="form-group">
     <label for="username">DOB</label>
-    <input type="date" class="form-control" id="sDOB" aria-describedby="" name="sDOB">
+    <input type="date" class="form-control" id="sDOB" aria-describedby="" value = {{dob}} name="sDOB">
 </div>
 <div class="form-group">
     <label for="username">Class Section</label>
-    <input type="text" class="form-control" id="classsection" name="classsection">
+    <input type="text" class="form-control" id="classsection" name="classsection"value = {{student.classSection}}>
 </div>
 
 <div class="form-group">
     <label for="username">Phone Number</label>
-    <input type="number" class="form-control" id="phonenumber" name="phonenumber">
+    <input type="number" class="form-control" id="phonenumber" name="phonenumber" value = {{student.mobileNumber}}>
 </div>
 <div class="form-group">
 <label for="inputAddress">Current Address</label>
-<input type="text" class="form-control" id="inputAddress" name="currentinputAddress" placeholder="">
+<input type="text" class="form-control" id="inputAddress" name="currentinputAddress" placeholder="" value = {{pAdd.Address1}}>
 </div>
 <div class="form-group">
 <label for="inputAddress2">Current Address 2</label>
-<input type="text" class="form-control" id="inputAddress2" name="currentinputAddress2" placeholder="">
+<input type="text" class="form-control" id="inputAddress2" name="currentinputAddress2"  placeholder="" value = {{pAdd.Address2}}>
 </div>
 <div class="form-row">
 <div class="form-group col-md-6">
     <label for="inputCity">City</label>
-    <input type="text" class="form-control" id="inputCity" name="inputCity">
+    <input type="text" class="form-control" id="inputCity" name="inputCity" value = {{pAdd.city}}>
 </div>
 <div class="form-group col-md-4">
     <label for="inputState">State</label>
-    <input type="text" class="form-control" id="inputState" name="inputState">
+    <input type="text" class="form-control" id="inputState" name="inputState" value = {{pAdd.state}}>
 </div>
 <div class="form-group col-md-2">
     <label for="inputZip">Zip</label>
-    <input type="text" class="form-control" id="inputZip" name="inputZip">
+    <input type="text" class="form-control" id="inputZip" name="inputZip" value = {{pAdd.zipCode}}>
 </div>
 </div>
 
-
-
-<div class="custom-control custom-checkbox">
-<input type="checkbox" class="custom-control-input" name="customCheck1" id="customCheck1"
-    onclick="FillAddress(this.form)">
-<label class="custom-control-label" for="customCheck1"> Current Address is same as Permanent Address</label>
-</div>
 
 
 
 <div class="form-group">
 <label for="preminputAddress">Permanent Address</label>
-<input type="text" class="form-control" id="perminputAddress" name="perminputAddress" placeholder="">
+<input type="text" class="form-control" id="perminputAddress" name="perminputAddress" placeholder="" value = {{cAdd.Address2}}>
 </div>
 <div class="form-group">
 <label for="preminputAddress2">Permanent Address 2</label>
-<input type="text" class="form-control" id="perminputAddress2" name="perminputAddress2" placeholder="">
+<input type="text" class="form-control" id="perminputAddress2"  name="perminputAddress2" placeholder="" value = {{cAdd.Address2}}>
 </div>
 <div class="form-row">
 <div class="form-group col-md-6">
     <label for="inputCity">City</label>
-    <input type="text" class="form-control" id="perminputCity" name="perminputCity">
+    <input type="text" class="form-control" id="perminputCity" name="perminputCity" value = {{cAdd.city}}>
 </div>
 <div class="form-group col-md-4">
     <label for="inputState">State</label>
-    <input type="text" class="form-control" id="perminputState" name="perminputState">
+    <input type="text" class="form-control" id="perminputState" name="perminputState" value = {{cAdd.state}}>
 </div>
 <div class="form-group col-md-2">
     <label for="inputZip">Zip</label>
-    <input type="text" class="form-control" id="perminputZip" name="perminputZip">
+    <input type="text" class="form-control" id="perminputZip" name="perminputZip" value = {{cAdd.zipCode}}>
 </div>
 </div>
 <div class="form-group">
 <label for="username">Religion</label>
-<input type="text" class="form-control" id="religion" name="religion">
+<input type="text" class="form-control" id="religion" name="religion" value = {{student.religion}}>
 </div>
 <div class="form-group">
 <label for="caste">Caste</label>
-<input type="text" class="form-control" id="caste" name="caste">
+<input type="text" class="form-control" id="caste" name="caste" value = {{student.caste}}>
 </div>
 <div class="form-group">
 <label for="tcnumber">Transfer Certificate Number</label>
-<input type="number" class="form-control" id="tcnumber" name="tcnumber">
+<input type="number" class="form-control" id="tcnumber" name="tcnumber" value = {{student.tcNumber}}>
 </div>
 <div class="form-group">
 <label for="anumber">Aadhar Number</label>
-<input type="number" class="form-control" id="anumber" name="anumber">
+<input type="number" class="form-control" id="anumber" name="anumber" value = {{student.aadharNumber}}>
 </div>
 <div class="form-group">
 <label for="feeCategory">Fee Waiver Category</label>
-<input type="text" class="form-control" id="feeCategory" name="feeCategory">
+<input type="text" class="form-control" id="feeCategory" name="feeCategory" value = {{student.feeWaiverCategory}}>
 </div>
 <div class="form-group">
 <label for="siblingid">Sibling ID</label>
-<input type="number" class="form-control" id="siblingid" name="siblingid">
+<input type="number" class="form-control" id="siblingid" name="siblingid" value = {{student.siblingID}}>
 </div>
 <div class="form-group mb-5">
 <label for="prevschoolname">Previous School Name</label>
-<input type="text" class="form-control" id="prevschoolname" name="prevschoolname">
+<input type="text" class="form-control" id="prevschoolname" name="prevschoolname" value = {{student.prevSchoolName}}>
 </div>
 </div>
 </form>

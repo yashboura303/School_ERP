@@ -9,8 +9,11 @@ def login(request):
 	if request.method == 'POST':
 		user = auth.authenticate(username=request.POST['username'],password=request.POST['password'])
 		if user is not None:
-			auth.login(request,user)
-			return redirect('home')
+			if user.user_type == "Admin":
+				auth.login(request,user)
+				return redirect('recordForm')
+			else:
+				return redirect('home')
 		else:
 			messages.error(request, 'Invalid credentials')
 			return redirect('login')
@@ -43,3 +46,4 @@ def logout(request):
 	if request.method == 'POST':
 		auth.logout(request)
 		return redirect('home')
+

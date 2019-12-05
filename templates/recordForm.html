@@ -24,7 +24,7 @@
                 aria-label="Search" value="{{values.fname}}">
             <input class="form-control mr-sm-2" type="search" name="addNumber" placeholder="Admission Number"
                 aria-label="Search" value="{{values.addNumber}}">
-            <input class="form-control mr-sm-2" type="search" name="classSection" placeholder="Class Section"
+            <input class="form-control mr-sm-2" type="search" name="classection" placeholder="Class Section"
                 aria-label="Search" value="{{values.classSection}}">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
@@ -52,8 +52,8 @@
                 <label class="pr-1" for="exampleFormControlSelect2">Gender:</label>
                 <select name="gender" class="form-control mr-2" id="exampleFormControlSelect2">
                     <option selected="true" value="">Select</option>
-                    <option value="Teacher">Male</option>
-                    <option value="Tutor">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                 </select>
             </div>
         </div>
@@ -321,7 +321,7 @@
     function printDiv(divName) {
         //alert('s');
         var printContents =
-            '<h2>Form Data </h2><div id="print-content"><form><table bordercolor=black border=2 width="30%"><tbody>';
+            '<h2>Form Data </h2><div id="print-content"><form><table bordercolor=black  width="30%"><tbody>';
         var inputs, index;
 
         inputs = document.getElementsByClassName('form-control');

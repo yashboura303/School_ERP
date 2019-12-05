@@ -52,18 +52,22 @@ def form(request):
         student_info.aadharNumber = anumber
         student_info.feeWaiverCategory = feeCategory
         student_info.siblingID = siblingid
-        student_info,fName = fathername
+        student_info.fName = fathername
         student_info.prevSchoolName = prevschoolname
         student_info.save()
 
-        permanent = PermanentAddress.objects.create(admissionNumber = student_info)
+        permanent = PermanentAddress.objects.create(student = student_info)
         permanent.Address = permAdd1+ permAdd2
+        permanent.Address1 = permAdd1
+        permanent.Address2 = permAdd2
         permanent.zipCode = permZip
         permanent.state = permState
         permanent.city = permCity
 
-        current = CurrentAddress.objects.create(admissionNumber = student_info)
+        current = CurrentAddress.objects.create(student = student_info)
+        current.Address1 = currentAdd1
         current.Address = currentAdd1+ currentAdd2
+        current.Address2 = currentAdd2
         current.zipCode = currentZip
         current.city = currentCity
         current.state = currentState
@@ -88,7 +92,7 @@ def form(request):
         mDOB = date(*map(int, mDOB.split('-')))
         fDOB = date(*map(int, fDOB.split('-')))
         
-        parent_info = ParentInfo.objects.create(admissionNumber = student_info)
+        parent_info = ParentInfo.objects.create(student = student_info)
         parent_info.attributes = pattributes
         parent_info.fatherName = fathername
         parent_info.motherName = mothername
@@ -104,9 +108,9 @@ def form(request):
         parent_info.motherQual = m_occup       
         parent_info.save()
 
-        documents = Documents.objects.create(admissionNumber = student_info)
+        documents = Documents.objects.create(student = student_info)
         documents.idProof = request.FILES["idproof"]
-        documents.photograph = request.FILES["photgraph"]
+        documents.photo = request.FILES["photgraph"]
         documents.castCertificate = request.FILES["castcert"]
         documents.domicile = request.FILES["domicile"]
         documents.tc = request.FILES["tc"]
@@ -114,8 +118,6 @@ def form(request):
         documents.save()
 
     return render(request,'recordForm.html')
-
-
 
 def update(request):
 
@@ -177,30 +179,40 @@ def update(request):
             return redirect('updateInfo.html')
     return render(request, 'updateInfo.html')
 
+def updateWithData(request,pk):
+    student_info = StudentInfo.objects.get(admissionNumber = (pk))
+    pAdd = PermanentAddress.objects.get(student= student_info)
+    cAdd = PermanentAddress.objects.get(student= student_info)
+    DOB_to_String = str(student_info.dob)
+    return render(request, 'updateInfo.html',{"student":student_info,"pAdd":pAdd,"cAdd":cAdd,"dob":DOB_to_String})
+
+def print(request,pk):
+    student_info = StudentInfo.objects.get(admissionNumber = (pk))
+    pAdd = PermanentAddress.objects.get(student = student_info)
+    return render(request, 'printStudentData.html',{"student":student_info,"pAdd":pAdd} )
 
 def search(request):
     if request.method == "GET":
 
-        studentsInfo = StudentInfo.objects.all()
-        parentInfo = ParentInfo.objects.all()
-        # if "fname" in request.GET:
-        #     fName = request.GET["fname"]
-        #     # studentsInfo = studentsInfo.filter(fName__icontains = fName)
-        #     studentsInfo = StudentInfo.objects.filter(parent__fatherName = fName)
-        #     print(studentsInfo)
+        students = StudentInfo.objects.all()
+        # parentInfo = ParentInfo.objects.all()
+        if "fname" in request.GET:
+            fName = request.GET["fname"]
+            # studentsInfo = studentsInfo.filter(fName__icontains = fName)
+            students = students.filter(parent__fatherName__icontains = fName)
         if "name" in request.GET:
             name = request.GET["name"]
-            studentInfo = studentsInfo.filter(fullName__icontains = name)
+            students = students.filter(fullName__icontains = name)
         if "classSection" in request.GET:
             classSection = request.GET["classSection"]
-            studentInfo = studentsInfo.filter(classSection__icontains = classSection)
+            students = students.filter(classSection__icontains = classSection)
         if "addNumber" in request.GET:
             addNo = request.GET["addNumber"]
-            studentInfo = studentsInfo.filter(admissionNumber__icontains = (addNo))
-            if studentInfo:
+            students = students.filter(admissionNumber__icontains = (addNo))
+            if students:
                 # permAdd = PermanentAddress.objects.filter(admissionNumber = student)
                 # currentAdd = CurrentAddress.objects.get(admissionNumber = student)
-                return render(request, 'searchPage.html',{"students":studentInfo})
+                return render(request, 'searchPage.html',{"students":students})
             else:
                 messages.error(request, 'Cant find student with entered detail')
                 return redirect('recordForm')

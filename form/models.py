@@ -23,12 +23,17 @@ class StudentInfo(models.Model):
 class CurrentAddress(models.Model):
     student = models.OneToOneField(StudentInfo,primary_key=True, on_delete=models.CASCADE)
     Address = models.CharField(max_length=100)
+    Address1 = models.CharField(max_length=100)
+    Address2 = models.CharField(max_length=100)
     zipCode = models.BigIntegerField(default=0)
     state = models.CharField(max_length=20)
+    city = models.CharField(max_length=20)
 
 class PermanentAddress(models.Model):
     student = models.OneToOneField(StudentInfo,primary_key=True, on_delete=models.CASCADE)
     Address = models.CharField(max_length=100)
+    Address1 = models.CharField(max_length=100)
+    Address2 = models.CharField(max_length=100)
     zipCode = models.BigIntegerField(default=0)
     state = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
@@ -51,16 +56,16 @@ class ParentInfo(models.Model):
 
 
 class Documents(models.Model):
-    admissionNumber = models.OneToOneField(StudentInfo,primary_key=True, on_delete=models.CASCADE)
-    photograph = models.FileField( upload_to='uploads/photograph')
+    student = models.OneToOneField(StudentInfo,primary_key=True, on_delete=models.CASCADE)
+    photo = models.FileField( upload_to='uploads/photograph')
     idProof = models.FileField( upload_to='uploads/idProof')
     castCertificate = models.FileField( upload_to='uploads/castCertificate')
     domicile = models.FileField( upload_to='uploads/domicile')
     tc = models.FileField( upload_to='uploads/tc')
     characterCertificate = models.FileField( upload_to='uploads/characterCertificate')
 
-    def save(self):
-        super().save()  
+    def save(self,*args, **kwargs):
+        super(Documents,self).save(*args, **kwargs)  
 
         # compress only if IMG file
         try:
