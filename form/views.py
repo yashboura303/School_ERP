@@ -189,7 +189,8 @@ def updateWithData(request,pk):
 def print(request,pk):
     student_info = StudentInfo.objects.get(admissionNumber = (pk))
     pAdd = PermanentAddress.objects.get(student = student_info)
-    return render(request, 'printStudentData.html',{"student":student_info,"pAdd":pAdd} )
+    parent = ParentInfo.objects.get(student = student_info)
+    return render(request, 'printStudentData.html',{"student":student_info,"pAdd":pAdd,"parent":parent} )
 
 def search(request):
     if request.method == "GET":

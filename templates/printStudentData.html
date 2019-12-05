@@ -1,46 +1,133 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>{{student.fullName}}</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
-      
+<head>
+  <title>{{student.fullName}}</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <div class="header container-fluid py-5">
-      Header
-    </div>
-    <div class="container">
-    <div class="row">
-      <div class="col-sm-4">
-        Name : {{student.fullName}}
-      </div>
-      <div class="col-sm-4">
-        Gender : {{student.gender}}
-      </div>
-      <div class="col-sm-4">DOB: {{student.dob}}</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4">
-          Class : {{student.classSection}}
-        </div>
-        <div class="col-sm-4">
-          Admission Number : {{student.admissionNumber}}
-        </div>
-        <div class="col-sm-4">Mobile Number: {{student.mobileNumber}}</div>
-      </div>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<style>
+  .marginTop {
+    margin-top: -130px;
+  }
+
+  @media print {
+    body {
+      width: 21cm;
+      height: 29.7cm;
+      margin: 30mm 45mm 30mm 45mm;
+      /* change the margins as you want them to be. */
+    }
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+</style>
+
+<body class="container" onload="window.print()">
+
+
+  <div class="header container-fluid py-4 border-bottom border-dark text-center ">
+    <h1>Header</h1>
   </div>
+  <div class="container-fluid text-center mt-2">
+    <h3>Sample Heading</h3>
+  </div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-4">
+        <span class="font-weight-bold text-info">Name :</span> {{student.fullName}}
+      </div>
+      <div class="col-sm-4">
+        <span class="font-weight-bold text-info">Gender :</span> {{student.gender}}
+      </div>
+      <div class="col-sm-4">
+        <div class="container-fluid border border-dark p-5 w-50">
+          <div class="container p-5">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row marginTop">
+      <div class="col-sm-4"><span class="font-weight-bold text-info">DOB :</span> {{student.dob}}</div>
+      <div class="col-sm-4">
+        <span class="font-weight-bold text-info">Class & Section :</span> {{student.classSection}}
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-sm-4">
+        <span class="font-weight-bold text-info">Admission Number :</span> {{student.admissionNumber}}
+      </div>
+      <div class="col-sm-4"><span class="font-weight-bold text-info"> Mobile Number :</span> {{student.mobileNumber}}
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-sm-4"><span class="font-weight-bold text-info">Religion :</span> {{student.religion}}</div>
+      <div class="col-sm-4"><span class="font-weight-bold text-info">Caste :</span> {{studetn.caste}}</div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-sm-4"><span class="font-weight-bold text-info">Transfer Certificate Number :</span>
+        {{student.tcNumber}}</div>
+      <div class="col-sm-4"><span class="font-weight-bold text-info">Aadhar Number: :</span> {{student.aadharNumber}}
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-sm-8"><span class="font-weight-bold text-info">Address:</span>{{pAdd.Address}}, {{pAdd.city}},
+        {{pAdd.state}}- {{pAdd.zipCode}}</div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-sm-4"><span class="font-weight-bold text-info">Sibling ID:</span> {{student.siblingID}}</div>
+      <div class="col-sm-4"><span class="font-weight-bold text-info">Prev School Name:</span> {{student.prevSchoolName}}
+      </div>
+    </div>
+    <hr>
+    <div class="mt-4">
+      <span class="font-weight-bold text-info">Parent/Gaurdian Details:-</span>
+
+      <div class="row mt-4">
+        <div class="col-sm-4">
+          <span class="font-weight-bold text-info">Name :</span>
+          {{parent.fatherName}}
+        </div>
+
+        <div class="col-sm-4"><span class="font-weight-bold text-info">DOB :</span> {{parent.Fatherdob}}</div>
+      </div>
+      <div class="row mt-4">
+          <div class="col-sm-4">
+            <span class="font-weight-bold text-info">Contact No. :</span>
+            {{parent.MobileNumber}}
+          </div>
+
+          <div class="col-sm-4"><span class="font-weight-bold text-info">E-Mail :</span>: {{parent.email}}</div>
+        </div>
+      </div>
+      <hr>
+    </div>
 
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script>
+
+    </script>
+</body>
+
 </html>
