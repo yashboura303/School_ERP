@@ -14,7 +14,7 @@ def form(request):
         lName = request.POST.get("lastname", False)
         gender = request.POST.get("gender", False)
         sDOB = request.POST.get("sDOB", False)
-        classSection = request.POST.get("classection", False)
+        classSection = request.POST.get("classsection", False)
         addNumber = request.POST.get("addmissionnumber", False)
         phoneNumber = request.POST.get("phonenumber", False)
         currentAdd1 = request.POST.get("currentinputAddress", False)
@@ -181,16 +181,17 @@ def update(request):
 
 def updateWithData(request,pk):
     student_info = StudentInfo.objects.get(admissionNumber = (pk))
-    pAdd = PermanentAddress.objects.get(student= student_info)
-    cAdd = PermanentAddress.objects.get(student= student_info)
+    pAdd = PermanentAddress.objects.get(student = student_info)
+    cAdd = CurrentAddress.objects.get(student = student_info)
     DOB_to_String = str(student_info.dob)
     return render(request, 'updateInfo.html',{"student":student_info,"pAdd":pAdd,"cAdd":cAdd,"dob":DOB_to_String})
 
 def print(request,pk):
     student_info = StudentInfo.objects.get(admissionNumber = (pk))
     pAdd = PermanentAddress.objects.get(student = student_info)
+    cAdd = CurrentAddress.objects.get(student = student_info)
     parent = ParentInfo.objects.get(student = student_info)
-    return render(request, 'printStudentData.html',{"student":student_info,"pAdd":pAdd,"parent":parent} )
+    return render(request, 'printStudentData.html',{"student":student_info,"pAdd":pAdd,"parent":parent,"cAdd":cAdd} )
 
 def search(request):
     if request.method == "GET":

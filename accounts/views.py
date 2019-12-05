@@ -7,11 +7,14 @@ from accounts.models import UserProfile
 
 def login(request):
 	if request.method == 'POST':
+		
 		user = auth.authenticate(username=request.POST['username'],password=request.POST['password'])
 		if user is not None:
-			if user.user_type == "Admin":
+			userProfile = UserProfile.objects.get(user = user)
+			if userProfile.user_type == "Admin":
 				auth.login(request,user)
-				return redirect('recordForm')
+				return redirect('dashboard')
+				# return redirect('home')
 			else:
 				return redirect('home')
 		else:

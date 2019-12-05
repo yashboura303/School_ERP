@@ -9,5 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('home.urls')),
     path('auth/',include('accounts.urls')),
-    path('form/',include('form.urls')),
+    path('studentForm/',include('form.urls')),
+    path('dashboard/',include('dashboard.urls')),
+    path('teacherForm/',include('teacherform.urls')),
 ]

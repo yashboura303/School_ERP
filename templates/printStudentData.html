@@ -18,13 +18,13 @@
 
   @media print {
     body {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       margin: 0;
       padding: 0;
       /* change the margins as you want them to be. */
     }
     html, body {
-      height:100vh; 
+      height:110vh; 
       margin: 10px !important; 
       padding: 10px !important;
       overflow: hidden;
@@ -88,9 +88,13 @@
       </div>
     </div>
     <div class="row mt-5">
-      <div class="col-sm-8"><span class="font-weight-bold text-info">Address:</span>{{pAdd.Address}}, {{pAdd.city}},
+      <div class="col-sm-10"><span class="font-weight-bold text-info">Address(Permanent):</span>{{pAdd.Address}}, {{pAdd.city}},
         {{pAdd.state}}- {{pAdd.zipCode}}</div>
     </div>
+    <div class="row mt-5">
+        <div class="col-sm-8"><span class="font-weight-bold text-info">Address(Current):</span>{{cAdd.Address}}, {{cAdd.city}},
+          {{cAdd.state}}-{{cAdd.zipCode}}</div>
+      </div>
     <div class="row mt-4">
       <div class="col-sm-4"><span class="font-weight-bold text-info">Sibling ID:</span> {{student.siblingID}}</div>
       <div class="col-sm-4"><span class="font-weight-bold text-info">Prev School Name:</span> {{student.prevSchoolName}}
@@ -102,13 +106,23 @@
 
       <div class="row mt-3">
         <div class="col-sm-4">
-          <span class="font-weight-bold text-info">Name :</span>
+          <span class="font-weight-bold text-info">Father Name :</span>
           {{parent.fatherName}}
         </div>
 
-        <div class="col-sm-4"><span class="font-weight-bold text-info">DOB :</span> {{parent.Fatherdob}}</div>
+        <div class="col-sm-4"><span class="font-weight-bold text-info">Father DOB :</span> {{parent.Fatherdob}}</div>
+        <div class="col-sm-4"><span class="font-weight-bold text-info">Father Qualification :</span> {{parent.gaurdianQual}}</div>
       </div>
-      <div class="row mt-5">
+      <div class="row mt-3">
+          <div class="col-sm-4">
+            <span class="font-weight-bold text-info">Mother Name :</span>
+            {{parent.mohterName}}
+          </div>
+  
+          <div class="col-sm-4"><span class="font-weight-bold text-info">Mother DOB :</span> {{parent.Motherdob}}</div>
+          <div class="col-sm-4"><span class="font-weight-bold text-info">Mother Qualification :</span> {{parent.motherQual}}</div>
+        </div>
+      <div class="row mt-4">
           <div class="col-sm-4">
             <span class="font-weight-bold text-info">Contact No. :</span>
             {{parent.MobileNumber}}

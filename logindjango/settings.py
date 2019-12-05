@@ -34,6 +34,8 @@ INSTALLED_APPS = [
 	'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
     'form.apps.FormConfig',
+    'dashboard.apps.DashboardConfig',
+    'teacherform.apps.TeacherformConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
