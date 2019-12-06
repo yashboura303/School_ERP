@@ -75,7 +75,12 @@
     {{pAdd.zipCode}}>
 </div>
 </div>
-
+<div class="custom-control custom-checkbox my-2">
+        <input type="checkbox" class="custom-control-input" name="customCheck1" id="customCheck1"
+            onclick="FillAddress(this.form)">
+        <label class="custom-control-label font-italic font-weight-lighter" for="customCheck1"> Current Address is same
+            as Permanent Address:</label>
+    </div>
 
 
 
@@ -132,8 +137,22 @@
 </div>
 </form>
 
-
-
+<script>
+        function FillAddress(f) {
+            console.log(999)
+            if (f.customCheck1.checked == true) {
+                f.perminputAddress.value = f.currentinputAddress.value;
+                f.perminputAddress2.value = f.currentinputAddress2.value;
+                f.perminputCity.value = f.inputCity.value
+                f.perminputState.value = f.inputState.value
+                f.perminputZip.value = f.inputZip.value
+            }
+        }
+</script>
+<div class="row justify-content-around">
+        <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
+        <!-- <input type="button" class="col-4 mt-5  container  btn btn-info" onclick="printDiv('myForm')" value="Print"> -->
+    </div>
 
 
 

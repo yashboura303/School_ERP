@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+
+{% block title %}Form{% endblock %}
+
+{% block content %}
+
+<style>
+        #teacher{
+            display: none;
+        }
+    </style>
+{% include './navBar.html' %}
+{% include 'message.html' %}
+<div class="container-fluid">
+    <form class="container w-75" id="myForm" method="POST" action={% url 'updateEmpInfo' %}>
+
+        <h3 class="my-2 text-info ">Update Employee Details</h3>
+        <div class="form-group w-50">
+            <label for="username" class="font-weight-bold">EmpID of Employee to Update</label>
+            <input type="number" class="form-control" id="empID" name="empID" value={{employee.empID}}>
+        </div>
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="username">First Name:</label>
+                <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname" value={{employee.firstName}}>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="username">Last Name:</label>
+                <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="lastname" value={{employee.lastName}}>
+            </div>
+            <div class="form-group col-md-3">
+                <label class="pr-1" for="exampleFormControlSelect2">Gender:</label>
+                <select name="gender" class="form-control mr-2" id="exampleFormControlSelect2" value={{employee.gender}}>
+                    <option selected="true" value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row mt-2">
+            <div class="form-group col-md-3">
+                <label for="username">DOB:</label>
+                <input type="date" class="form-control" id="DOB" aria-describedby="" name="DOB" value={{dob}}>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="username">Email:</label>
+                <input type="text" class="form-control" id="email" name="email" value={{employee.email}}>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="username">Joining Date:</label>
+                <input type="date" class="form-control" id="joinDate" aria-describedby="" name="joinDate" value={{joiningDate}}>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="username">Phone Number:</label>
+                <input type="number" class="form-control" id="phonenumber" name="phonenumber" value={{employee.mobileNumber}}>
+            </div>
+        </div>
+
+
+
+<div class="form-row mt-2">
+    <div class="form-group col-md-4">
+        <label for="username">Blood Group:</label>
+        <input type="text" class="form-control" id="bloodGroup" name="bloodGroup" value={{employee.bloodGroup}}>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="username">Maritial Status:</label>
+        <input type="text" class="form-control" id="maritalStatus" name="maritalStatus" value={{employee.maritalStatus}}>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="caste">Experience:</label>
+        <input type="text" class="form-control" id="experience" name="experience" value={{employee.experience}}>
+    </div>
+</div>
+<div class="form-row mt-2">
+    <div class="form-group col-md-4">
+        <label for="username">Father Name:</label>
+        <input type="text" class="form-control" id="fatherName" name="fatherName" value={{employee.fatherName}}>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="username">Mother Name:</label>
+        <input type="text" class="form-control" id="motherName" name="motherName" value={{employee.motherName}}>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="caste">Wife/Husband Name:</label>
+        <input type="text" class="form-control" id="partnerName" name="partnerName" value={{employee.partnerName}}>
+    </div>
+</div>
+<div class="form-group">
+        <label for="inputAddress">Current Address</label>
+        <input type="text" class="form-control" id="inputAddress" name="currentinputAddress" placeholder="" value = {{pAdd.Address1}}>
+        </div>
+        <div class="form-group">
+        <label for="inputAddress2">Current Address 2</label>
+        <input type="text" class="form-control" id="inputAddress2" name="currentinputAddress2"  placeholder="" value = {{pAdd.Address2}}>
+        </div>
+        <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputCity">City</label>
+            <input type="text" class="form-control" id="inputCity" name="inputCity" 
+            value = {{pAdd.city}}>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputState">State</label>
+            <input type="text" class="form-control" id="inputState" name="inputState" value = 
+            {{pAdd.state}}>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="inputZip" name="inputZip" value = 
+            {{pAdd.zipCode}}>
+        </div>
+        </div>
+        <div class="custom-control custom-checkbox my-2">
+                <input type="checkbox" class="custom-control-input" name="customCheck1" id="customCheck1"
+                    onclick="FillAddress(this.form)">
+                <label class="custom-control-label font-italic font-weight-lighter" for="customCheck1"> Current Address is same
+                    as Permanent Address:</label>
+            </div>
+        
+        
+        
+        <div class="form-group">
+        <label for="preminputAddress">Permanent Address</label>
+        <input type="text" class="form-control" id="perminputAddress" name="perminputAddress" placeholder="" value = {{cAdd.Address2}}>
+        </div>
+        <div class="form-group">
+        <label for="preminputAddress2">Permanent Address 2</label>
+        <input type="text" class="form-control" id="perminputAddress2"  name="perminputAddress2" placeholder="" value = {{cAdd.Address2}}>
+        </div>
+        <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputCity">City</label>
+            <input type="text" class="form-control" id="perminputCity" name="perminputCity" value = {{cAdd.city}}>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputState">State</label>
+            <input type="text" class="form-control" id="perminputState" name="perminputState" value = {{cAdd.state}}>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="perminputZip" name="perminputZip" value = {{cAdd.zipCode}}>
+        </div>
+<div class="form-row mt-2">
+    <div class="form-group col-md-4">
+        <label class="pr-1" for="exampleFormControlSelect2">Employee Category:</label>
+        <select onchange="teacherOption()" name="empCategory" class="form-control mr-2" id="empCategory">
+            <option selected="true" value="">Select</option>
+            <option value="teacher">Teacher</option>
+            <option value="driver">Driver</option>
+            <option value="peon">Peon</option>
+            <option value="receptionist">Receptionist</option>
+            <option value="coordinator">Coordinator</option>
+            <option value="manager">Manager</option>
+            <option value="helper">Helper</option>
+            <option value="principal">Principal</option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="anumber">Aadhar Number:</label>
+        <input type="number" class="form-control" id="anumber" name="anumber" alue={{employee.aadharNumber}}>
+    </div>
+</div>
+
+<div id="teacher">
+    <h3 class="my-4 text-info border-top border-dark pt-4 ">Teacher Details </h3>
+    <div class="form-row mt-2 ">
+        <div class="form-group col-md-3">
+            <label for="fathername">First Name:</label>
+            <input type="text" class="form-control" id="teacherFirstName" aria-describedby="emailHelp"
+                name="teacherFirstName" value={{teacher.firstName}}>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="mothername">Last Name:</label>
+            <input type="text" class="form-control" id="specialization" aria-describedby="emailHelp"
+                name="teacherLastName" value={{teacher.lastName}}>
+        </div>
+    </div>
+    <div class="form-row mt-3 ">
+        <div class="form-group col-md-4">
+            <label for="username">Designation:</label>
+            <input type="number" class="form-control" id="designation" name="designation" value={{teacher.designation}}>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="username">Specialization:</label>
+            <input type="text" class="form-control" id="specialization" name="specialization"
+            value={{teacher.specialization}}>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="username">Class Teacher:</label>
+            <input type="text" class="form-control" id="classTeacher" name="classTeacher" value={{teacher.classTeacher}}>
+        </div>
+    </div>
+</div>
+
+</div>
+</form>
+<script>
+        function teacherOption(){
+            inputSelect = document.getElementById('empCategory')
+            teacherDiv = document.getElementById('teacher')
+            if (inputSelect.value == "teacher"){
+                teacherDiv.style.display = "block"
+            }
+            else{
+                teacherDiv.style.display = "none"
+            }
+    
+        }
+        function FillAddress(f) {
+            console.log(999)
+            if (f.customCheck1.checked == true) {
+                f.perminputAddress.value = f.currentinputAddress.value;
+                f.perminputAddress2.value = f.currentinputAddress2.value;
+                f.perminputCity.value = f.inputCity.value
+                f.perminputState.value = f.inputState.value
+                f.perminputZip.value = f.inputZip.value
+            }
+        }
+</script>
+
+
+<div class="row justify-content-around">
+        <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
+        <!-- <input type="button" class="col-4 mt-5  container  btn btn-info" onclick="printDiv('myForm')" value="Print"> -->
+    </div>
+
+
+
+
+{% endblock %}

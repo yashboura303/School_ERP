@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Form{% endblock %}
+
+{% block content %}
+
+{% include './navBar.html' %}
+{% include 'message.html' %}
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h2 class="display-5">Search employee</h2>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'empSearchPage'%}" method="GET">
+            <input class="form-control mr-sm-2" type="search" name="name" placeholder="Name" aria-label="Search"
+                value="{{values.name}}">
+            <input class="form-control mr-sm-2" type="search" name="empID" placeholder="employeee ID"
+                aria-label="Search" value="{{values.empID}}">
+            <input class="form-control mr-sm-2" type="search" name="category" placeholder="Category"
+                aria-label="Search" value="{{values.category}}">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+
+
+{% for employee in employees %}
+
+<div class="container-fluid">
+<table class="mb-5 table table-secondary table-striped">
+
+    <thead>
+        <a class="badge badge-pill badge-Warning d-inline py-2 mx-1" href="{% url 'updateEmpData' employee.empID %}"> <svg
+                xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24">
+                <path
+                    d="M18.363 8.464l1.433 1.431-12.67 12.669-7.125 1.436 1.439-7.127 12.665-12.668 1.431 1.431-12.255 12.224-.726 3.584 3.584-.723 12.224-12.257zm-.056-8.464l-2.815 2.817 5.691 5.692 2.817-2.821-5.693-5.688zm-12.318 18.718l11.313-11.316-.705-.707-11.313 11.314.705.709z" />
+                </svg>
+            Edit</a>
+            <a class="badge badge-pill badge-success d-inline px-2 py-2 mx-2" href="{% url 'printEmpData' employee.empID %}"><svg class="mx-1" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path d="M16 18h-8v-1h8v1zm-2 1h-6v1h6v-1zm10-14v13h-4v6h-16v-6h-4v-13h4v-5h16v5h4zm-18 0h12v-3h-12v3zm12 10h-12v7h12v-7zm4-8h-20v9h2v-3h16v3h2v-9zm-1.5 1c-.276 0-.5.224-.5.5s.224.5.5.5.5-.224.5-.5-.224-.5-.5-.5z"/></svg>Print</a>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Emp ID</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Mobile Number</th>
+            <th scope="col">Category</th>
+            <th scope="col">DOB</th>
+            <th scope="col">Date of Joining</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">{{ employee.fullName}}</th>
+            <th scope="row">{{ employee.empID}}</th>
+            <td>{{ employee.gender }}</td>
+            <td>{{ employee.mobileNumber }}</td>
+            <td>{{ employee.empCategory }}</td>
+            <td>{{ employee.dob }}</td>
+            <td>{{ employee.admissionNumber }}</td>
+        </tr>
+    </tbody>
+    
+</table>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+
+
+<!-- <div class="container my-3 py-2 bg-secondary">
+
+   
+    <p class="font-weight-bold border-bottom border-dark">First Name:<span class="font-weight-normal">{{ employee.firstName }}</span></p>
+    <p class="font-weight-bold border-bottom border-dark">Last Name:<span class="font-weight-normal">{{employee.lastName}}</span></p>
+    <p class="font-weight-bold border-bottom border-dark">Gender :<span class="font-weight-normal">{{ employee.gender }}</span></p>
+    <p class="font-weight-bold border-bottom border-dark">Mobile Number :<span class="font-weight-normal">{{ employee.mobileNumber }}</span></p>
+    <p class="font-weight-bold border-bottom border-dark">DOB : <span class="font-weight-normal">{{ employee.dob }}</span>
+    </p>
+    <p class="font-weight-bold border-bottom border-dark">Class Section : <span class="font-weight-normal">{{ employee.classSection }}</span>
+    </p>
+    <p class="font-weight-bold border-bottom border-dark">Admission Number: <span class="font-weight-normal">{{ employee.admissionNumber }}</span>
+    </p> -->
+<!-- <p class="font-weight-bold border-bottom border-dark">Permantent Address :{{permAdd.address}}</p> -->
+<!-- <p class="font-weight-bold border-bottom border-dark">Current Address:{{currentAdd.address}}</p>
+    <p class="font-weight-bold border-bottom border-dark">Fee Waiver Category : <span
+            class="font-weight-normal">{{ employee.feeWaiverCategory }}</span>
+    </p>
+    <p class="font-weight-bold border-bottom border-dark">Aadhar Number: <span class="font-weight-normal">{{ employee.aadharNumber }}</span>
+    </p>
+    <p class="font-weight-bold border-bottom border-dark">Sibling ID : <span class="font-weight-normal">{{ employee.siblingID }}</span>
+    </p>
+    <p class="font-weight-bold border-bottom border-dark">Previous School Name : <span
+            class="font-weight-normal">{{ employee.prevSchoolName }}</span>
+    </p> -->
+
+
+<!-- </div> -->

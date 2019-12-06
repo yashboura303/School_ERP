@@ -2,7 +2,7 @@
 <html lang="en" class="">
 
 <head>
-  <title>{{student.fullName}}</title>
+  <title>{{employee.fullName}}</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -50,10 +50,10 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-sm-4">
-        <span class="font-weight-bold text-info">Name :</span> {{student.fullName}}
+        <span class="font-weight-bold text-info">Name :</span> {{employee.fullName}}
       </div>
       <div class="col-sm-4">
-        <span class="font-weight-bold text-info">Gender :</span> {{student.gender}}
+        <span class="font-weight-bold text-info">Gender :</span> {{employee.gender}}
       </div>
       <div class="col-sm-4">
         <div class="container-fluid border border-dark p-5 w-50">
@@ -64,28 +64,28 @@
     </div>
 
     <div class="row marginTop">
-      <div class="col-sm-4"><span class="font-weight-bold text-info">DOB :</span> {{student.dob}}</div>
+      <div class="col-sm-4"><span class="font-weight-bold text-info">DOB :</span> {{employee.dob}}</div>
       <div class="col-sm-4">
-        <span class="font-weight-bold text-info">Class & Section :</span> {{student.classSection}}
+        <span class="font-weight-bold text-info">E-Mail :</span> {{employee.email}}
       </div>
     </div>
     <div class="row mt-5">
       <div class="col-sm-4">
-        <span class="font-weight-bold text-info">Admission Number :</span> {{student.admissionNumber}}
+        <span class="font-weight-bold text-info">Employee ID :</span> {{employee.admissionNumber}}
       </div>
-      <div class="col-sm-4"><span class="font-weight-bold text-info"> Mobile Number :</span> {{student.mobileNumber}}
+      <div class="col-sm-4"><span class="font-weight-bold text-info"> Mobile Number :</span> {{employee.mobileNumber}}
       </div>
     </div>
     <div class="row mt-5">
-      <div class="col-sm-4"><span class="font-weight-bold text-info">Religion :</span> {{student.religion}}</div>
-      <div class="col-sm-4"><span class="font-weight-bold text-info">Caste :</span> {{student.caste}}</div>
+      <div class="col-sm-4"><span class="font-weight-bold text-info">Joining Date :</span> {{employee.joiningDate}}</div>
+      <div class="col-sm-4"><span class="font-weight-bold text-info">Blood Group :</span> {{employee.bloodGroup}}</div>
     </div>
 
     <div class="row mt-5">
-      <div class="col-sm-4"><span class="font-weight-bold text-info">Transfer Certificate Number :</span>
-        {{student.tcNumber}}</div>
-      <div class="col-sm-4"><span class="font-weight-bold text-info">Aadhar Number: :</span> {{student.aadharNumber}}
-      </div>
+      <div class="col-sm-4"><span class="font-weight-bold text-info">Maritial Status :</span>
+        {{employee.tcNumber}}</div>
+        <div class="col-sm-4"><span class="font-weight-bold text-info">Partner Name:</span> {{employee.prevSchoolName}}
+        </div>
     </div>
     <div class="row mt-5">
       <div class="col-sm-10"><span class="font-weight-bold text-info">Address(Permanent):</span>{{pAdd.Address}}, {{pAdd.city}},
@@ -96,11 +96,12 @@
           {{cAdd.state}}-{{cAdd.zipCode}}</div>
       </div>
     <div class="row mt-4">
-      <div class="col-sm-4"><span class="font-weight-bold text-info">Sibling ID:</span> {{student.siblingID}}</div>
-      <div class="col-sm-4"><span class="font-weight-bold text-info">Prev School Name:</span> {{student.prevSchoolName}}
+      <div class="col-sm-4"><span class="font-weight-bold text-info">Experience:</span> {{employee.experience}}</div>
+      <div class="col-sm-4"><span class="font-weight-bold text-info">Aadhar Number: :</span> {{employee.aadharNumber}}
       </div>
+      
     </div>
-    <hr>
+    <!-- <hr>
     <div class="mt-2">
       <span class="font-weight-bold text-info">Parent/Gaurdian Details:-</span>
 
@@ -130,7 +131,7 @@
 
           <div class="col-sm-4"><span class="font-weight-bold text-info">E-Mail :</span>: {{parent.email}}</div>
         </div>
-      </div>
+      </div> -->
       <hr>
     </div>
 

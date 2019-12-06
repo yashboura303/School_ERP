@@ -54,15 +54,18 @@ class ParentInfo(models.Model):
     motherOccup = models.CharField(max_length=20)
 
 
+def user_directory_path(instance, filename):
+# file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'student/{0}/{1}'.format(instance.student.admissionNumber, filename)
 
 class Documents(models.Model):
     student = models.OneToOneField(StudentInfo,primary_key=True, on_delete=models.CASCADE)
-    photo = models.FileField( upload_to='uploads/photograph')
-    idProof = models.FileField( upload_to='uploads/idProof')
-    castCertificate = models.FileField( upload_to='uploads/castCertificate')
-    domicile = models.FileField( upload_to='uploads/domicile')
-    tc = models.FileField( upload_to='uploads/tc')
-    characterCertificate = models.FileField( upload_to='uploads/characterCertificate')
+    photo = models.FileField( upload_to=user_directory_path)
+    idProof = models.FileField( upload_to=user_directory_path)
+    castCertificate = models.FileField( upload_to=user_directory_path)
+    domicile = models.FileField( upload_to=user_directory_path)
+    tc = models.FileField( upload_to=user_directory_path)
+    characterCertificate = models.FileField( upload_to=user_directory_path)
 
     def save(self,*args, **kwargs):
         super(Documents,self).save(*args, **kwargs)  
