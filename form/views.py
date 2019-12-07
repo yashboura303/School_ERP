@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from . models import StudentInfo, PermanentAddress,CurrentAddress,ParentInfo,Documents
 from datetime import date
 from django.contrib import messages
+from classform.models import ClassRoom
 # Create your views here.
 def form(request):
         
@@ -42,7 +43,7 @@ def form(request):
         student_info.fullName = fName + lName
         student_info.attributes = attributes
         student_info.dob = sDOB
-        student_info.classSection = classSection
+        # student_info.classSection = classSection
         student_info.permanentAddress = permAdd1 + permAdd2
         student_info.gender = gender
         student_info.mobileNumber = phoneNumber
@@ -55,6 +56,15 @@ def form(request):
         student_info.fName = fathername
         student_info.prevSchoolName = prevschoolname
         student_info.save()
+
+        #class Section check
+        if ClassRoom.objects.filter(classSection__icontains = classSection):
+            student_info.classSection = classSection
+            student_info.save()
+        else:
+            messages.error(request,"Class Doesn't Exist")
+            return redirect('recordForm')
+
 
         permanent = PermanentAddress.objects.create(student = student_info)
         permanent.Address = permAdd1+ permAdd2
@@ -116,6 +126,7 @@ def form(request):
         documents.tc = request.FILES["tc"]
         documents.characterCertificate = request.FILES["charcert"]
         documents.save()
+        messages.success(request,"Record successfully added")
 
     return render(request,'recordForm.html')
 

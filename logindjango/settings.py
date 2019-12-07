@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'form.apps.FormConfig',
     'dashboard.apps.DashboardConfig',
     'employeeform.apps.EmployeeformConfig',
+    'classform.apps.ClassformConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

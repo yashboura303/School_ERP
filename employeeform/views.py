@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .models import Employee, Teacher, EmployeeDocuments,PermanentAddress,CurrentAddress;
 from datetime import date
 from django.contrib import messages
+from classform.models import ClassRoom, ClassRoomStudent
 # Create your views here.
 def form(request):
     if request.method == "POST":
@@ -87,8 +88,17 @@ def form(request):
             teacher.fullName = teacherFirstName + " "+ teacherLastName
             teacher.specialization = specialization
             teacher.designation = designation
-            teacher.classTeacher = classTeacher
             teacher.save()
+            #alert message when class has already a class teacher
+            if ClassRoom.objects.filter(classSection__icontains = classTeacher):
+                messages.error(request, "Class already has a teacher")
+                return redirect('employeeForm')
+            else:
+                teacher.classTeacher = classTeacher
+                teacher.save()
+                classroom = ClassRoom.objects.create(classSection = classTeacher, teacher = teacher)
+                classroom.save()
+
 
         documents = EmployeeDocuments.objects.create(employee = employee)
         documents.IdProof = request.FILES["idproof"]
