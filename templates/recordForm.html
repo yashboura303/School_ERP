@@ -316,42 +316,6 @@
     }
 
 
-
-
-    function printDiv(divName) {
-        //alert('s');
-        var printContents =
-            '<h2>Form Data </h2><div id="print-content"><form><table bordercolor=black  width="30%"><tbody>';
-        var inputs, index;
-
-        inputs = document.getElementsByClassName('form-control');
-        for (index = 0; index < inputs.length - 1; ++index) {
-
-            var fieldName = inputs[index].name.toUpperCase();
-            var fieldValue = inputs[index].value;
-
-            printContents += '<tr><td><label>' + fieldName + '</label></td>';
-            printContents += '<td>' + fieldValue + '</td></tr>';
-        }
-
-        var z = 8;
-        inputs = document.getElementsByTagName('textarea');
-        for (index = 0; index < inputs.length; ++index) {
-
-            var fieldName = document.getElementsByTagName('label')[z].textContent;
-            var fieldValue = inputs[index].value;
-
-            printContents += '<tr><td colspan="2"><label>' + fieldName + '</label><br>' + fieldValue + '</td></tr>';
-            ++z;
-        }
-
-        printContents += '</tbody></table>';
-
-        w = window.open();
-        w.document.write(printContents);
-        w.print();
-        w.close();
-    }
 </script>
 
 

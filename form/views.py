@@ -58,7 +58,7 @@ def form(request):
         student_info.save()
 
         #class Section check
-        if ClassRoom.objects.filter(classSection__icontains = classSection):
+        if ClassRoom.objects.filter(classSection__exact = classSection):
             student_info.classSection = classSection
             student_info.save()
         else:

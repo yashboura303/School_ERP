@@ -1,6 +1,6 @@
 from django.db import models
 from form.models import StudentInfo
-from teacherform.models import Teacher
+from employeeform.models import Teacher
 
 class ClassRoom(models.Model):
     # standard = models.CharField(max_length=50)

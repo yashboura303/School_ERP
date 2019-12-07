@@ -12,4 +12,5 @@ urlpatterns = [
     path('studentForm/',include('form.urls')),
     path('dashboard/',include('dashboard.urls')),
     path('empForm/',include('employeeform.urls')),
+    path('classForm/',include('classform.urls')),
 ]
