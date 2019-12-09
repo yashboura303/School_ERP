@@ -27,6 +27,9 @@ class Employee(models.Model):
     aadharNumber = models.BigIntegerField(default=0)
     empCategory = models.CharField(max_length=20)
 
+    def __str__(self):
+        return f"Name:{self.fullName}| Cateogry:{self.empCategory}| Emp.ID: {self.empID}"
+
 
 class CurrentAddress(models.Model):
     """Currrent Address Table"""
@@ -38,6 +41,9 @@ class CurrentAddress(models.Model):
     zipCode = models.BigIntegerField(default=0)
     state = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"Name:{self.employee.fullName}"
 
 
 class PermanentAddress(models.Model):
@@ -51,6 +57,9 @@ class PermanentAddress(models.Model):
     state = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
 
+    def __str__(self):
+        return f"Name:{self.employee.fullName}"
+
 
 class Teacher(models.Model):
     """ Teacher Table"""
@@ -62,6 +71,9 @@ class Teacher(models.Model):
     specialization = models.CharField(max_length=50)
     designation = models.CharField(max_length=50)
     classTeacher = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"Name:{self.fullName}| Class:{self.classTeacher}| Emp.ID: {self.employee.empID}"
 
 
 def user_directory_path(instance, filename):
@@ -79,6 +91,8 @@ class EmployeeDocuments(models.Model):
     addressProof = models.FileField(upload_to=user_directory_path)
     otherDoc = models.FileField(upload_to=user_directory_path)
 
+    def __str__(self):
+        return f"Name:{self.employee.fullName}"
     def save(self, *args, **kwargs):
         super(EmployeeDocuments, self).save(*args, **kwargs)
 

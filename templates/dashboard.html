@@ -1,7 +1,52 @@
-Hi
-{{user.username}}
-<a href="{% url 'recordForm' %}"> Student Registration Form</a>
-<a href="{% url 'updateInfo' %}"> Student Update Form</a>
-<a href="{% url 'recordForm' %}"> Employee Registration Form</a>
-<a href="{% url 'updateEmpInfo' %}"> Employee Update Form</a>
-<a href="{% url 'addClass' %}"> Add Class</a>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Dashboard</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark py-3">
+        <a class="navbar-brand" href="#">Dashboard</a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'recordForm' %}">Student Registration  </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'updateInfo' %}">Student Update </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'employeeForm'  %}">Employee Registration </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'updateEmpInfo'  %}">Employee Update </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'addClass' %}">Add Class</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'attendenceStudent'  %}">Student Attendence</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'attendenceTeacher' %}">Teacher Attendence</a>
+                </li>
+    
+            </ul>
+        </div>
+    </nav>
+    
+<h1 class="m-3 text-center">Hi
+    {{user.username}}</h1>
+  </body>
+</html>
+

@@ -10,7 +10,11 @@ from .models import StudentInfo, PermanentAddress, CurrentAddress, ParentInfo, D
 
 # Create your views here.
 def form(request):
-    """add student info"""
+    """
+    add student info to student and media path for documents
+    input: form values
+
+    """
     if request.method == "POST":
         # Student Details
         s_dob = request.POST["sDOB"]
@@ -132,7 +136,10 @@ def form(request):
 
 
 def update(request):
-    """update student info"""
+    """
+    update student info in student table
+    input: form values
+    """
     if request.method == "POST":
         # Student Details
 
@@ -216,7 +223,11 @@ def update(request):
 
 
 def update_with_data(request, admission_number):
-    "update with actual data already filled in"
+    """
+    update form with actual data already filled in for required student
+    input: admission number of student and form values
+
+    """
     student_info = StudentInfo.objects.get(admissionNumber=(admission_number
                                                             ))
     p_add = PermanentAddress.objects.get(student=student_info)
@@ -227,7 +238,11 @@ def update_with_data(request, admission_number):
 
 
 def print(request, admission_number):
-    """print info"""
+    """
+    print info for student
+    input: admission number of whose data needs to be printed
+    output: prints pdf with student details
+    """
     student_info = StudentInfo.objects.get(admissionNumber=(admission_number
                                                             ))
     p_add = PermanentAddress.objects.get(student=student_info)
@@ -238,7 +253,11 @@ def print(request, admission_number):
 
 
 def search(request):
-    """search students"""
+    """
+    search students
+    input: father's name, admission number,class section and name
+    output: list of students matching search query
+    """
     if request.method == "GET":
 
         students = StudentInfo.objects.all()

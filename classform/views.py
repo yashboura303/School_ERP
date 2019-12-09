@@ -9,7 +9,10 @@ from .models import ClassRoom
 
 
 def addclass(request):
-    """ Add new Class with teacher name"""
+    """ 
+    Add new Class with teacher name
+    input: teacher name and class name
+    """
     if request.method == "POST":
         class_section = request.POST["classSection"]
         teacher = request.POST["teacher"]

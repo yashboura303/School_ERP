@@ -26,6 +26,9 @@ class StudentInfo(models.Model):
     siblingID = models.BigIntegerField(default=0)
     prevSchoolName = models.CharField(max_length=20)
 
+    def __str__(self):
+        return f"Name:{self.fullName} Add.No: {self.admissionNumber} Class:{self.classSection}"
+
 
 class CurrentAddress(models.Model):
     """Currrent Address Table"""
@@ -38,6 +41,9 @@ class CurrentAddress(models.Model):
     state = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
 
+    def __str__(self):
+        return f"Name:{self.student.fullName}"
+
 
 class PermanentAddress(models.Model):
     """Permanent Address Table"""
@@ -49,6 +55,9 @@ class PermanentAddress(models.Model):
     zipCode = models.BigIntegerField(default=0)
     state = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"Name:{self.student.fullName}"
 
 
 class ParentInfo(models.Model):
@@ -68,6 +77,9 @@ class ParentInfo(models.Model):
     motherQual = models.CharField(max_length=30)
     motherOccup = models.CharField(max_length=20)
 
+    def __str__(self):
+        return f"Student:{self.student.fullName} Add.No: {self.student.admissionNumber} Father Name:{self.fatherName}"
+
 
 def user_directory_path(instance, filename):
     """file will be uploaded to given path"""
@@ -84,6 +96,9 @@ class Documents(models.Model):
     domicile = models.FileField(upload_to=user_directory_path)
     tc = models.FileField(upload_to=user_directory_path)
     characterCertificate = models.FileField(upload_to=user_directory_path)
+
+    def __str__(self):
+        return f"Name:{self.student.fullName}"
 
     def save(self, *args, **kwargs):
         super(Documents, self).save(*args, **kwargs)

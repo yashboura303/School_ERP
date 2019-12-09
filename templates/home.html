@@ -3,24 +3,23 @@
 
 {% block content %}
 
-		<div class="container-fluid">
-			<h2 class="text-center">Django Authentication</h2>
-			{% if user.is_authenticated %}
+<div class="container-fluid">
+	<h2 class="text-center">Django Authentication</h2>
+	{% if user.is_authenticated %}
 
-  			Hi {{ user.username }}!
-		<a class="nav-item nav-link text-dark"
-            href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+	Hi {{ user.username }}!
+	<a class="nav-item nav-link text-dark" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
 
-        	<form id="logout" method="POST" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <input type="hidden" />
-          </form>
-			{% else %}
-  	<p class="text-danger">You are not logged in</p>
-  		<a href="{% url 'login' %}" class="text-dark">Login</a>
-  		<a href="{% url 'signup' %}" class="text-dark">Sign Up</a>
-		</div>
+	<form id="logout" method="POST" action="{% url 'logout' %}">
+		{% csrf_token %}
+		<input type="hidden" />
+	</form>
+	{% else %}
+	<p class="text-danger">You are not logged in</p>
+	<a href="{% url 'login' %}" class="text-dark">Login</a>
+	<a href="{% url 'signup' %}" class="text-dark">Sign Up</a>
+</div>
 {% endif %}
-		<!--  -->
+<!--  -->
 
 {% endblock %}

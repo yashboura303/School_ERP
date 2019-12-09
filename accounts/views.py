@@ -9,7 +9,10 @@ from accounts.models import UserProfile
 
 
 def login(request):
-    "login user"
+    """
+    login user
+    input: username and password
+    """
     if request.method == 'POST':
 
         user = auth.authenticate(
@@ -28,7 +31,10 @@ def login(request):
 
 
 def signup(request):
-    "signup user"
+    """
+    signup user
+    input: user_type,user_name,password,phone number
+    """
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
             try:

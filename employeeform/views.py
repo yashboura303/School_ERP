@@ -10,7 +10,11 @@ from .models import Employee, Teacher, EmployeeDocuments, PermanentAddress, Curr
 
 # Create your views here.
 def form(request):
-    """add new employee info"""
+    """
+    add new employee info to employee and teacher table and set media path of documents
+    input: form values
+
+    """
     if request.method == "POST":
         # Student Details
         emp_id = request.POST.get("empID")
@@ -120,8 +124,11 @@ def form(request):
     return render(request, 'employee/recordForm.html')
 
 
-def update(request):
-    """update info"""
+def update(request):  
+    """
+    update employee info in employee and teacher table
+    input: form values
+    """
     if request.method == "POST":
         # Student Details
         if not request.POST.get("addmissionnumber"):
@@ -214,7 +221,10 @@ def update(request):
 
 
 def update_with_data(request, emp_id):
-    """update info with stored data already filled in"""
+    """
+    update form with actual data already filled in for required employee
+    input: empID of employee and form values
+    """
     employee = Employee.objects.get(empID=(emp_id))
     p_add = PermanentAddress.objects.get(employee=employee)
     teacher = Teacher.objects.get(employee=employee)
@@ -227,7 +237,11 @@ def update_with_data(request, emp_id):
 
 
 def print(request, emp_id):
-    """print details"""
+    """
+    print info for employee
+    input: empID number of whose data needs to be printed
+    output: prints pdf with employee details
+    """
     employee = Employee.objects.get(empID=emp_id)
     p_add = PermanentAddress.objects.get(employee=employee)
     c_add = CurrentAddress.objects.get(employee=employee)
@@ -239,7 +253,10 @@ def print(request, emp_id):
 
 
 def search(request):
-    """search employees"""
+    """
+    search employees
+    input: employee category, employee id and name
+    output: list of employee matching search query"""
     if request.method == "GET":
 
         employee = Employee.objects.all()
