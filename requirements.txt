@@ -1,0 +1,16 @@
+dj-database-url==0.5.0
+Django==2.2.5
+docutils==0.15.2
+isort==4.3.21
+jmespath==0.9.4
+lazy-object-proxy==1.4.3
+Pillow==6.1.0
+psycopg2==2.8.3
+pylint==2.4.4
+pylint-django==2.0.13
+python-dateutil==2.8.0
+sqlparse==0.3.0
+urllib3==1.25.7
+whitenoise==4.1.4
+wrapt==1.11.2
+mysqlclient==1.4.6

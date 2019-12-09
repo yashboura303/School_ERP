@@ -115,7 +115,6 @@ def form(request):
 def update(request):
     if request.method == "POST":
         # Student Details
-
         if not request.POST.get("addmissionnumber"):
             messages.info(request, 'Enter addmission Number!')
             return redirect('updateInfo.html')

@@ -81,7 +81,8 @@ WSGI_APPLICATION = 'logindjango.wsgi.application'
 
 DATABASES = {
       'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',        # 'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',        
+        # 'ENGINE': 'django.db.backends.mysql',
         'NAME': 'logindjango',
         'USER': 'myprojectuser',
         # 'USER': 'root',
