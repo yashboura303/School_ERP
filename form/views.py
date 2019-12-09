@@ -1,98 +1,98 @@
-from django.shortcuts import render,redirect
-from . models import StudentInfo, PermanentAddress,CurrentAddress,ParentInfo,Documents
+"""
+  Handle student registration part
+"""
 from datetime import date
 from django.contrib import messages
+from django.shortcuts import render, redirect
 from classform.models import ClassRoom
+from .models import StudentInfo, PermanentAddress, CurrentAddress, ParentInfo, Documents
+
+
 # Create your views here.
 def form(request):
-        
+    """add student info"""
     if request.method == "POST":
         # Student Details
-        sDOB = request.POST["sDOB"]
-        sDOB = date(*map(int, sDOB.split('-')))
+        s_dob = request.POST["sDOB"]
+        s_dob = date(*map(int, s_dob.split('-')))
         attributes = request.POST.get("attributes", False)
-        fName = request.POST.get("firstname", False)
-        lName = request.POST.get("lastname", False)
+        f_name = request.POST.get("firstname", False)
+        l_name = request.POST.get("lastname", False)
         gender = request.POST.get("gender", False)
-        sDOB = request.POST.get("sDOB", False)
-        classSection = request.POST.get("classsection", False)
-        addNumber = request.POST.get("addmissionnumber", False)
-        phoneNumber = request.POST.get("phonenumber", False)
-        currentAdd1 = request.POST.get("currentinputAddress", False)
-        currentAdd2 = request.POST.get("currentinputAddress2", False)
-        currentCity = request.POST.get("inputCity", False)
-        currentState = request.POST.get("inputState", False)
-        currentZip = request.POST.get("inputZip", False)
-        permAdd1 = request.POST.get("perminputAddress", False)
-        permAdd2 = request.POST.get("perminputAddress2", False)
-        permCity = request.POST.get("perminputCity", False)
-        permState = request.POST.get("perminputState", False)
-        permZip = request.POST.get("perminputZip", False)
+        class_section = request.POST.get("classsection", False)
+        add_number = request.POST.get("addmissionnumber", False)
+        phone_number = request.POST.get("phone_number", False)
+        current_add1 = request.POST.get("currentinputAddress", False)
+        current_add2 = request.POST.get("currentinputAddress2", False)
+        current_city = request.POST.get("inputCity", False)
+        current_state = request.POST.get("inputState", False)
+        current_zip = request.POST.get("inputZip", False)
+        perm_add1 = request.POST.get("perminputAddress", False)
+        perm_add2 = request.POST.get("perminputAddress2", False)
+        perm_city = request.POST.get("perminputCity", False)
+        perm_state = request.POST.get("perminputState", False)
+        perm_zip = request.POST.get("perminputZip", False)
         religion = request.POST.get("religion", False)
         caste = request.POST.get("caste", False)
-        tcnumber = request.POST.get("tcnumber", False)
+        tc_number = request.POST.get("tcnumber", False)
         anumber = request.POST.get("anumber", False)
         feeCategory = request.POST.get("feeCategory", False)
         siblingid = request.POST.get("siblingid", False)
-        prevschoolname = request.POST.get("prevschoolname", False)
+        prevschool_name = request.POST.get("prevschool_name", False)
         fathername = request.POST.get("fathername", False)
 
-        student_info = StudentInfo.objects.create(admissionNumber = addNumber)
-        student_info.firstName = fName
-        student_info.lastName = lName
-        student_info.fullName = fName + lName
+        student_info = StudentInfo.objects.create(admissionNumber=add_number)
+        student_info.firstName = f_name
+        student_info.lastName = l_name
+        student_info.full_name = f_name + l_name
         student_info.attributes = attributes
-        student_info.dob = sDOB
+        student_info.dob = s_dob
         # student_info.classSection = classSection
-        student_info.permanentAddress = permAdd1 + permAdd2
+        student_info.permanentAddress = perm_add1 + perm_add2
         student_info.gender = gender
-        student_info.mobileNumber = phoneNumber
+        student_info.mobileNumber = phone_number
         student_info.religion = religion
         student_info.caste = caste
-        student_info.tcNumber = tcnumber
+        student_info.tcNumber = tc_number
         student_info.aadharNumber = anumber
         student_info.feeWaiverCategory = feeCategory
         student_info.siblingID = siblingid
-        student_info.fName = fathername
-        student_info.prevSchoolName = prevschoolname
+        student_info.f_name = fathername
+        student_info.prevSchool_name = prevschool_name
         student_info.save()
 
-        #class Section check
-        if ClassRoom.objects.filter(classSection__exact = classSection):
-            student_info.classSection = classSection
+        # class Section check
+        if ClassRoom.objects.filter(classSection__exact=class_section):
+            student_info.classSection = class_section
             student_info.save()
         else:
-            messages.error(request,"Class Doesn't Exist")
+            messages.error(request, "Class Doesn't Exist")
             return redirect('recordForm')
 
+        permanent = PermanentAddress.objects.create(student=student_info)
+        permanent.Address = perm_add1 + perm_add2
+        permanent.Address1 = perm_add1
+        permanent.Address2 = perm_add2
+        permanent.zipCode = perm_zip
+        permanent.state = perm_state
+        permanent.city = perm_city
 
-        permanent = PermanentAddress.objects.create(student = student_info)
-        permanent.Address = permAdd1+ permAdd2
-        permanent.Address1 = permAdd1
-        permanent.Address2 = permAdd2
-        permanent.zipCode = permZip
-        permanent.state = permState
-        permanent.city = permCity
+        current = CurrentAddress.objects.create(student=student_info)
+        current.Address1 = current_add1
+        current.Address = current_add1 + current_add2
+        current.Address2 = current_add2
+        current.zipCode = current_zip
+        current.city = current_city
+        current.state = current_state
 
-        current = CurrentAddress.objects.create(student = student_info)
-        current.Address1 = currentAdd1
-        current.Address = currentAdd1+ currentAdd2
-        current.Address2 = currentAdd2
-        current.zipCode = currentZip
-        current.city = currentCity
-        current.state = currentState
-        
-
-
-        #Parent Details
+        # Parent Details
         pattributes = request.POST.get("pattributes", False)
-        fathername = request.POST.get("fathername", False)
-        mothername = request.POST.get("mothername", False)
-        mDOB = request.POST.get("mDOB", False)
-        fDOB = request.POST.get("fDOB", False)
-        paddmissionnumber = request.POST.get("paddmissionnumber", False)
-        pphonenumber = request.POST.get("pphonenumber", False)
-        alt_pphonenumber = request.POST.get("alt_pphonenumber", False)
+        father_name = request.POST.get("fathername", False)
+        mother_name = request.POST.get("mothername", False)
+        m_dob = request.POST.get("mDOB", False)
+        f_dob = request.POST.get("fDOB", False)
+        pphone_number = request.POST.get("pphone_number", False)
+        alt_pphone_number = request.POST.get("alt_pphone_number", False)
         gname = request.POST.get("gname", False)
         g_qual = request.POST.get("g_qual", False)
         pemail = request.POST.get("pemail", False)
@@ -101,24 +101,24 @@ def form(request):
         g_occup = request.POST.get("g_occup", False)
         mDOB = date(*map(int, mDOB.split('-')))
         fDOB = date(*map(int, fDOB.split('-')))
-        
-        parent_info = ParentInfo.objects.create(student = student_info)
+
+        parent_info = ParentInfo.objects.create(student=student_info)
         parent_info.attributes = pattributes
-        parent_info.fatherName = fathername
-        parent_info.motherName = mothername
-        parent_info.Fatherdob = fDOB
-        parent_info.Motherdob = mDOB
-        parent_info.MobileNumber = pphonenumber
-        parent_info.altMobileNumber = alt_pphonenumber
+        parent_info.fatherName = father_name
+        parent_info.motherName = mother_name
+        parent_info.Fatherdob = f_dob
+        parent_info.Motherdob = m_dob
+        parent_info.MobileNumber = pphone_number
+        parent_info.altMobileNumber = alt_pphone_number
         parent_info.gaurdianName = gname
         parent_info.gaurdianQual = g_qual
         parent_info.guardianOccup = g_occup
         parent_info.email = pemail
         parent_info.motherQual = m_qual
-        parent_info.motherQual = m_occup       
+        parent_info.motherQual = m_occup
         parent_info.save()
 
-        documents = Documents.objects.create(student = student_info)
+        documents = Documents.objects.create(student=student_info)
         documents.idProof = request.FILES["idproof"]
         documents.photo = request.FILES["photgraph"]
         documents.castCertificate = request.FILES["castcert"]
@@ -126,12 +126,13 @@ def form(request):
         documents.tc = request.FILES["tc"]
         documents.characterCertificate = request.FILES["charcert"]
         documents.save()
-        messages.success(request,"Record successfully added")
+        messages.success(request, "Record successfully added")
 
-    return render(request,'recordForm.html')
+    return render(request, 'recordForm.html')
+
 
 def update(request):
-
+    """update student info"""
     if request.method == "POST":
         # Student Details
 
@@ -139,94 +140,128 @@ def update(request):
             messages.info(request, 'Enter addmission Number!')
             return redirect('updateInfo.html')
         else:
-            addNumber = request.POST.get("addmissionnumber")
-            student_info = StudentInfo.objects.get(admissionNumber = int(addNumber))
-            permanent = PermanentAddress.objects.get(admissionNumber = student_info)
-            current = CurrentAddress.objects.get(admissionNumber = student_info)
+            add_number = request.POST.get("addmissionnumber")
+            student_info = StudentInfo.objects.get(
+                admissionNumber=int(add_number))
+            permanent = PermanentAddress.objects.get(
+                admissionNumber=student_info)
+            current = CurrentAddress.objects.get(admissionNumber=student_info)
             sDOB = request.POST.get["sDOB"]
             sDOB = date(*map(int, sDOB.split('-')))
             attributes = request.POST.get("attributes", False)
-            fName = request.POST.get("firstname", student_info.firstName)
-            lName = request.POST.get("lastname", student_info.lastName)
+            f_name = request.POST.get("firstname", student_info.firstName)
+            l_name = request.POST.get("lastname", student_info.lastName)
             gender = request.POST.get("gender", student_info.gender)
             sDOB = request.POST.get("sDOB", student_info.dob)
-            classSection = request.POST.get("classection", student_info.classSection)
-            phoneNumber = request.POST.get("phonenumber", student_info.mobileNumber)
-            currentAdd1 = request.POST.get("currentinputAddress", current.Address)
-            currentAdd2 = request.POST.get("currentinputAddress2", "")
-            currentCity = request.POST.get("inputCity", current.city)
-            currentState = request.POST.get("inputState", current.state)
-            currentZip = request.POST.get("inputZip", current.zipCode)
-            permAdd1 = request.POST.get("perminputAddress",  permanent.Address)
-            permAdd2 = request.POST.get("perminputAddress2", "")
-            permCity = request.POST.get("perminputCity", permanent.city)
-            permState = request.POST.get("perminputState", permanent.state)
-            permZip = request.POST.get("perminputZip", permanent.zipCode)
+            classSection = request.POST.get(
+                "classection", student_info.classSection)
+            phone_number = request.POST.get(
+                "phone_number", student_info.mobileNumber)
+            current_add1 = request.POST.get(
+                "currentinputAddress", current.Address1)
+            current_add2 = request.POST.get(
+                "currentinputAddress2", current.Address2)
+            current_city = request.POST.get("inputCity", current.city)
+            current_state = request.POST.get("inputState", current.state)
+            current_zip = request.POST.get("inputZip", current.zipCode)
+            perm_add1 = request.POST.get(
+                "perminputAddress", permanent.Address1)
+            perm_add2 = request.POST.get(
+                "perminputAddress2", permanent.Address2)
+            perm_city = request.POST.get("perminputCity", permanent.city)
+            perm_state = request.POST.get("perminputState", permanent.state)
+            perm_zip = request.POST.get("perminputZip", permanent.zipCode)
             religion = request.POST.get("religion", student_info.religion)
             caste = request.POST.get("caste", student_info.caste)
-            tcnumber = request.POST.get("tcnumber", student_info.tcNumber)
-            anumber = request.POST.get("anumber", student_info.aadharNumber)
-            feeCategory = request.POST.get("feeCategory", student_info.feeWaiverCategory)
-            siblingid = request.POST.get("siblingid", student_info.siblingID)
-            prevschoolname = request.POST.get("prevschoolname", student_info.prevSchoolName)
+            tc_number = request.POST.get("tcnumber", student_info.tcNumber)
+            a_number = request.POST.get("anumber", student_info.aadharNumber)
+            fee_category = request.POST.get(
+                "feeCategory", student_info.feeWaiverCategory)
+            sibling_id = request.POST.get("siblingid", student_info.siblingID)
+            prevschool_name = request.POST.get(
+                "prevschool_name", student_info.prevSchool_name)
 
-            student_info.firstName = fName
-            student_info.lastName = lName
+            # store current and perm address
+            permanent.Address1 = perm_add1
+            permanent.Address2 = perm_add2
+            permanent.city = perm_city
+            permanent.zipCode = perm_zip
+            permanent.state = perm_state
+
+            current.Address1 = current_add1
+            current.Address2 = current_add2
+            current.city = current_city
+            current.zipCode = current_zip
+            current.state = current_state
+
+            student_info.firstName = f_name
+            student_info.lastName = l_name
             student_info.attributes = attributes
             student_info.dob = sDOB
             student_info.classSection = classSection
-            student_info.permanentAddress = permAdd1 + permAdd2
+            student_info.permanentAddress = perm_add1 + perm_add2
             student_info.gender = gender
-            student_info.mobileNumber = phoneNumber
+            student_info.mobileNumber = phone_number
             student_info.religion = religion
             student_info.caste = caste
-            student_info.tcNumber = tcnumber
-            student_info.aadharNumber = anumber
-            student_info.feeWaiverCategory = feeCategory
-            student_info.siblingID = siblingid
-            student_info.prevSchoolName = prevschoolname
+            student_info.tcNumber = tc_number
+            student_info.aadharNumber = a_number
+            student_info.feeWaiverCategory = fee_category
+            student_info.siblingID = sibling_id
+            student_info.prevSchool_name = prevschool_name
             student_info.save()
             messages.info(request, 'Updated the details')
             return redirect('updateInfo.html')
     return render(request, 'updateInfo.html')
 
-def updateWithData(request,pk):
-    student_info = StudentInfo.objects.get(admissionNumber = (pk))
-    pAdd = PermanentAddress.objects.get(student = student_info)
-    cAdd = CurrentAddress.objects.get(student = student_info)
-    DOB_to_String = str(student_info.dob)
-    return render(request, 'updateInfo.html',{"student":student_info,"pAdd":pAdd,"cAdd":cAdd,"dob":DOB_to_String})
 
-def print(request,pk):
-    student_info = StudentInfo.objects.get(admissionNumber = (pk))
-    pAdd = PermanentAddress.objects.get(student = student_info)
-    cAdd = CurrentAddress.objects.get(student = student_info)
-    parent = ParentInfo.objects.get(student = student_info)
-    return render(request, 'printStudentData.html',{"student":student_info,"pAdd":pAdd,"parent":parent,"cAdd":cAdd} )
+def update_with_data(request, admission_number):
+    "update with actual data already filled in"
+    student_info = StudentInfo.objects.get(admissionNumber=(admission_number
+                                                            ))
+    p_add = PermanentAddress.objects.get(student=student_info)
+    c_add = CurrentAddress.objects.get(student=student_info)
+    DOB_to_String = str(student_info.dob)
+    return render(request, 'updateInfo.html',
+                  {"student": student_info, "pAdd": p_add, "cAdd": c_add, "dob": DOB_to_String})
+
+
+def print(request, admission_number):
+    """print info"""
+    student_info = StudentInfo.objects.get(admissionNumber=(admission_number
+                                                            ))
+    p_add = PermanentAddress.objects.get(student=student_info)
+    c_add = CurrentAddress.objects.get(student=student_info)
+    parent = ParentInfo.objects.get(student=student_info)
+    return render(request, 'printStudentData.html',
+                  {"student": student_info, "pAdd": p_add, "parent": parent, "cAdd": c_add})
+
 
 def search(request):
+    """search students"""
     if request.method == "GET":
 
         students = StudentInfo.objects.all()
         # parentInfo = ParentInfo.objects.all()
-        if "fname" in request.GET:
-            fName = request.GET["fname"]
-            # studentsInfo = studentsInfo.filter(fName__icontains = fName)
-            students = students.filter(parent__fatherName__icontains = fName)
+        if "f_name" in request.GET:
+            f_name = request.GET["f_name"]
+            # studentsInfo = studentsInfo.filter(f_name__icontains = f_name)
+            students = students.filter(parent__fatherName__icontains=f_name)
         if "name" in request.GET:
             name = request.GET["name"]
-            students = students.filter(fullName__icontains = name)
+            students = students.filter(full_name__icontains=name)
         if "classSection" in request.GET:
-            classSection = request.GET["classSection"]
-            students = students.filter(classSection__icontains = classSection)
-        if "addNumber" in request.GET:
-            addNo = request.GET["addNumber"]
-            students = students.filter(admissionNumber__icontains = (addNo))
+            class_section = request.GET["classSection"]
+            students = students.filter(classSection__icontains=class_section)
+        if "add_number" in request.GET:
+            add_no = request.GET["add_number"]
+            students = students.filter(admissionNumber__icontains=(add_no))
             if students:
                 # permAdd = PermanentAddress.objects.filter(admissionNumber = student)
                 # currentAdd = CurrentAddress.objects.get(admissionNumber = student)
-                return render(request, 'searchPage.html',{"students":students})
+                return render(request, 'searchPage.html', {"students": students})
             else:
-                messages.error(request, 'Cant find student with entered detail')
+                messages.error(
+                    request, 'Cant find student with entered detail')
                 return redirect('recordForm')
     return render(request, 'searchPage.html')

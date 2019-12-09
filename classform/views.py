@@ -1,17 +1,22 @@
-from django.shortcuts import render,redirect
-from employeeform.models import Teacher
-from .models import ClassRoom,ClassRoomStudent
+"""
+  Handle class registration part
+"""
 from django.contrib import messages
+from django.shortcuts import render, redirect
+
+from employeeform.models import Teacher
+from .models import ClassRoom
 
 
-def addClass(request):
+def addclass(request):
+    """ Add new Class with teacher name"""
     if request.method == "POST":
-        classSection = request.POST["classSection"]
+        class_section = request.POST["classSection"]
         teacher = request.POST["teacher"]
-        _teacher = Teacher.objects.get(fullName__exact = teacher)
-        classroom = ClassRoom.objects.create(teacher = _teacher, classSection=classSection)
+        _teacher = Teacher.objects.get(fullName__exact=teacher)
+        classroom = ClassRoom.objects.create(teacher=_teacher, classSection=class_section)
         classroom.save()
-        messages.success(request,"Class alloted!")
+        messages.success(request, "Class alloted!")
         return redirect('addClass')
 
     return render(request, 'classform/addclass.html')
