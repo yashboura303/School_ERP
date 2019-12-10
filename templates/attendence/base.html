@@ -17,27 +17,21 @@
     </nav>
     <div class=" container-fluid text-left">
 
-      <div class="row">
   
-          <form class="col-6 w-50" method="GET" action="{% url 'attendenceStudent' %}" >
+          <form class="row" method="GET" action="{% url 'attendenceStudent' %}" >
             {% csrf_token %}
-              <div class="form-group">
+              <div class="form-group col-5">
                   <label for=""> Admission Number</label>
                   <input type="text" class="form-control" name="add_no" id="" aria-describedby="helpId" placeholder="">
               <small id="helpId" class="form-text text-muted">Marks Attendence By Addmisson Number</small>
-              <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-      </form>
-      <form class="col-6 w-50" method="POST" action="{% url 'attendenceStudent' %}">
-          {% csrf_token %}
-          <div class="form-group">
+          <div class="form-group col-5">
               <label for=""> Class Name</label>
               <input type="text" class="form-control" name="class_name" id="" aria-describedby="helpId" placeholder="">
               <small id="helpId" class="form-text text-muted">Marks Attendence class wise</small>
-              <button type="submit" class="btn btn-primary">Submit</button>
           </div>
+          <button type="submit" class="btn btn-primary col-1 m-4">Submit</button>
       </form>
-  </div>
   </div>
     {% block content %}
     {% endblock %}

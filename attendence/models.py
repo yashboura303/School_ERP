@@ -12,7 +12,7 @@ class StudentAttendence(models.Model):
     """
     Student Attendence table
     """
-    student = models.OneToOneField(ClassRoomStudent, on_delete=models.CASCADE)
+    student = models.ForeignKey(ClassRoomStudent, on_delete=models.CASCADE)
     status = models.CharField(max_length=50)
     date = models.DateField()
 
@@ -24,7 +24,7 @@ class TeacherAttendence(models.Model):
     """
     Teacher Attendence Table
     """
-    teacher = models.OneToOneField(Teacher, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     status = models.CharField(max_length=50)
     date = models.DateField()
 

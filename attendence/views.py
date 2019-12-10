@@ -13,11 +13,9 @@ def student_attendence(request):
         if "add_no" in request.GET:
             add_no = request.GET["add_no"]
             students = ClassRoomStudent.objects.filter(student__admissionNumber__icontains=add_no)
-            return render(request, 'attendence/student.html', {"students":students})
-    elif request.method == "POST":
-        if "class_name" in request.POST:
-            class_name = request.POST["class_name"]
-            students = ClassRoomStudent.objects.filter(classRoom__classSection__icontains = class_name)
+        if "class_name" in request.GET:
+            class_name = request.GET["class_name"]
+            students = students.filter(classRoom__classSection__icontains = class_name)
             return render(request, 'attendence/student.html', {"students":students})
     return render(request,'attendence/student.html')
 
