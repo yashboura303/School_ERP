@@ -15,17 +15,17 @@ class ClassRoom(models.Model):
 
 class ClassRoomStudent(models.Model):
     classRoom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
-    rollNumber = models.IntegerField()
+    roll_number = models.IntegerField()
     student = models.OneToOneField(StudentInfo, on_delete=models.CASCADE)
     
     def __str__(self):
-        return f"Class:{self.classRoom}| Student: {self.student.fullName}"
+        return f"Class:{self.classRoom}| Student:{self.student.fullName}"
 
-
-    def save (self):
-        if ClassRoomStudent.objects.filter(classroom = self.classRoom):
-            self.rollNumber = ClassRoomStudent.objects.filter(classRoom=self.classRoom).last().rollNumber + 1
+    def save (self, *args, **kwargs):
+        if len(ClassRoomStudent.objects.filter(classRoom = self.classRoom)) > 0:
+            self.roll_number = ClassRoomStudent.objects.filter(classRoom=self.classRoom).last().roll_number + 1
         else:
-            self.rollNumber = 1
-        return super().save()  
+            self.roll_number = 1
+        return super(ClassRoomStudent, self).save(*args, **kwargs)
+
 

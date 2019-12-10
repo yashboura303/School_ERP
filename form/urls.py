@@ -9,5 +9,5 @@ urlpatterns = [
     path('update', views.update, name="updateInfo"),
     path('search', views.search, name="searchPage"),
     path('update/<int:pk>/', views.update_with_data, name="updateInfoWithData"),
-    path('print/<int:pk>/', views.print, name="printStudentData"),
+    path('print/<int:pk>/', views.printinfo, name="printStudentData"),
 ]

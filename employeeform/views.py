@@ -102,14 +102,16 @@ def form(request):
             teacher.designation = designation
             teacher.save()
             # alert message when class has already a class teacher
-            if ClassRoom.objects.filter(classSection__exact=classTeacher):
+            try:
+                ClassRoom.objects.filter(classSection__exact=classTeacher)
                 messages.error(request, "Class already has a teacher")
                 return redirect('employeeForm')
-            teacher.classTeacher = classTeacher
-            teacher.save()
-            classroom = ClassRoom.objects.create(
-                classSection=classTeacher, teacher=teacher)
-            classroom.save()
+            except:
+                teacher.classTeacher = classTeacher
+                teacher.save()
+                classroom = ClassRoom.objects.create(
+                    classSection=classTeacher, teacher=teacher)
+                classroom.save()
 
         documents = EmployeeDocuments.objects.create(employee=employee)
         documents.IdProof = request.FILES["idproof"]

@@ -4,7 +4,7 @@
 from datetime import date
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from classform.models import ClassRoom
+from classform.models import ClassRoom, ClassRoomStudent
 from .models import StudentInfo, PermanentAddress, CurrentAddress, ParentInfo, Documents
 
 
@@ -44,8 +44,16 @@ def form(request):
         siblingid = request.POST.get("siblingid", False)
         prevschool_name = request.POST.get("prevschool_name", False)
         fathername = request.POST.get("fathername", False)
-
         student_info = StudentInfo.objects.create(admissionNumber=add_number)
+        # class Section check
+        try:
+            class_room = ClassRoom.objects.get(classSection=class_section)
+            student_info.classSection = class_section
+            student_info.save()
+            ClassRoomStudent.objects.create(classRoom=class_room, student=student_info)
+        except:
+            messages.error(request, "Class Doesn't Exist")
+            return redirect('recordForm')
         student_info.firstName = f_name
         student_info.lastName = l_name
         student_info.full_name = f_name + l_name
@@ -65,13 +73,7 @@ def form(request):
         student_info.prevSchool_name = prevschool_name
         student_info.save()
 
-        # class Section check
-        if ClassRoom.objects.filter(classSection__exact=class_section):
-            student_info.classSection = class_section
-            student_info.save()
-        else:
-            messages.error(request, "Class Doesn't Exist")
-            return redirect('recordForm')
+        
 
         permanent = PermanentAddress.objects.create(student=student_info)
         permanent.Address = perm_add1 + perm_add2
@@ -237,7 +239,7 @@ def update_with_data(request, admission_number):
                   {"student": student_info, "pAdd": p_add, "cAdd": c_add, "dob": DOB_to_String})
 
 
-def print(request, admission_number):
+def printinfo(request, admission_number):
     """
     print info for student
     input: admission number of whose data needs to be printed

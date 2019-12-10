@@ -17,9 +17,16 @@ def addclass(request):
         class_section = request.POST["classSection"]
         teacher = request.POST["teacher"]
         _teacher = Teacher.objects.get(fullName__exact=teacher)
-        classroom = ClassRoom.objects.create(teacher=_teacher, classSection=class_section)
-        classroom.save()
-        messages.success(request, "Class alloted!")
+        if _teacher:
+          try:
+            classroom = ClassRoom.objects.create(teacher=_teacher, classSection=class_section)
+          except:
+            messages.error(request, "Class already alloted!")
+            return redirect('addClass')
+          classroom.save()
+          messages.success(request, "Class alloted!")
+          return redirect('addClass')
+        messages.error(request,"Teahcer name not registered")
         return redirect('addClass')
 
     return render(request, 'classform/addclass.html')

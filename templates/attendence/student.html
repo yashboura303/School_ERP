@@ -1,39 +1,16 @@
 {% extends './base.html' %}
 
-{% block title %}Attendece | Student{% endblock %}
+{% block title %}Attendence | Student{% endblock %}
 {% block name %}Student{% endblock %}
 
 {% block content %}
 
-
-<div class=" container-fluid text-left">
-
-    <div class="row">
-
-        <form class="col-6 w-50">
-            
-            <div class="form-group">
-                <label for=""> Admission Number</label>
-                <input type="text" class="form-control" name="add_no" id="" aria-describedby="helpId" placeholder="">
-            <small id="helpId" class="form-text text-muted">Marks Attendence By Addmisson Number</small>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
-    <form class="col-6 w-50">
-        <div class="form-group">
-            <label for=""> Class Name</label>
-            <input type="text" class="form-control" name="class_name" id="" aria-describedby="helpId" placeholder="">
-            <small id="helpId" class="form-text text-muted">Marks Attendence class wise</small>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
-</div>
-</div>
 <div class="container-fluid">
     {% for student in students %}
-        student.rollNumber
-        student.classRoom
-        student.student.fullName
+
+        <p>{{student.roll_number}}</p>
+        <p>{{student.classRoom.classSection}}</p>
+        <p>{{student.student.fullName}}</p>
     {% endfor %}
 </div>
 

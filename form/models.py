@@ -27,7 +27,7 @@ class StudentInfo(models.Model):
     prevSchoolName = models.CharField(max_length=20)
 
     def __str__(self):
-        return f"Name:{self.fullName} Add.No: {self.admissionNumber} Class:{self.classSection}"
+        return f"Name:{self.fullName}| Add.No: {self.admissionNumber}| Class:{self.classSection}"
 
 
 class CurrentAddress(models.Model):
