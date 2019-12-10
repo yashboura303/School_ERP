@@ -17,7 +17,7 @@ class StudentAttendence(models.Model):
     date = models.DateField()
 
     def __str__(self):
-        return f"Name:{self.student.fullName}| Date:{self.date} | Status:{self.status}"
+        return f"Name:{self.student.student.fullName}| Date:{self.date} | Status:{self.status}"
 
 
 class TeacherAttendence(models.Model):
@@ -27,6 +27,12 @@ class TeacherAttendence(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     status = models.CharField(max_length=50)
     date = models.DateField()
+    available_casual_leave = models.IntegerField()
+    available_sick_leave = models.IntegerField()
+    taken_casual_leave = models.IntegerField()
+    taken_sick_leave = models.IntegerField()
+    total_no_of_days_present = models.IntegerField()
+
 
     def __str__(self):
         return f"Name:{self.teacher.fullName}| Date:{self.date} | Status:{self.status}"

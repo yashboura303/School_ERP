@@ -6,12 +6,54 @@
 {% block content %}
 
 <div class="container-fluid">
-    {% for student in students %}
+    <form method="POST" action="{% url 'attendenceStudent' %}">
+            {% csrf_token %}
+        <div class="form-group col-md-3 mt-3 mx-auto">
+                <label for="username" class="font-weight-bold">Select Date:</label>
+                <input type="date" class="form-control" id="" aria-describedby="" name="date">
+            </div>
+    <table class="mb-5 table table-secondary table-striped">
 
-        <p>{{student.roll_number}}</p>
-        <p>{{student.classRoom.classSection}}</p>
-        <p>{{student.student.fullName}}</p>
-    {% endfor %}
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Roll Number</th>
+                <th scope="col">Admission Number</th>
+                <th scope="col">Class Section</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <th scope="row">{{ student.student.fullName}}</th>
+                <td>{{ student.roll_number }}</td>
+                <td>{{ student.student.admissionNumber }}</td>
+                <td>{{ student.classRoom.classSection }}</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name={{student.student.admissionNumber}} id=""
+                                value="present"> Present
+                        </label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name={{student.student.admissionNumber}} id=""
+                                value="absent"> Absent
+                        </label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name={{student.student.admissionNumber}} id=""
+                                value="leave"> Leave
+                        </label>
+                    </div>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+    <button type="submit" class="btn btn-primary my-2">Update Attendence</button>
+</form>
 </div>
 
 {% endblock %}
