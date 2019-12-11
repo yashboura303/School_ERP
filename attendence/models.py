@@ -8,6 +8,8 @@ from classform.models import ClassRoomStudent
 from employeeform.models import Teacher
 
 # Create your models here.
+
+
 class StudentAttendence(models.Model):
     """
     Student Attendence table
@@ -27,12 +29,11 @@ class TeacherAttendence(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     status = models.CharField(max_length=50)
     date = models.DateField()
-    available_casual_leave = models.IntegerField()
-    available_sick_leave = models.IntegerField()
-    taken_casual_leave = models.IntegerField()
-    taken_sick_leave = models.IntegerField()
-    total_no_of_days_present = models.IntegerField()
-
+    available_casual_leave = models.IntegerField(default=10)
+    available_sick_leave = models.IntegerField(default=10)
+    taken_casual_leave = models.IntegerField(default=0)
+    taken_sick_leave = models.IntegerField(default=0)
+    total_no_of_days_present = models.IntegerField(default=0)
 
     def __str__(self):
         return f"Name:{self.teacher.fullName}| Date:{self.date} | Status:{self.status}"

@@ -93,6 +93,7 @@ class EmployeeDocuments(models.Model):
 
     def __str__(self):
         return f"Name:{self.employee.fullName}"
+
     def save(self, *args, **kwargs):
         super(EmployeeDocuments, self).save(*args, **kwargs)
 

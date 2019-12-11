@@ -7,9 +7,7 @@ from . import views
 
 urlpatterns = [
     path('student', views.student_attendence, name="attendenceStudent"),
+    path('piechartStudent', views.student_pie_chart, name="piechartStudent"),
+    path('piechartTeacher', views.teacher_pie_chart, name="piechartTeacher"),
     path('teacher', views.teacher_attendence, name="attendenceTeacher"),
-    # path('update', views., name="updateEmpInfo"),
-    # path('search', views.search, name="empSearchPage"),
-    # path('update/<int:pk>/', views.update_with_data, name="updateEmpData"),
-    # path('print/<int:pk>/', views.print, name="printEmpData"),
 ]

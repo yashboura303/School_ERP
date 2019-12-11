@@ -1,9 +1,70 @@
-{% extends 'base.html' %}
+{% extends './base.html' %}
 
 {% block title %}Attendence | Teacher{% endblock %}
+{% block name %}Teacher{% endblock %}
+{% block url %}{% url 'piechartTeacher' %}{% endblock %}
 
 {% block content %}
+<div class="container">
+    <form class="row" method="GET" action="{% url 'attendenceTeacher' %}">
+        {% csrf_token %}
+        <div class="form-group col-5">
+            <label for=""> EmpID Number</label>
+            <input type="text" class="form-control" name="emp_id" id="" aria-describedby="helpId" placeholder="">
+            <small id="helpId" class="form-text text-muted">Marks Attendence By EmpID Number</small>
+        </div>
+        <div class="form-group col-5">
+            <label for="">Name</label>
+            <input type="text" class="form-control" name="teacher_name" id="" aria-describedby="helpId" placeholder="">
+            <small id="helpId" class="form-text text-muted">Marks Attendence by Name</small>
+        </div>
+        <button type="submit" class="btn btn-primary my-auto">Submit</button>
+    </form>
+</div>
+<div class="container-fluid">
+    <form method="POST" action="{% url 'attendenceTeacher' %}">
+        {% csrf_token %}
+        <div class="form-group col-md-3 mt-3 mx-auto">
+            <label for="username" class="font-weight-bold">Select Date:</label>
+            <input type="date" class="form-control" id="" aria-describedby="" name="date">
+        </div>
+        <table class="mb-5 table table-secondary table-striped">
 
-Teacher
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Emp ID</th>
+                    <th scope="col">Specialization</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teachers %}
+                <tr>
+                    <th scope="row">{{ teacher.fullName}}</th>
+                    <td>{{ teacher.employee.empID }}</td>
+                    <td>{{ teacher.specialization }}</td>
+                    <td>
+                        <div class="form-check form-check-inline">
+
+                            <input class="form-check-input" type="radio" name={{teacher.employee.empID}} id=""
+                                value="present">
+                            <label class="form-check-label">Present</label>
+                            <input class="form-check-input ml-2 " type="radio" name={{teacher.employee.empID}} id=""
+                                value="absent">
+                            <label class="form-check-label">Absent</label>
+                            <input class="form-check-input ml-2" type="radio" name={{teacher.employee.empID}} id=""
+                                value="leave">
+                            <label class="form-check-label">Leave</label>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+        <button type="submit" class="btn btn-primary my-2">Update Attendence</button>
+    </form>
+</div>
 
 {% endblock %}

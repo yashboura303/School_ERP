@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends './base.html' %}
 
 {% block title %}Form{% endblock %}
 
 {% block content %}
 
 
-{% include 'navBar.html' %}
+{% include './navBar.html' %}
 {% include 'message.html' %}
 <div class="container">
 <form class="container w-75" id="myForm" method="POST" action={% url 'updateInfo' %} ></form>

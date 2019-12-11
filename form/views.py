@@ -134,7 +134,7 @@ def form(request):
         documents.save()
         messages.success(request, "Record successfully added")
 
-    return render(request, 'recordForm.html')
+    return render(request, 'form/recordForm.html')
 
 
 def update(request):
@@ -147,7 +147,7 @@ def update(request):
 
         if not request.POST.get("addmissionnumber"):
             messages.info(request, 'Enter addmission Number!')
-            return redirect('updateInfo.html')
+            return redirect('updateInfo')
         else:
             add_number = request.POST.get("addmissionnumber")
             student_info = StudentInfo.objects.get(
@@ -220,8 +220,8 @@ def update(request):
             student_info.prevSchool_name = prevschool_name
             student_info.save()
             messages.info(request, 'Updated the details')
-            return redirect('updateInfo.html')
-    return render(request, 'updateInfo.html')
+            return redirect('updateInfo')
+    return render(request, 'form/updateInfo.html')
 
 
 def update_with_data(request, admission_number):
@@ -235,7 +235,7 @@ def update_with_data(request, admission_number):
     p_add = PermanentAddress.objects.get(student=student_info)
     c_add = CurrentAddress.objects.get(student=student_info)
     DOB_to_String = str(student_info.dob)
-    return render(request, 'updateInfo.html',
+    return render(request, 'form/updateInfo.html',
                   {"student": student_info, "pAdd": p_add, "cAdd": c_add, "dob": DOB_to_String})
 
 
@@ -250,7 +250,7 @@ def printinfo(request, admission_number):
     p_add = PermanentAddress.objects.get(student=student_info)
     c_add = CurrentAddress.objects.get(student=student_info)
     parent = ParentInfo.objects.get(student=student_info)
-    return render(request, 'printStudentData.html',
+    return render(request, 'form/printStudentData.html',
                   {"student": student_info, "pAdd": p_add, "parent": parent, "cAdd": c_add})
 
 
@@ -280,9 +280,9 @@ def search(request):
             if students:
                 # permAdd = PermanentAddress.objects.filter(admissionNumber = student)
                 # currentAdd = CurrentAddress.objects.get(admissionNumber = student)
-                return render(request, 'searchPage.html', {"students": students})
+                return render(request, 'form/searchPage.html', {"students": students})
             else:
                 messages.error(
                     request, 'Cant find student with entered detail')
                 return redirect('recordForm')
-    return render(request, 'searchPage.html')
+    return render(request, 'form/searchPage.html')
