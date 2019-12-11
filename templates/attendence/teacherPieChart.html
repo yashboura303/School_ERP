@@ -1,0 +1,52 @@
+{% extends './base.html' %}
+
+{% block title %}Teacher | Pie Chart{% endblock %}
+{% block name %}Pie Chart{% endblock %}
+
+{% block content %}
+{% include 'message.html' %}
+
+<div class="container">
+
+    <form method="POST" action="{% url 'piechartTeacher' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="">Select Year</label>
+            <select id="year" class="form-control" name="year"></select>
+        </div>
+        <div class="form-group">
+            <label for="">Select Month</label>
+            <select id="month" class="form-control" name="month">
+                <option value='1'>Janaury</option>
+                <option value='2'>February</option>
+                <option value='3'>March</option>
+                <option value='4'>April</option>
+                <option value='5'>May</option>
+                <option value='6'>June</option>
+                <option value='7'>July</option>
+                <option value='8'>August</option>
+                <option value='9'>September</option>
+                <option value='10'>October</option>
+                <option value='11'>November</option>
+                <option value='12'>December</option>
+            </select>
+        </div>
+        <div class="form-group">
+                <label for="">Emp ID Number</label>
+                <input type="text" class="form-control" name="emp_id_no" id="" aria-describedby="helpId" placeholder="">
+              </div>
+        <button type="submit" class="btn btn-primary my-auto">Submit</button>
+        <form>
+</div>
+
+<script>
+    var start = 2000;
+    var end = new Date().getFullYear();
+    var options = "";
+    for (var year = start; year <= end; year++) {
+        options += `<option value = '${year}'>` + year + "</option>";
+    }
+    document.getElementById("year").innerHTML = options;
+</script>
+
+{% endblock %}

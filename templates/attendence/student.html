@@ -1,0 +1,84 @@
+{% extends './base.html' %}
+
+{% block title %}Attendence | Student{% endblock %}
+{% block name %}Student{% endblock %}
+{% block url %}{% url 'piechartStudent' %}{% endblock %}
+
+{% block content %}
+{% include 'message.html' %}
+<div class="container">
+    <form class="row" method="GET" action="{% url 'attendenceStudent' %}">
+        {% csrf_token %}
+        <div class="form-group col-5">
+            <label for=""> Admission Number</label>
+            <input type="text" class="form-control" name="add_no" id="" aria-describedby="helpId" placeholder="">
+            <small id="helpId" class="form-text text-muted">Marks Attendence By Addmisson Number</small>
+        </div>
+        <div class="form-group col-5">
+            <label for=""> Class Name</label>
+            <input type="text" class="form-control" name="class_name" id="" aria-describedby="helpId" placeholder="">
+            <small id="helpId" class="form-text text-muted">Marks Attendence class wise</small>
+        </div>
+        <button type="submit" class="btn btn-primary my-auto">Submit</button>
+    </form>
+</div>
+<div class="container-fluid">
+    <form method="POST" action="{% url 'attendenceStudent' %}">
+        {% csrf_token %}
+        <div class="form-group col-md-3 mt-3 mx-auto">
+            <label for="username" class="font-weight-bold">Select Date:</label>
+            <input type="date" class="form-control" id="date_" aria-describedby="" name="date">
+        </div>
+        <table class="mb-5 table table-secondary table-striped">
+
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Roll Number</th>
+                    <th scope="col">Admission Number</th>
+                    <th scope="col">Class Section</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <th scope="row">{{ student.student.fullName}}</th>
+                    <td>{{ student.roll_number }}</td>
+                    <td>{{ student.student.admissionNumber }}</td>
+                    <td>{{ student.classRoom.classSection }}</td>
+                    <td>
+                        <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name={{student.student.admissionNumber}} id=""
+                                value="present">
+                            <label class="form-check-label">Present</label>
+                            <input class="form-check-input ml-2 " type="radio" name={{student.student.admissionNumber}} id=""
+                                value="absent">
+                            <label class="form-check-label">Absent</label>
+                            <input class="form-check-input ml-2" type="radio" name={{student.student.admissionNumber}} id=""
+                                value="leave">
+                            <label class="form-check-label">Leave</label>
+                            
+                        </div>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+        <button type="submit" class="btn btn-primary my-2">Update Attendence</button>
+    </form>
+</div>
+<script>
+    _date = document.getElementById('date_')
+    _date.addEventListener("input", checkDate);
+    function checkDate(){
+        let d = new Date(_date.value);
+        if (d.getDay() == 0){
+            alert("Selected Date is Sunday!")
+        }
+    }
+   
+</script>
+{% endblock %}
