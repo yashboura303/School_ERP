@@ -22,6 +22,7 @@
         <button type="submit" class="btn btn-primary my-auto">Submit</button>
     </form>
 </div>
+{% if students %}
 <div class="container-fluid">
     <form method="POST" action="{% url 'attendenceStudent' %}">
         {% csrf_token %}
@@ -70,6 +71,7 @@
         <button type="submit" class="btn btn-primary my-2">Update Attendence</button>
     </form>
 </div>
+{% endif %}
 <script>
     _date = document.getElementById('date_')
     _date.addEventListener("input", checkDate);

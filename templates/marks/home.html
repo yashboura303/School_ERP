@@ -4,7 +4,6 @@
 
 <head>
     <title>Marks</title>
-    
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -36,9 +35,18 @@
             <hr>
             <form action="" id="add_subject_form">
                 {% csrf_token %}
-                <div class="form-group">
+               <!--  <div class="form-group">
                     <label for="">Class Room</label>
                     <input type="text" class="form-control" name="" id="class_room" aria-describedby="helpId" placeholder="">
+                </div> -->
+                <div class="form-group">
+                    <label class="pr-1" for="">Class Room:</label>
+                    <select name="class_room" class="form-control mr-2" id="class_room">
+                        <option selected="true" disabled="disabled" value="a">Select</option>
+                        {% for class_room in class_rooms %}
+                        <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="">Subject</label>
@@ -49,11 +57,10 @@
         </div>
     </div>
     <div class="container m-5 text-center">
-            <a href="{% url 'addMarks' %}" class=" btn btn-info p-3 m-4">Go to Add Marks Section</a>
+        <a href="{% url 'addMarks' %}" class=" btn btn-info p-3 m-4">Go to Add Marks Section</a>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="{% static 'marks/js/add_exam_form.js' %}"></script>
     <script>

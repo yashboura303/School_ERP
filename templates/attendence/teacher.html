@@ -21,6 +21,7 @@
         <button type="submit" class="btn btn-primary my-auto">Submit</button>
     </form>
 </div>
+{% if teachers %}
 <div class="container-fluid">
     <form method="POST" action="{% url 'attendenceTeacher' %}">
         {% csrf_token %}
@@ -66,5 +67,5 @@
         <button type="submit" class="btn btn-primary my-2">Update Attendence</button>
     </form>
 </div>
-
+{% endif %}
 {% endblock %}
