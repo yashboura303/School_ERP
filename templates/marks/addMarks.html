@@ -1,0 +1,71 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <title>Add Marks</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    {% include 'message.html' %}
+    <div class="container mt-3">
+        <form method="GET" action="{% url 'addMarks' %}">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="">Class Name</label>
+                    <input type="text" class="form-control" value="{{values.class_name}}" id="" placeholder="" name="class_name" required>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Type of Exam</label>
+                    <input type="text" class="form-control" id=""value="{{values.exam_type}}" placeholder="" name="exam_type" required>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Select Subjects</label>
+                    <input type="text" class="form-control" id=""value="{{values.subject}}" placeholder="" name="subject" required >
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-success ">Submit</button>
+        </form>
+    </div>
+    <div class="container-fluid mt-5">
+        
+    
+    <table class="mb-5 table table-secondary table-striped">
+
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Roll Number</th>
+                    <th scope="col">Admission Number</th>
+                    <th scope="col">Class Section</th>
+                    <th scope="col">Marks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <th scope="row">{{ student.student.fullName}}</th>
+                    <td>{{ student.roll_number }}</td>
+                    <td>{{ student.student.admissionNumber }}</td>
+                    <td>{{ student.classRoom.classSection }}</td>
+                    <td>
+                        <div class="form-row">
+                <div class="form-group col-md-3">
+                    <input type="number" class="form-control" id="" placeholder="" name={{student.student.admissionNumber}} required>
+                </div>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+</div>
+</body>
+
+</html>

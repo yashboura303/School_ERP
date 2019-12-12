@@ -1,13 +1,13 @@
-# """
-# Urls for attendence app
-# """
+"""
+Urls for marks app
+"""
 
-# from django.urls import path
-# from . import views
+from django.urls import path
+from . import views
 
-# urlpatterns = [
-#     path('student', views.student_attendence, name="attendenceStudent"),
-#     path('piechartStudent', views.student_pie_chart, name="piechartStudent"),
-#     path('piechartTeacher', views.teacher_pie_chart, name="piechartTeacher"),
-#     path('teacher', views.teacher_attendence, name="attendenceTeacher"),
-# ]
+urlpatterns = [
+    path('', views.home, name="marksHome"),
+    path('addExamForm', views.add_exam_form, name="addExamForm"),
+    path('addSubjectForm', views.add_subject_form, name="addSubjectForm"),
+    path('addMarks', views.add_marks, name="addMarks"),
+]

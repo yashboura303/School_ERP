@@ -280,7 +280,7 @@ def search(request):
             if students:
                 # permAdd = PermanentAddress.objects.filter(admissionNumber = student)
                 # currentAdd = CurrentAddress.objects.get(admissionNumber = student)
-                return render(request, 'form/searchPage.html', {"students": students})
+                return render(request, 'form/searchPage.html', {"students": students,"values":request.GET})
             else:
                 messages.error(
                     request, 'Cant find student with entered detail')

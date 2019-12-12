@@ -273,7 +273,7 @@ def search(request):
             emp_id = request.GET["empID"]
             employee = employee.filter(empID__icontains=emp_id)
             if employee:
-                return render(request, 'employee/emplSearchPage.html', {"employees": employee})
+                return render(request, 'employee/emplSearchPage.html', {"employees": employee, "values":request.GET})
             messages.error(
                 request, 'Cant find employee with entered detail')
             return redirect('empSearchPage')
