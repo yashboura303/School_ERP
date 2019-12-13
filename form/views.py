@@ -270,7 +270,7 @@ def search(request):
             students = students.filter(parent__fatherName__icontains=f_name)
         if "name" in request.GET:
             name = request.GET["name"]
-            students = students.filter(full_name__icontains=name)
+            students = students.filter(fullName__icontains=name)
         if "classSection" in request.GET:
             class_section = request.GET["classSection"]
             students = students.filter(classSection__icontains=class_section)

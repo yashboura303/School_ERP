@@ -16,23 +16,14 @@
     <div class="container mt-3">
         <form method="GET" action="{% url 'addMarks' %}">
             <div class="form-row">
-                <!--  <div class="form-group col-md-3">
-                    <label for="">Class Name</label>
-                    <input type="text" class="form-control" value="{{values.class_name}}" id="" placeholder="" name="class_name" required>
-                </div> -->
                 <div class="form-group col-md-3">
                     <label class="pr-1" for="">Class Name:</label>
                     <select name="class_name" class="form-control mr-2" id="">
                         <option selected="true" disabled="disabled">Select</option>
                         {% for class_room in class_rooms %}
                         <option value='{{ class_room.classSection }}'
-                        {% if class_room.classSection == values.class_name %}
 
-                            selected
-                        {% endif %}
-
-
-                        >{{ class_room.classSection }}</option>
+                         >{{ class_room.classSection }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -41,20 +32,21 @@
                     <select name="exam_type" class="form-control mr-2" id="">
                         <option selected="true" disabled="disabled">Select</option>
                         {% for exam_type in exam_types %}
-                        <option value='{{ exam_type.examType }}'
-                        {% if  exam_type.examType == values.exam_type %}
-
-                            selected
-                        {% endif %}
-
-                        >{{ exam_type.examType }}</option>
+                        <option value='{{ exam_type.examType }}' 
+                          >{{ exam_type.examType }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                <!-- <div class="form-group col-md-3">
-                    <label for="">Type of Exam</label>
-                    <input type="text" class="form-control" id=""value="{{values.exam_type}}" placeholder="" name="exam_type" required>
-                </div> -->
+                <div class="form-group col-md-3">
+                    <label for="">Name of Exam</label>
+                    <select name="exam_name" class="form-control mr-2" id="">
+                        <option selected="true" disabled="disabled">Select</option>
+                        {% for exam_name in exam_names %}
+                        <option value='{{ exam_name.examName }}' 
+                          >{{ exam_name.examName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
                 <div class="form-group col-md-3">
                     <label for=""> Subject</label>
                     <input type="text" class="form-control" id="" value="{{values.subject}}" placeholder="" name="subject" required>

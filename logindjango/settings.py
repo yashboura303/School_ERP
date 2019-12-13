@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
     'form.apps.FormConfig',
-    'marks.apps.MarksConfig',
+    'markssection.apps.MarkssectionConfig',
     'dashboard.apps.DashboardConfig',
     'employeeform.apps.EmployeeformConfig',
     'classform.apps.ClassformConfig',

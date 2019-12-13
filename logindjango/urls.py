@@ -12,7 +12,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('auth/', include('accounts.urls')),
     path('studentForm/', include('form.urls')),
-    path('marks/', include('marks.urls')),
+    path('marks/', include('markssection.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('empForm/', include('employeeform.urls')),
     path('classForm/', include('classform.urls')),
