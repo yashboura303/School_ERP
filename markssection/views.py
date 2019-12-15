@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import ExamType, Exam, ExamMapping, Marks
+from .models import ExamType, Exam, ExamMapping, Marks, AdditionalSubjectMapping
 from classform.models import ClassRoom, ClassRoomStudent
 from django.http import HttpResponse
 from django.contrib import messages
 
 from django.http import JsonResponse
-# Create your views here.
 
 
 def home(request):
@@ -90,8 +89,6 @@ def add_subject_form(request):
         return HttpResponse('')
 
 
-
-
 def add_marks(request):
 
     exam_types = ExamType.objects.all()
@@ -111,36 +108,72 @@ def add_marks(request):
             request.session["subject"] = subject
         if "exam_name" in request.GET:
             exam_name = request.GET["exam_name"]
-            print("sssss",exam_name)
+            print("sssss", exam_name)
             request.session["exam_name"] = exam_name
             try:
                 students = ClassRoomStudent.objects.filter(
                     classRoom__classSection__icontains=class_name)
                 return render(request, 'marks/addMarks.html', {"students": students,
                                                                "values": request.GET, "exam_types": exam_types,
-                                                               "class_rooms": class_rooms,"exam_names":exam_names})
+                                                               "class_rooms": class_rooms, "exam_names": exam_names})
             except:
                 messages.error(request, "Class doesn't exist")
                 redirect('addMarks')
 
     if request.method == "POST":
-        # try:
-        classstudents = ClassRoomStudent.objects.filter(
-            classRoom__classSection__exact=request.session["class_name"])
-        exam_type = ExamType.objects.get(
-            examType=request.session["exam_type"])
-        exam_name = Exam.objects.get(
-            examName=request.session["exam_name"])
-        for classroomstudent in classstudents:
-            student_marks = Marks.objects.create(classroomStudent=classroomstudent,
-                                                 examType=exam_type,
-                                                 examName = exam_name,
-                                                 marks=request.POST[str(
-                                                     classroomstudent.student.admissionNumber)],
-                                                 subject=request.session["subject"])
-    # except:
-        #     messages.error(request, "Please enter correct info")
-        #     redirect('addMarks')
+        try:
+            classstudents = ClassRoomStudent.objects.filter(
+                classRoom__classSection__exact=request.session["class_name"])
+            exam_type = ExamType.objects.get(
+                examType=request.session["exam_type"])
+            exam_name = Exam.objects.get(
+                examName=request.session["exam_name"])
+            for classroomstudent in classstudents:
+                student_marks = Marks.objects.create(classroomStudent=classroomstudent,
+                                                     examType=exam_type,
+                                                     examName=exam_name,
+                                                     marks=request.POST[str(
+                                                         classroomstudent.student.admissionNumber)],
+                                                     subject=request.session["subject"])
+        except:
+            messages.error(request, "Please enter correct info")
+            redirect('addMarks')
 
     return render(request, 'marks/addMarks.html', {"exam_types": exam_types,
                                                    "class_rooms": class_rooms, "values": request.GET, "exam_names": exam_names})
+
+
+def additional_sub_mapping(request):
+    if request.method == "POST":
+        print(request.POST)
+        if "add_number" in request.POST:
+            add_number = request.POST["add_number"]
+        if "exam_name" in request.POST:
+            exam_name = request.POST["exam_name"]
+        if "exam_type" in request.POST:
+            exam_type = request.POST["exam_type"]
+        if "subject" in request.POST:
+            subject = request.POST["subject"]
+        if "marks" in request.POST:
+            marks = request.POST["marks"]
+
+        _student = ClassRoomStudent.objects.get(
+            student__admissionNumber=add_number)
+        print("sssssss", exam_name)
+        print("sssssss", exam_type)
+        exam_name = Exam.objects.get(examName=exam_name)
+        print(9999999)
+        exam_type = ExamType.objects.get(examType=exam_type)
+        AdditionalSubjectMapping.objects.create(examName=exam_name,
+                                                examType=exam_type,
+                                                classroomStudent=_student,
+                                                marks=marks,
+                                                subject=subject)
+
+        return HttpResponse('')
+
+
+def report_card(request, pk):
+    class_room_student = ClassRoomStudent.objects.get(student__admissionNumber=pk)
+    marks = Marks.objects.filter(classroomStudent=class_room_student)
+    

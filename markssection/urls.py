@@ -11,4 +11,5 @@ urlpatterns = [
     path('addExamType', views.exam_type_form, name="addExamType"),
     path('examMapping', views.exam_mapping, name="examMapping"),
     path('addMarks', views.add_marks, name="addMarks"),
+    path('additional', views.additional_sub_mapping, name="additionalMapping"),
 ]

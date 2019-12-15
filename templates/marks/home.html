@@ -12,12 +12,18 @@
 </head>
 
 <body>
+    <div class="container-fluid py-4 bg-dark">
+        <a class="text-white" href="{% url 'marksHome' %}">Add Exam</a>
+        <a class="text-white mx-md-3" href="{% url 'addMarks' %}">Add Marks</a>
+        <a class="text-white " href="{% url 'addMarks' %}">Add Marks</a>
+    </div>
+
     {% include 'message.html' %}
-    <div class="container-fluid row justify-content-around mt-3 border-bottom border-dark pb-2">
-        <div class="col-md-5 border-right border-dark">
-            <h3>Add Exam</h3>
+    <div class="container-fluid row  justify-content-around mt-3 border-bottom border-dark pb-2">
+        <div class="col-md-5 border-right border-dark ">
+            <h3 class="">Add Exam</h3>
             <hr>
-            <form action="" id="add_exam_form">
+            <form action="" id="add_exam_form" class="">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="">Exam Name</label>
@@ -64,7 +70,8 @@
             </form>
         </div>
     </div>
-    <div class="container m-3">
+    <div class="container m-3 row justify-content-around">
+        <div class="col-md-5">
         <h3 class="text-center">Exam Mapping</h3>
         <hr>
         <form action="" id="exam_mapping">
@@ -102,6 +109,45 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+    </div>
+    <div class="col-md-5">
+        <h3 class="text-center">Additional Subject</h3>
+        <hr>
+        <form action="" id="additional_subject">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="">Admission No.</label>
+                <input type="text" class="form-control" name="" id="add_number" aria-describedby="helpId" placeholder="">
+            </div>
+           <div class="form-group">
+                    <label class="pr-1" for="">Exam Name:</label>
+                    <select name="class_room" class="form-control mr-2" id="additional_subject_exam_name">
+                        <option selected="true" disabled="disabled" value="a">Select</option>
+                        {% for exam_name in exam_names %}
+                        <option value='{{ exam_name.examName }}'>{{ exam_name.examName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            <div class="form-group">
+                <label class="pr-1" for="">Exam Type:</label>
+                <select name="class_room" class="form-control mr-2" id="additional_subject_exam_type">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for exam_type in exam_types %}
+                    <option value='{{ exam_type.examType }}'>{{ exam_type.examType }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Subject</label>
+                <input type="text" class="form-control" name="" id="subject" aria-describedby="helpId" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="">Marks</label>
+                <input type="number" class="form-control" name="" id="marks" aria-describedby="helpId" placeholder="">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="{% static 'marks/js/add_exam_form.js' %}"></script>
@@ -167,6 +213,30 @@
             },
             success: function(e) {
                 alert("Subject added!");
+            },
+            error: function() {
+                alert("Fail");
+            }
+
+        });
+    });
+     $(document).on('submit', '#additional_subject', function(e) {
+
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'additionalMapping' %}',
+            data: {
+                exam_type: $('#additional_subject_exam_type').val(),
+                add_number: $('#add_number').val(),
+                marks: $('#marks').val(),
+                subject:$('#subject').val(),
+                exam_name: $('#additional_subject_exam_name').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+
+            },
+            success: function(e) {
+                alert("Additional Subject added!");
             },
             error: function() {
                 alert("Fail");
