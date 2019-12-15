@@ -1,7 +1,7 @@
-#SchoolERP
+# SchoolERP
 
 
-##System Requirement
+## System Requirement
 
 	sudo apt-get update
 
