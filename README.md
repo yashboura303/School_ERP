@@ -33,15 +33,15 @@
 
 ## Create database 
 
-	For mysql change engine in settings.py/DATABASES
+For mysql change engine in settings.py/DATABASES
 
 	'django.db.backends.mysql'
 
-	For postgresql change engine in settings.py/DATABASES
+For postgresql change engine in settings.py/DATABASES
 
 	'django.db.backends.postgresql_psycopg2'
 
-	Change the user and password according to your database servers
+Change the user and password according to your database servers
 
 	Create new database and set 'NAME' : <database_name>
 
