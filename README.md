@@ -23,13 +23,13 @@
 
 ## Create virtual environment
 
-	mkvirtualenv <project_name>
+	python3 -m venv <project_name>
 
 	source <project_name>/bin/activate
 
 ## Install requirements
 
-	pip install -r requirements.txt
+	pip3 install -r requirements.txt
 
 ## Create database 
 
@@ -47,11 +47,11 @@
 
 
 ## Makemigrations and migrate
-	python manage.py makemigrations
+	python3 manage.py makemigrations
 
-	python manage.py migrate
+	python3 manage.py migrate
 
 ## Start the development server
 
-	python manage.py runserver
+	python3 manage.py runserver
 
