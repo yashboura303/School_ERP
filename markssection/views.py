@@ -11,6 +11,7 @@ from django.http import JsonResponse
 
 matplotlib.use('TkAgg')
 
+
 def home(request):
     context = {
 
@@ -163,10 +164,7 @@ def additional_sub_mapping(request):
 
         _student = ClassRoomStudent.objects.get(
             student__admissionNumber=add_number)
-        print("sssssss", exam_name)
-        print("sssssss", exam_type)
         exam_name = Exam.objects.get(examName=exam_name)
-        print(9999999)
         exam_type = ExamType.objects.get(examType=exam_type)
         AdditionalSubjectMapping.objects.create(examName=exam_name,
                                                 examType=exam_type,
@@ -178,9 +176,10 @@ def additional_sub_mapping(request):
 
 
 def report_card(request, pk):
-    class_room_student = ClassRoomStudent.objects.get(student__admissionNumber=pk)
+    class_room_student = ClassRoomStudent.objects.get(
+        student__admissionNumber=pk)
     marks = Marks.objects.filter(classroomStudent=class_room_student)
-    
+
 
 def report_analysis(request):
     if request.method == 'GET':
@@ -189,7 +188,8 @@ def report_analysis(request):
             add_number = request.GET["add_number"]
         if "term" in request.GET:
             term = request.GET.getlist('term')
-            class_student = ClassRoomStudent.objects.get(student__admissionNumber=add_number)
+            class_student = ClassRoomStudent.objects.get(
+                student__admissionNumber=add_number)
             class_section = class_student.classRoom.classSection
             class_room = ClassRoom.objects.get(classSection=class_section)
             subject_x = []
@@ -199,16 +199,18 @@ def report_analysis(request):
                     subject_x.append(a.subject)
 
             subject_x.sort()
-            print("subjects",subject_x)
+            print("subjects", subject_x)
             try:
                 if 'term1' in term and 'term2' not in term:
-                    marks = Marks.objects.filter(examName__examName='UT-1',classroomStudent=class_student)
+                    marks = Marks.objects.filter(
+                        examName__examName='UT-1', classroomStudent=class_student)
                     ut1_y = []
                     for subject in subject_x:
                         ut1_y.append(marks.get(subject=subject).marks)
 
                     sa_1_y = []
-                    marks = Marks.objects.filter(examName__examName='SA-1',classroomStudent=class_student)
+                    marks = Marks.objects.filter(
+                        examName__examName='SA-1', classroomStudent=class_student)
                     for subject in subject_x:
                         sa_1_y.append(marks.get(subject=subject).marks)
 
@@ -217,9 +219,10 @@ def report_analysis(request):
                     subject_x = np.arange(len(subject_x))
                     plt.xticks(subject_x, subjects)
 
-
-                    plt.bar(subject_x-width, ut1_y, color="#444444", label="UT-1", width=width)
-                    plt.bar(subject_x, sa_1_y, color="#008fd5", label="SA-1", width=width)
+                    plt.bar(subject_x-width, ut1_y, color="#444444",
+                            label="UT-1", width=width)
+                    plt.bar(subject_x, sa_1_y, color="#008fd5",
+                            label="SA-1", width=width)
                     plt.legend()
                     plt.title("Marks of Term 1")
                     plt.xlabel("Subjects")
@@ -228,13 +231,15 @@ def report_analysis(request):
                     plt.show()
 
                 elif 'term2' in term and 'term1' not in term:
-                    marks = Marks.objects.filter(examName__examName='UT-2',classroomStudent=class_student)
+                    marks = Marks.objects.filter(
+                        examName__examName='UT-2', classroomStudent=class_student)
                     ut2_y = []
                     for subject in subject_x:
                         ut2_y.append(marks.get(subject=subject).marks)
 
                     sa_2_y = []
-                    marks = Marks.objects.filter(examName__examName='SA-2',classroomStudent=class_student)
+                    marks = Marks.objects.filter(
+                        examName__examName='SA-2', classroomStudent=class_student)
                     for subject in subject_x:
                         sa_2_y.append(marks.get(subject=subject).marks)
 
@@ -243,9 +248,10 @@ def report_analysis(request):
                     subject_x = np.arange(len(subject_x))
                     plt.xticks(subject_x, subjects)
 
-
-                    plt.bar(subject_x-width, ut2_y, color="#444444", label="UT-2", width=width)
-                    plt.bar(subject_x, sa_2_y, color="#008fd5", label="SA-2", width=width)
+                    plt.bar(subject_x-width, ut2_y, color="#444444",
+                            label="UT-2", width=width)
+                    plt.bar(subject_x, sa_2_y, color="#008fd5",
+                            label="SA-2", width=width)
                     plt.legend()
                     plt.title("Marks of Term 2")
                     plt.xlabel("Subjects")
@@ -254,23 +260,27 @@ def report_analysis(request):
                     plt.show()
 
                 else:
-                    marks = Marks.objects.filter(examName__examName='UT-1',classroomStudent=class_student)
+                    marks = Marks.objects.filter(
+                        examName__examName='UT-1', classroomStudent=class_student)
                     ut1_y = []
                     for subject in subject_x:
                         ut1_y.append(marks.get(subject=subject).marks)
 
                     sa_1_y = []
-                    marks = Marks.objects.filter(examName__examName='SA-1',classroomStudent=class_student)
+                    marks = Marks.objects.filter(
+                        examName__examName='SA-1', classroomStudent=class_student)
                     for subject in subject_x:
                         sa_1_y.append(marks.get(subject=subject).marks)
 
-                    marks = Marks.objects.filter(examName__examName='UT-2',classroomStudent=class_student)
+                    marks = Marks.objects.filter(
+                        examName__examName='UT-2', classroomStudent=class_student)
                     ut2_y = []
                     for subject in subject_x:
                         ut2_y.append(marks.get(subject=subject).marks)
 
                     sa_2_y = []
-                    marks = Marks.objects.filter(examName__examName='SA-2',classroomStudent=class_student)
+                    marks = Marks.objects.filter(
+                        examName__examName='SA-2', classroomStudent=class_student)
                     for subject in subject_x:
                         sa_2_y.append(marks.get(subject=subject).marks)
 
@@ -279,11 +289,14 @@ def report_analysis(request):
                     subject_x = np.arange(len(subject_x))
                     plt.xticks(subject_x, subjects)
 
-
-                    plt.bar(subject_x-width, ut1_y, color="#444444", label="UT-1", width=width,align='center')
-                    plt.bar(subject_x, sa_1_y, color="#008fd5", label="SA-1", width=width,align='center')
-                    plt.bar(subject_x+width, ut2_y, color="#4d6c67", label="UT-2", width=width,align='center')
-                    plt.bar(subject_x+ width+width, sa_2_y, color="#c7ea56", label="SA-2", width=width,align='center')
+                    plt.bar(subject_x-width, ut1_y, color="#444444",
+                            label="UT-1", width=width, align='center')
+                    plt.bar(subject_x, sa_1_y, color="#008fd5",
+                            label="SA-1", width=width, align='center')
+                    plt.bar(subject_x+width, ut2_y, color="#4d6c67",
+                            label="UT-2", width=width, align='center')
+                    plt.bar(subject_x + width+width, sa_2_y, color="#c7ea56",
+                            label="SA-2", width=width, align='center')
                     plt.legend()
                     plt.title("Marks of Term 1 & Term 2")
                     plt.xlabel("Subjects")
@@ -291,15 +304,66 @@ def report_analysis(request):
                     # plt.tight_layout()
                     plt.show()
             except:
-                messages.error(request, "Ensure that marks and subjects are entered properly")
+                messages.error(
+                    request, "Ensure that marks and subjects are entered properly")
                 redirect('reportStudent')
             redirect('reportStudent')
     return render(request, 'marks/studentReport.html')
 
+
 def class_report_analysis(request):
     if request.method == "GET":
-        if "class_room" in request.GET["class_room"]:
+        plt.style.use("fivethirtyeight")
+        if "class_room" in request.GET:
             class_room = request.GET["class_room"]
-            marks = Marks.objects.filter(classroomstudent__classRoom__classSection=class_room)
+            marks = Marks.objects.filter(
+                classroomStudent__classRoom__classSection=class_room)
+            # ut_marks = marks.filter(examName__examName='UT-1') | marks.filter(examName__examName='UT-2')
+            sa_marks = marks.filter(
+                examName__examName='SA-1') | marks.filter(examName__examName='SA-2')
+            pass_students = 0
+            fail_students = 0
+            didnt_appear = 0
+            for sa_mark in sa_marks:
+                if sa_mark.marks >= 33:
+                    pass_students += 1
+                elif sa_mark.marks < 33:
+                    fail_students += 1
+                else:
+                    didnt_appear += 1
+            labels = ['Pass', 'Fail', "Didn't Appear"]
+            slices = [pass_students, fail_students, didnt_appear]
+            plt.pie(slices, labels=labels, startangle=90, autopct='%1.1f%%')
+            plt.title(f"Report for {class_room}")
+            plt.tight_layout()
+            plt.show()
 
-    return render(request, 'marks/classReport.html',{"class_rooms": ClassRoom.objects.all()})
+
+
+            class_room = ClassRoom.objects.get(classSection=class_room)
+            subject_x = []
+            exam_mapping = ExamMapping.objects.filter(classroom=class_room)
+            for a in exam_mapping:
+                if a.subject not in subject_x:
+                    subject_x.append(a.subject)
+
+            subject_x.sort()
+
+            for sub in subject_x:
+
+            highest_marks = 0
+            total_marks = 0
+            avg_marks = 0
+
+            for mark in marks:
+                total_marks+=mark.marks
+                if mark.marks > highest_marks:
+                    highest_marks = mark.marks
+
+
+            bar(subject, highest_marks)
+            bar(subject, min_marks)
+            bar(subject, avg_marks)
+            redirect('reportClass')
+
+    return render(request, 'marks/classReport.html', {"class_rooms": ClassRoom.objects.all()})
