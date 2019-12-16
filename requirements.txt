@@ -14,3 +14,6 @@ urllib3==1.25.7
 whitenoise==4.1.4
 wrapt==1.11.2
 mysqlclient==1.4.6
+matplotlib==3.1.2
+mccabe==0.6.1
+numpy==1.17.4

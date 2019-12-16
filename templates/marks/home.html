@@ -1,23 +1,7 @@
-<!doctype html>
+{% extends './base.html' %}
+
+{% block content %}
 {% load static %}
-<html lang="en">
-
-<head>
-    <title>Marks</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-
-<body>
-    <div class="container-fluid py-4 bg-dark">
-        <a class="text-white" href="{% url 'marksHome' %}">Add Exam</a>
-        <a class="text-white mx-md-3" href="{% url 'addMarks' %}">Add Marks</a>
-        <a class="text-white " href="{% url 'addMarks' %}">Add Marks</a>
-    </div>
-
     {% include 'message.html' %}
     <div class="container-fluid row  justify-content-around mt-3 border-bottom border-dark pb-2">
         <div class="col-md-5 border-right border-dark ">
@@ -248,3 +232,6 @@
 </body>
 
 </html>
+
+
+{% endblock %}

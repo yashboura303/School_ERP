@@ -40,7 +40,7 @@ class Marks(models.Model):
     marks = models.IntegerField()
 
     def __str__(self):
-        return f"{self.classroomStudent.student.fullName} | Exam:{self.examType} | Subject:{self.subject}"
+        return f"{self.classroomStudent.student.fullName} | Exam:{self.examType.examType} {self.examName.examName} | Subject:{self.subject}"
 
 
 class AdditionalSubjectMapping(models.Model):

@@ -1,21 +1,7 @@
-<!doctype html>
-{% load static %}
-<html lang="en">
+{% extends './base.html' %}
 
-<head>
-    <title>Add Marks</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
+{% block content %}
 
-<body>
-    <div class="container-fluid py-4 bg-dark">
-        <a class="text-white" href="{% url 'marksHome' %}">Add Exam</a>
-        <a class="text-white" href="{% url 'addMarks' %}">Add Marks</a>
-    </div>
     {% include 'message.html' %}
     <div class="container mt-3">
         <form method="GET" action="{% url 'addMarks' %}">
@@ -100,3 +86,6 @@
 </body>
 
 </html>
+
+
+{% endblock %}

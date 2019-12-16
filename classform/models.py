@@ -21,7 +21,7 @@ class ClassRoomStudent(models.Model):
     student = models.OneToOneField(StudentInfo, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Class:{self.classRoom}| Student:{self.student.fullName}"
+        return f"Class:{self.classRoom.classSection}| Student:{self.student.fullName}"
 
     def save(self, *args, **kwargs):
         if len(ClassRoomStudent.objects.filter(classRoom=self.classRoom)) > 0:
