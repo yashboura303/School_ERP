@@ -83,7 +83,7 @@
                 <select name="class_room" class="form-control mr-2" id="exam_type">
                     <option selected="true" disabled="disabled" value="a">Select</option>
                     {% for exam_type in exam_types %}
-                    <option value='{{ exam_type.examType }}'>{{ exam_type.examType }}</option>
+                    <option value='{{ exam_type.examType }}'>{{ exam_type.examType }}-{{exam_type.examName}}</option>
                     {% endfor %}
                 </select>
             </div>

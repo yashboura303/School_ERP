@@ -1,12 +1,12 @@
 import matplotlib
 import numpy as np
+from openpyxl import load_workbook
 from matplotlib import pyplot as plt
 from django.shortcuts import render, redirect
 from .models import ExamType, Exam, ExamMapping, Marks, AdditionalSubjectMapping
 from classform.models import ClassRoom, ClassRoomStudent
 from django.http import HttpResponse
 from django.contrib import messages
-
 from django.http import JsonResponse
 
 matplotlib.use('TkAgg')
@@ -70,6 +70,7 @@ def exam_mapping(request):
     Input: Subject, ClassRoom, Exam Name & Type
     """
     if request.method == "POST":
+        print(request.POST)
         if "class_subject" in request.POST:
             class_subject = request.POST["class_subject"]
         if "class_room" in request.POST:
@@ -79,12 +80,12 @@ def exam_mapping(request):
         if "exam_type" in request.POST:
             exam_type = request.POST["exam_type"]
 
+        exam_name = Exam.objects.get(examName=exam_name)
         ExamMapping.objects.create(subject=class_subject,
                                    classroom=ClassRoom.objects.get(
                                        classSection=class_room),
-                                   examName=Exam.objects.get(
-                                       examName=exam_name),
-                                   examType=ExamType.objects.get(examType=exam_type))
+                                   examName=exam_name,
+                                   examType=ExamType.objects.get(examType=exam_type, examName=exam_name))
         return HttpResponse('')
 
 
@@ -127,10 +128,11 @@ def add_marks(request):
         try:
             classstudents = ClassRoomStudent.objects.filter(
                 classRoom__classSection__exact=request.session["class_name"])
-            exam_type = ExamType.objects.get(
-                examType=request.session["exam_type"])
             exam_name = Exam.objects.get(
                 examName=request.session["exam_name"])
+            exam_type = ExamType.objects.get(
+                examType=request.session["exam_type"], examName=exam_name)
+
             for classroomstudent in classstudents:
                 student_marks = Marks.objects.create(classroomStudent=classroomstudent,
                                                      examType=exam_type,
@@ -177,10 +179,88 @@ def additional_sub_mapping(request):
         return HttpResponse('')
 
 
-def report_card(request, pk):
-    class_room_student = ClassRoomStudent.objects.get(
-        student__admissionNumber=pk)
-    marks = Marks.objects.filter(classroomStudent=class_room_student)
+def report_card(request):
+    """
+    Report Card for stduent by searching admission number
+    Issue: Formating of excell sheet get's overlapped
+    """
+    if request.method == "POST":
+        pk = request.POST.get("add_number")
+        if pk:
+            class_room_student = ClassRoomStudent.objects.get(
+                student__admissionNumber=pk)
+            additional_sub = AdditionalSubjectMapping.objects.filter(
+                classroomStudent=class_room_student)[0].subject
+            class_room = class_room_student.classRoom
+            marks = Marks.objects.filter(classroomStudent=class_room_student)
+            subjects = []
+            exam_mapping = ExamMapping.objects.filter(classroom=class_room)
+            # get subjects
+            for a in exam_mapping:
+                if a.subject not in subjects:
+                    subjects.append(a.subject)
+            subjects.sort()
+            # get marks for term1, term2 and final exam
+            term1_marks_list = []
+            exam_name = Exam.objects.get(examName='SA-1')
+            marks_term1 = marks.filter(examName=exam_name)
+            for sub in subjects:
+                term1_marks_list.append(marks_term1.get(subject=sub).marks)
+
+            term1_marks_list.append(AdditionalSubjectMapping.objects.get(
+                subject=additional_sub, classroomStudent=class_room_student, examName=exam_name).marks)
+
+            term2_marks_list = []
+            exam_name = Exam.objects.get(examName='SA-2')
+            marks_term2 = marks.filter(examName=exam_name)
+            for sub in subjects:
+                term2_marks_list.append(marks_term2.get(subject=sub).marks)
+
+            term2_marks_list.append(AdditionalSubjectMapping.objects.get(
+                subject=additional_sub, classroomStudent=class_room_student, examName=exam_name).marks)
+
+            final_term_marks_list = []
+            exam_name = Exam.objects.get(examName='Final')
+            marks_final_term = marks.filter(examName=exam_name)
+            for sub in subjects:
+                final_term_marks_list.append(
+                    marks_final_term.get(subject=sub).marks)
+
+            final_term_marks_list.append(AdditionalSubjectMapping.objects.get(
+                subject=additional_sub, classroomStudent=class_room_student, examName=exam_name).marks)
+
+            subjects.append(additional_sub)
+
+            if "excel" in request.FILES:
+                excel_file = request.FILES["excel"]
+
+                wb = load_workbook(excel_file)
+                sheet = wb.get_sheet_by_name('Sheet1')
+
+                for i in range(len(subjects)):
+                    sheet[f'B{i+9}'].value = subjects[i]
+                    sheet[f'D{i+9}'].value = term1_marks_list[i]
+                    sheet[f'G{i+9}'].value = term2_marks_list[i]
+                    sheet[f'J{i+9}'].value = final_term_marks_list[i]
+
+                sheet.delete_rows(14, 3)
+                sheet['C14'].value = sheet['F14'].value = sheet['I14'].value = len(subjects) * 100
+                sheet['D14'].value = sum(term1_marks_list)
+                sheet['G14'].value = sum(term2_marks_list)
+                sheet['J14'].value = sum(final_term_marks_list)
+
+            
+
+
+
+            print(subjects)
+            print(term1_marks_list)
+            print(term2_marks_list)
+            print(final_term_marks_list)
+
+
+
+    return render(request, 'marks/reportCard.html')
 
 
 def report_analysis(request):

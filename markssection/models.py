@@ -39,6 +39,7 @@ class Marks(models.Model):
     subject = models.CharField(max_length=50)
     marks = models.IntegerField()
 
+
     def __str__(self):
         return f"{self.classroomStudent.student.fullName} | Exam:{self.examType.examType} {self.examName.examName} | Subject:{self.subject}"
 
@@ -50,3 +51,5 @@ class AdditionalSubjectMapping(models.Model):
         ClassRoomStudent, on_delete=models.CASCADE)
     subject = models.CharField(max_length=50)
     marks = models.IntegerField(blank=True, null=True)
+    def __str__(self):
+        return f"{self.classroomStudent.student.fullName} | Exam:{self.examType.examType} {self.examName.examName} | Subject:{self.subject}"

@@ -14,4 +14,5 @@ urlpatterns = [
     path('additional', views.additional_sub_mapping, name="additionalMapping"),
     path('report', views.report_analysis, name="reportStudent"),
     path('reportClass', views.class_report_analysis, name="reportClass"),
+    path('reportCard', views.report_card, name="reportCard"),
 ]
