@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
+      <div>
+          
+      
     <nav class="navbar navbar-expand-md navbar-dark bg-dark py-3">
         <a class="navbar-brand" href="#">Dashboard</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
@@ -18,7 +21,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <!-- <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item ">
                     <a class="nav-link" href="{% url 'recordForm' %}">Student Registration  </a>
                 </li>
@@ -43,13 +46,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'marksHome' %}">Marks</a>
                 </li>
-    
-            </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'homeworkHome' %}">Home Work</a>
+                </li>
+            </ul> -->
         </div>
     </nav>
     
-<h1 class="m-3 text-center">Hi
+<h1 class="m-3 text-center">Hi, 
     {{user.username}}</h1>
+    <div class="container mx-auto m-3 bg-dark p-3">
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'recordForm' %}">Student Registration</a>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'updateInfo' %}">Student Update</a>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'employeeForm' %}">Employee Registration</a>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'updateEmpInfo' %}">Employee Update</a>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'addClass' %}">Add Class</a>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'attendenceStudent' %}">Student Attendence</a>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'attendenceTeacher' %}">Teacher Attendence</a>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'marksHome' %}">Marks </a>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'homeworkHome' %}">Home Work </a>
+    </div>
+</div>
   </body>
 </html>
 

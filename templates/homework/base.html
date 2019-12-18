@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>HomeWork</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+      <nav class="container-fluid bg-dark p-4">
+        <a href="{% url 'homeworkHome' %}" class="text-white mx-2"> Add HomeWork</a>
+        <a href="{% url 'checkHomework' %}" class="text-white mx-2"> Check HomeWork</a>
+      </nav>
+    {% block content %}
+      
+    {% endblock content %}
+  </body>
+</html>

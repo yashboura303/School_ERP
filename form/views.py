@@ -274,8 +274,8 @@ def search(request):
         if "classSection" in request.GET:
             class_section = request.GET["classSection"]
             students = students.filter(classSection__icontains=class_section)
-        if "add_number" in request.GET:
-            add_no = request.GET["add_number"]
+        if "addNumber" in request.GET:
+            add_no = request.GET["addNumber"]
             students = students.filter(admissionNumber__icontains=(add_no))
             if students:
                 # permAdd = PermanentAddress.objects.filter(admissionNumber = student)

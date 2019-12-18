@@ -1,0 +1,21 @@
+{% extends "./base.html" %}
+
+{% block content %}
+    <div class="container mx-auto px-auto m-3">
+        <h3 class="text-center">Notice for {{student.student.fullName}}</h3>
+        <form action="{% url 'noticeStudent' student.student.admissionNumber %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group w-75">
+              <label for="">Notice</label>
+              <textarea class="form-control" name="notice" id="" rows="5"></textarea>
+            </div>
+            <div class="form-group w-50">
+                <label for="noticeFile">Notice File:</label>
+                <input type="file" class="form-control-file no-print " id="homeworkFile"
+                    name="noticeFile">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    {% endblock content %}

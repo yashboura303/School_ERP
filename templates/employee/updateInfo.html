@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'form/base.html' %}
 
 {% block title %}Form{% endblock %}
 
@@ -143,7 +143,7 @@
             <input type="text" class="form-control" id="perminputZip" name="perminputZip" value = {{cAdd.zipCode}}>
         </div>
 <div class="form-row mt-2">
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-5">
         <label class="pr-1" for="exampleFormControlSelect2">Employee Category:</label>
         <select onchange="teacherOption()" name="empCategory" class="form-control mr-2" id="empCategory">
             <option selected="true" value="">Select</option>
@@ -157,7 +157,7 @@
             <option value="principal">Principal</option>
         </select>
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-5">
         <label for="anumber">Aadhar Number:</label>
         <input type="number" class="form-control" id="anumber" name="anumber" alue={{employee.aadharNumber}}>
     </div>
