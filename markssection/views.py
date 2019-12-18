@@ -307,7 +307,6 @@ def report_analysis(request):
                     subjects = subject_x
                     subject_x = np.arange(len(subject_x))
                     plt.xticks(subject_x, subjects)
-
                     plt.bar(subject_x-width, ut1_y, color="#444444",
                             label="UT-1", width=width)
                     plt.bar(subject_x, sa_1_y, color="#008fd5",
@@ -470,6 +469,7 @@ def class_report_analysis(request):
             width = 0.22
             subjects = subject_x
             subject_x = np.arange(len(subject_x))
+            print(subject_x)
             plt.xticks(subject_x, subjects)
             plt.bar(subject_x - width, highest, color="#444444",
                     label="Max Marks", width=width, align='center')

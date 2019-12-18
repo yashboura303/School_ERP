@@ -55,7 +55,23 @@
     
 <h1 class="m-3 text-center">Hi, 
     {{user.username}}</h1>
-    <div class="container mx-auto m-3 bg-dark p-3">
+    <div class="row w-75 mx-auto border border-dark bg-light">
+        <div class="container mx-auto m-3 bg-light p-3 col-md-6">
+            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'recordForm' %}">Student Registration</a>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'updateInfo' %}">Student Update</a>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'employeeForm' %}">Employee Registration</a>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'updateEmpInfo' %}">Employee Update</a>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'addClass' %}">Add Class</a>
+        </div>
+        <div class="container mx-auto m-3 bg-light p-3 col-md-6">
+            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'attendenceStudent' %}">Student Attendence</a>
+            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'attendenceTeacher' %}">Teacher Attendence</a>
+            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'marksHome' %}">Marks </a>
+            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'homeworkHome' %}">Home Work </a>
+            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'noticeHome' %}">Notice </a>
+        </div>
+    </div>
+    <!-- <div class="container mx-auto m-3 bg-dark p-3">
         <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'recordForm' %}">Student Registration</a>
         <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'updateInfo' %}">Student Update</a>
         <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'employeeForm' %}">Employee Registration</a>
@@ -65,7 +81,8 @@
         <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'attendenceTeacher' %}">Teacher Attendence</a>
         <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'marksHome' %}">Marks </a>
         <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'homeworkHome' %}">Home Work </a>
-    </div>
+        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'noticeHome' %}">Notice </a>
+    </div> -->
 </div>
   </body>
 </html>
