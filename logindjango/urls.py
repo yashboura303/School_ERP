@@ -19,4 +19,8 @@ urlpatterns = [
     path('attendence/', include('attendence.urls')),
     path('homework/', include('homework.urls')),
     path('notice/', include('notice.urls')),
+    path('thought/', include('dailythought.urls')),
+    path('newsletter/', include('newsletter.urls')),
+    path('schoolinfo/', include('schoolinfo.urls')),
+    path('holiday/', include('holiday.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

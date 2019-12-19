@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Add Holiday</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+        <h3 class="text-center m-3">Add Holiday </h3>
+        <form action="{% url 'addHoliday' %}" method="get">
+            <div class="form-group">
+              <label for="">Holiday Title</label>
+              <input type="text" class="form-control" name="title" id="" aria-describedby="helpId" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="">Start Date</label>
+                <input type="date" class="form-control" name="start_date" id="" aria-describedby="helpId" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="">End Date</label>
+                <input type="date" class="form-control" name="end_date" id="" aria-describedby="helpId" placeholder="">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+  </body>
+</html>
