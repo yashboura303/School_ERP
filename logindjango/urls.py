@@ -23,4 +23,5 @@ urlpatterns = [
     path('newsletter/', include('newsletter.urls')),
     path('schoolinfo/', include('schoolinfo.urls')),
     path('holiday/', include('holiday.urls')),
+    path('fees/', include('fees.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

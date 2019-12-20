@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'newsletter.apps.NewsletterConfig',
     'schoolinfo.apps.SchoolinfoConfig',
     'holiday.apps.HolidayConfig',
+    'fees.apps.FeesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
