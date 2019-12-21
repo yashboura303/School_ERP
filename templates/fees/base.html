@@ -12,11 +12,14 @@
 </head>
 
 <body>
-    <div class="container-fluid py-4 bg-dark">
+    <div class="container-fluid py-4 bg-dark d-flex justify-content-around">
         <a class="text-white" href="{% url 'feesHome' %}">Fees Home</a>
-        <a class="text-white mx-2" href="{% url 'addFine' %}">Fine Section</a>
+        <a class="text-white" href="{% url 'addFine' %}">Fine Section</a>
         <a class="text-white" href="{% url 'addFeeClass' %}">Add Fee Class</a>
-       
+        <a class="text-white" href="{% url 'addFeeClass' %}">Add Fee Class</a>
+        <a class="text-white" href="{% url 'searchDefaulter' %}">Search Defaulters</a>
+        <a class="text-white" href="{% url 'feeCollectionReport' %}">Fee Collection Report</a>
+        
         <!-- <a class="text-white mx-md-3" href="{% url 'addMarks' %}">Add Marks</a>
         <a class="text-white mx-md-2" href="{% url 'reportStudent' %}">Show Student Report</a>
         <a class="text-white" href="{% url 'reportClass' %}">Show Class Report</a> -->
