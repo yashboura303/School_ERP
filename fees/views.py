@@ -49,6 +49,16 @@ def add_fee_class(request):
             redirect('addFeeClass')
     return render(request, 'fees/addClassFee.html', {"category": FeeCategory.objects.all(), "class_rooms": ClassRoom.objects.all()})
 
+def add_fee_cycle(request):
+    if request.method == 'GET':
+        cycle = request.GET.get("cycle")
+        starting_date = request.GET.get("starting_date")
+        ending_date = request.GET.get("ending_date")
+        starting_date = date(*map(int, starting_date.split('-')))
+        ending_date = date(*map(int, ending_date.split('-')))
+        FeeCycle.objects.create(lastSubmissionDate=ending_date, firstSubmissionDate=starting_date, cycle=cycle)
+
+    return render(request, 'fees/home.html')
 
 def home(request):
     if request.method == 'GET':
@@ -56,6 +66,7 @@ def home(request):
         payment_method = request.GET.get("payment_method")
         reg_no = request.GET.get("register_number")
         months = request.GET.get("months")
+        
         add_number = request.GET.get("add_number") 
         if add_number:   
             classRoom = ClassRoom.objects.get(classSection=classSection)
