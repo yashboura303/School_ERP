@@ -1,6 +1,7 @@
 from django.shortcuts import render
+from django.db.models import Sum
 from classform.models import ClassRoom, ClassRoomStudent
-from fees.models import Fee, FeeCategory, FeeCycle, FeeDiscount, ClassSectionFees
+from fees.models import Fee, FeeCategory, FeeCycle, FeeDiscount, ClassSectionFees, Fine
 
 # Create your views here.
 def search_defaulter(request):
@@ -33,6 +34,7 @@ def search_defaulter(request):
 
     return render(request, 'feereport/defaulterSearch.html')
 
+
 def fee_collection_report(request):
     if request.method == "GET":
         print(request.GET)
@@ -57,3 +59,19 @@ def fee_collection_report(request):
         print(fees)
         return render(request, 'feereport/feeCollectionReport.html',{"fees":fees})
     return render(request, 'feereport/feeCollectionReport.html')
+
+def amount_report(request):
+    if request.method == "GET":
+        month = request.GET.get("month")
+        paid = Fee.objects.filter(submissionDate__month=month).aggregate(Sum('amount'))['amount__sum']
+        fine = Fine.objects.filter(submissionDate__month=month).aggregate(Sum('fine'))['fine__sum']
+        discount_list = []
+        for fee in Fee.objects.filter(submissionDate__month=month):
+            student = fee.student
+            discount_per_student = FeeDiscount.objects.filter(student=student)
+            if discount_per_student:
+                discount = discount_per_student[0].discount * fee.amount * 0.01
+                discount_list.append(discount)
+
+
+

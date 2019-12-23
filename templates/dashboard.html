@@ -1,68 +1,222 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Dashboard</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
-      <div>
-          
-      
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark py-3">
-        <a class="navbar-brand" href="#">Dashboard</a>
-        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavId">
+<head>
+  {% load static %}
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <title>Dashboard</title>
+</head>
+
+<body>
+  <div class="page-wrapper chiller-theme toggled">
+    <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+      <i class="fas fa-bars fa-2x my-auto"></i>
+    </a>
+    <nav id="sidebar" class="sidebar-wrapper">
+      <div class="sidebar-content">
+        <div class="sidebar-brand">
+          <a href="#">DashBoard Menu</a>
+          <div id="close-sidebar">
+            <i class="fas fa-times"></i>
+          </div>
         </div>
+        <div class="sidebar-header">
+          <div class="user-pic">
+            <img class="img-responsive img-rounded"
+              src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+              alt="User picture">
+          </div>
+          <div class="user-info">
+            <span class="user-name">
+              <strong style="text-transform: capitalize;">{{request.user}}</strong>
+            </span>
+            <span class="user-role">Administrator</span>
+            <span class="user-status">
+              <i class="fa fa-circle"></i>
+              <span>Online</span>
+            </span>
+          </div>
+        </div>
+        <div class="sidebar-menu">
+          <ul>
+            <li class="header-menu">
+              <span>General</span>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-user"></i>
+                <span>Employees</span>
+              </a>
+              <div class="sidebar-submenu">
+                <ul>
+                  <li>
+                    <a href="{% url 'employeeForm' %}">Employee Registration
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'updateEmpInfo' %}">Employee Update</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'empSearchPage' %}">Search Employees</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="far fa-user-circle"></i>
+                <span>Students</span>
+              </a>
+              <div class="sidebar-submenu">
+                <ul>
+                  <li>
+                    <a href="{% url 'recordForm' %}">Student Registration</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'updateInfo' %}">Student Update</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'searchPage' %}">Search Students</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-file-alt"></i>
+                <span>Notice & Homework</span>
+              </a>
+              <div class="sidebar-submenu">
+                <ul>
+                  <li>
+                    <a href="{% url 'noticeHome' %}">Notice to Class
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'searchStudent' %}">Notice to Student</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'homeworkHome' %}">Home Work</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-chart-line"></i>
+                <span>Attendence</span>
+              </a>
+              <div class="sidebar-submenu">
+                <ul>
+                  <li>
+                    <a href="{% url 'attendenceStudent' %}">Student Attendence</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'attendenceTeacher' %}">Teacher Attendence</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="header-menu">
+              <span>Others</span>
+            </li>
+            <li>
+              <a href="{% url 'addNewsletter' %}">
+                <i class="fa fa-book"></i>
+                <span>Add Newsletter</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'addThought' %}">
+                <i class="fa fa-quote-left"></i>
+                <span>Add Thought</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'addSchoolInfo' %}">
+                <i class="fa fa-info"></i>
+                <span>Add School Info</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'addHoliday' %}">
+                <i class="fa fa-calendar"></i>
+                <span>Add Holdiay</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- sidebar-menu  -->
+      </div>
+      <!-- sidebar-content  -->
+      <div class="sidebar-footer">
+        <a href="#">
+          <i class="fa fa-cog"></i>
+        </a>
+        <a href="#">
+          <i class="fa fa-power-off"></i>
+        </a>
+      </div>
     </nav>
-<div class="container p-3">
-
-    <h5 class="d-inline font-weight-bold">Today's Thought ~ </h5><p class=" d-inline text-center w-50">
-        {{thought.thought}}
-    </p>
-    <!-- <br> -->
-    {% if news %}
-    {% for n in news  %}
-    <span class="d-block mt-3"><h5 class="d-inline font-weight-bold">Newsletter:</h5><p class=" d-inline text-center w-50">
-        {{n.description}}
-    </p></span>
-    {% endfor %}
+    <!-- sidebar-wrapper  -->
+    <main class="page-content">
+      <div class="container-fluid">
+        <h2>Dashboard</h2>
+        <hr>
    
-    {% endif %}
-</div>
-<h3 class="m-3 text-center">Hi, 
-    {{user.username}}</h1>
-    <div class="row w-75 mx-auto border border-dark bg-light">
-        <div class="container mx-auto m-3 bg-light p-3 col-md-6">
-            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'recordForm' %}">Student Registration</a>
-        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'updateInfo' %}">Student Update</a>
-        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'employeeForm' %}">Employee Registration</a>
-        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'updateEmpInfo' %}">Employee Update</a>
-        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'addClass' %}">Add Class</a>
-        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'attendenceStudent' %}">Student Attendence</a>
-        <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'attendenceTeacher' %}">Teacher Attendence</a>
-        </div>
-        <div class="container mx-auto m-3 bg-light p-3 col-md-6">
-            
-            
-            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'marksHome' %}">Marks </a>
-            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'homeworkHome' %}">Home Work </a>
-            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'noticeHome' %}">Notice </a>
-            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'addThought' %}">Add Thought </a>
-            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'addNewsletter' %}">Add Newsletter </a>
-            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'addSchoolInfo' %}">Add School Info </a>
-            <a  class="d-block text-white my-3  text-success font-weight-bold text-monospace ml-5"href="{% url 'addHoliday' %}">Add Holiday </a>
-        </div>
-    </div>
-</div>
-  </body>
-</html>
+        <h5>Home</h5>
+        <hr>
+        
+      </div>
 
+    </main>
+    <!-- page-content" -->
+  </div>
+  <!-- page-wrapper -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+  <script>
+    $(".sidebar-dropdown > a").click(function () {
+      $(".sidebar-submenu").slideUp(200);
+      if (
+        $(this)
+        .parent()
+        .hasClass("active")
+      ) {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .parent()
+          .removeClass("active");
+      } else {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .next(".sidebar-submenu")
+          .slideDown(200);
+        $(this)
+          .parent()
+          .addClass("active");
+      }
+    });
+
+    $("#close-sidebar").click(function () {
+      $(".page-wrapper").removeClass("toggled");
+    });
+    $("#show-sidebar").click(function () {
+      $(".page-wrapper").addClass("toggled");
+    });
+  </script>
+</body>
+
+</html>

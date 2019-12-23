@@ -6,6 +6,7 @@ class Fine(models.Model):
     fine = models.IntegerField()
     student = models.ForeignKey(ClassRoomStudent, on_delete=models.CASCADE)
     category = models.CharField(max_length=100)
+    submissionDate = models.DateField()
     description = models.TextField()
 	
 

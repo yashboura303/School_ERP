@@ -75,3 +75,15 @@ def home(request):
             Fee.objects.create(regNo=reg_no, student=student, classSection=classRoom, submissionDate=date.today(),monthsPaid=months, payment_method=payment_method )
 
     return render(request, 'fees/home.html', {"class_rooms": ClassRoom.objects.all()})
+
+def fee_discount(request):
+    if request.method =="GET":
+        description = request.GET.get('description')
+        add_number = request.GET.get('add_number')
+        total_off = request.GET.get('total_off')
+        discount = request.GET.get('discount')
+        if discount:
+            student = ClassRoomStudent.objects.get(
+                student__admissionNumber=add_number)
+            FeeDiscount.objects.create(discount=discount,student=student, description=description, total_off=total_off)
+        return render(request, 'fees/home.html')

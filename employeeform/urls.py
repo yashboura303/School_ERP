@@ -8,6 +8,6 @@ urlpatterns = [
     path('', views.form, name="employeeForm"),
     path('update', views.update, name="updateEmpInfo"),
     path('search', views.search, name="empSearchPage"),
-    path('update/<int:pk>/', views.update_with_data, name="updateEmpData"),
-    path('print/<int:pk>/', views.print, name="printEmpData"),
+    path('update/<int:emp_id>/', views.update_with_data, name="updateEmpData"),
+    path('print/<int:emp_id>/', views.print, name="printEmpData"),
 ]
