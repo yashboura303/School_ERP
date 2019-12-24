@@ -291,7 +291,7 @@ def search(request):
 def upload_excel_data(request):
     if request.method == "POST":
         wb = Workbook()
-        wb = load_workbook(request.FILES.get("excel"))
+        wb = wb.load_workbook(request.FILES.get("excel"))
         sheet = wb.get_sheet_by_name('Sheet1')
         i = 2
         while sheet[f"A{i}"] != "":
@@ -337,7 +337,7 @@ def upload_excel_data(request):
             permanent.save()
             current = CurrentAddress.objects.create(student=student_info)
             current.Address1 = sheet[f"AJ{i}"]
-            current.Address = csheet[f"AK{i}"]
+            current.Address = sheet[f"AK{i}"]
             current.Address2 = sheet[f"AL{i}"]
             current.zipCode = sheet[f"AM{i}"]
             current.city = sheet[f"AN{i}"]

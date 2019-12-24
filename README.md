@@ -34,7 +34,7 @@ pip3 install -r requirements.txt
 
 ## Create database 
 
-For mysql change engine in settings.py/DATABASES
+<!-- For mysql change engine in settings.py/DATABASES
 
 	'django.db.backends.mysql'
 
@@ -44,8 +44,10 @@ For postgresql change engine in settings.py/DATABASES
 
 Change the user and password according to your database servers
 
-	Create new database and set 'NAME' : <database_name>
-
+	Create new database and set 'NAME' : <database_name> -->
+```console
+sudo -u postgres psql -f ./setup.sql
+```
 
 ## Makemigrations and migrate
 	
