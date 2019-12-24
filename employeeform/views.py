@@ -227,7 +227,7 @@ def update_with_data(request, emp_id):
     update form with actual data already filled in for required employee
     input: empID of employee and form values
     """
-    employee = Employee.objects.get(empID=(emp_id))
+    employee = Employee.objects.get(empID=emp_id)
     p_add = PermanentAddress.objects.get(employee=employee)
     teacher = Teacher.objects.get(employee=employee)
     c_add = CurrentAddress.objects.get(employee=employee)

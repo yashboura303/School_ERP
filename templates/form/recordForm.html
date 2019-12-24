@@ -10,28 +10,22 @@
         display: none;
     }
 </style>
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
+}
+</style>
 
 {% include './navBar.html' %}
 {% include 'message.html' %}
-
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h2 class="display-5">Search Students</h2>
-        <form class="form-inline my-2 my-lg-0" action="{% url 'searchPage'%}" method="GET">
-            <input class="form-control mr-sm-2" type="search" name="name" placeholder="Name" aria-label="Search"
-                value="{{values.name}}">
-            <input class="form-control mr-sm-2" type="search" name="fname" placeholder="Father's Name"
-                aria-label="Search" value="{{values.fname}}">
-            <input class="form-control mr-sm-2" type="search" name="addNumber" placeholder="Admission Number"
-                aria-label="Search" value="{{values.addNumber}}">
-            <input class="form-control mr-sm-2" type="search" name="classection" placeholder="Class Section"
-                aria-label="Search" value="{{values.classSection}}">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
-</div>
-
-
 
 <form class="container" id="myForm" method="POST" action={% url 'recordForm' %} enctype="multipart/form-data">
     {% csrf_token %}
@@ -68,11 +62,11 @@
             </div>
             <div class="form-group col-md-3">
                 <label for="username">Admission Number:</label>
-                <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber">
+                <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber" onwheel="this.blur()">
             </div>
             <div class="form-group col-md-3">
                 <label for="username">Phone Number:</label>
-                <input type="number" class="form-control" id="phonenumber" name="phonenumber">
+                <input type="number" class="form-control" id="phonenumber" name="phonenumber"onwheel="this.blur()">
             </div>
         </div>
 
@@ -107,7 +101,7 @@
             <input type="text" class="form-control" id="inputState" name="inputState">
         </div>
         <div class="form-group col-md-2">
-            <label for="inputZip">Zip:</label>
+            <label for="inputZip">Pin Code:</label>
             <input type="text" class="form-control" id="inputZip" name="inputZip">
         </div>
     </div>
@@ -139,7 +133,7 @@
             <input type="text" class="form-control" id="perminputState" name="perminputState">
         </div>
         <div class="form-group col-md-2">
-            <label for="inputZip">Zip:</label>
+            <label for="inputZip">Pin Code:</label>
             <input type="text" class="form-control" id="perminputZip" name="perminputZip">
         </div>
     </div>
@@ -286,7 +280,7 @@
 
     <div class="row justify-content-around">
         <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
-        <input type="button" class="col-4 mt-5  container  btn btn-info" onclick="printDiv('myForm')" value="Print">
+        <a href="{% url 'searchPage' %}" class="btn btn-primary col-4 mt-5"> Print </a>
     </div>
 
 </form>
