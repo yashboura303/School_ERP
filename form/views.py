@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from classform.models import ClassRoom, ClassRoomStudent
 from .models import StudentInfo, PermanentAddress, CurrentAddress, ParentInfo, Documents
+from openpyxl import Workbook
 
 
 # Create your views here.
@@ -286,3 +287,60 @@ def search(request):
                     request, 'Cant find student with entered detail')
                 return redirect('recordForm')
     return render(request, 'form/searchPage.html')
+
+def upload_excel_data(request):
+    if request.method == "POST":
+        wb = Workbook()
+        wb = load_workbook(request.FILES.get("excel"))
+        sheet = wb.get_sheet_by_name('Sheet1')
+        i = 2
+        while sheet[f"A{i}"] != "":
+            student_info = StudentInfo.objects.create(admissionNumber=sheet[f"A{i}"])
+            student_info.firstName = sheet[f"B{i}"]
+            student_info.lastName = sheet[f"C{i}"]
+            student_info.full_name = sheet[f"D{i}"]
+            student_info.attributes = sheet[f"E{i}"]
+            student_info.dob = sheet[f"F{i}"]
+            student_info.permanentAddress = sheet[f"G{i}"]
+            student_info.gender = sheet[f"H{i}"]
+            student_info.mobileNumber = sheet[f"I{i}"]
+            student_info.religion = sheet[f"J{i}"]
+            student_info.caste = sheet[f"K{i}"]
+            student_info.tcNumber = sheet[f"L{i}"]
+            student_info.aadharNumber = sheet[f"M{i}"]
+            student_info.feeWaiverCategory = sheet[f"N{i}"]
+            student_info.siblingID = sheet[f"O{i}"]
+            student_info.f_name = sheet[f"P{i}"]
+            student_info.prevSchool_name = sheet[f"Q{i}"]
+            student_info.save()
+            parent_info = ParentInfo.objects.create(student=student_info)
+            parent_info.fatherName = sheet[f"R{i}"]
+            parent_info.motherName = sheet[f"S{i}"]
+            parent_info.Fatherdob = sheet[f"T{i}"]
+            parent_info.Motherdob = sheet[f"U{i}"]
+            parent_info.MobileNumber = sheet[f"V{i}"]
+            parent_info.altMobileNumber = sheet[f"W{i}"]
+            parent_info.gaurdianName = sheet[f"X{i}"]
+            parent_info.gaurdianQual = sheet[f"Y{i}"]
+            parent_info.guardianOccup =sheet[f"Z{i}"] 
+            parent_info.email = sheet[f"AA{i}"]
+            parent_info.motherOccup = sheet[f"AB{i}"]
+            parent_info.motherQual = sheet[f"AC{i}"]
+            parent_info.save()
+            permanent = PermanentAddress.objects.create(student=student_info)
+            permanent.Address = sheet[f"AD{i}"]
+            permanent.Address1 = sheet[f"AE{i}"]
+            permanent.Address2 = sheet[f"AF{i}"]
+            permanent.zipCode = sheet[f"AG{i}"]
+            permanent.state = sheet[f"AH{i}"]
+            permanent.city = sheet[f"AI{i}"]
+            permanent.save()
+            current = CurrentAddress.objects.create(student=student_info)
+            current.Address1 = sheet[f"AJ{i}"]
+            current.Address = csheet[f"AK{i}"]
+            current.Address2 = sheet[f"AL{i}"]
+            current.zipCode = sheet[f"AM{i}"]
+            current.city = sheet[f"AN{i}"]
+            current.state = sheet[f"AO{i}"]
+            current.save()
+    return render(request, 'form/uploadExcelData.html')

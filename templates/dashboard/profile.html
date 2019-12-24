@@ -1,0 +1,55 @@
+{% extends "./base.html" %}
+
+{% block content %}
+
+{% include "message.html" %}
+    <div class="container pt-3 mt-3 w-75">
+        <form method="post" action="{% url 'userProfile' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2 class="text-center mb-2">Update Profile</h2>
+            <div class="form-group profile-pic">
+                <label for="username">Current Picture:-</label>
+                <img src="{{profile.image.url}}" alt="" class="img-responsive img-rounded">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="username">User Name</label>
+                    <input type="text" class="form-control" id="username" aria-describedby="emailHelp" name="username" value="{{profile.user.username }}">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="username">Name</label>
+                    <input type="text" class="form-control" id="first_name" aria-describedby="emailHelp" name="first_name" value="{{profile.fullName }}">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="exampleInputPassword1"> Change Profile Pic</label>
+                    <input type="file" class="form-control" id="" name="profile_picture"
+                    value="{{ profile.image.url }}}">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="username">Phone Number</label>
+                    <input type="number" class="form-control" id="username" aria-describedby="emailHelp" name="phonenumber"value="{{ profile.mobile_no }}">
+                </div>
+            </div>
+            
+            <p class="mt-2"> <strong>Change Password:</strong></p>
+            <div class="form-group w-50">
+                <label for="current_password"> Current Password</label>
+                <input type="password" class="form-control" id="current_password" name="current_password">
+            </div>
+            <div class="form-group w-50">
+                <label for="exampleInputPassword1"> New Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="password1">
+            </div>
+            <div class="form-group w-50">
+                <label for="exampleInputPassword2"> Confirm Password</label>
+                <input type="password" name="password2" class="form-control" id="exampleInputPassword2">
+            </div>
+            <div class="form-group">
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+    {% endblock content %}

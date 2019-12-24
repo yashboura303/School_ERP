@@ -1,0 +1,20 @@
+{% extends "./base.html" %}
+
+{% block content %}
+
+<div class="container-fluid border border-top border-bottom border-success text-center py-3">
+  <h5><i class="fas fa-podcast mr-1"></i><strong>Today's Thought: </strong>{{thought.thought}}</h5>
+</div>
+{% if news %}
+<div class="container-fluid border border-top border-bottom border-success text-center py-3 ">
+  <h4><i class="far fa-newspaper mr-1"></i><strong>Newsletter:</strong>
+    <h4>
+      <!-- <h5> -->
+      {% for n in news  %}
+      <div>{{n.description|safe}}</div>
+      <!-- </h5> -->
+      {% endfor %}
+</div>
+{% endif %}
+</div>
+{% endblock content %}

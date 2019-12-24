@@ -92,20 +92,28 @@ WSGI_APPLICATION = 'logindjango.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'jdmri',
+#         'USER': 'admin',
+#         'PASSWORD': 'admin',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'jdmri',
-        'USER': 'admin',
-        # 'USER': 'root',
-        'PASSWORD': 'admin',
-        # 'PASSWORD': 'yash123boura',
+        'NAME': 'logindjango',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '',
-        # 'PORT': '3306',
     }
 }
+
+
 
 
 # Password validation

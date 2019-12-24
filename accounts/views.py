@@ -27,7 +27,7 @@ def login(request):
         else:
             messages.error(request, 'Invalid credentials')
             return redirect('login')
-    return render(request, 'login.html')
+    return render(request, 'accounts/login.html')
 
 
 def signup(request):
@@ -36,13 +36,14 @@ def signup(request):
     input: user_type,user_name,password,phone number
     """
     if request.method == 'POST':
+        print(request.FILES)
+        print(request.FILES['profile_picture'])
         if request.POST['password1'] == request.POST['password2']:
             try:
                 user = User.objects.get(username=request.POST['username'])
                 if user:
                     messages.error(request, 'Username already exists!')
-                    return render(request, 'signup.html')
-
+                    return render(request, 'accounts/signup.html')
             except User.DoesNotExist:
                 user = User.objects.create_user(
                     request.POST['username'], password=request.POST['password1'],
@@ -50,18 +51,23 @@ def signup(request):
                 auth.login(request, user)
                 user_profile = UserProfile.objects.create(
                     user=request.user)
+                user_profile.fullName = request.POST['name'] 
                 user_profile.mobile_no = request.POST["phonenumber"]
                 user_profile.user_type = request.POST["usertype"]
+                print(request.FILES)
+                user_profile.image = request.FILES['profile_picture']
                 user_profile.save()
-                return redirect('home')
+                return redirect('dashboard')
         else:
             messages.error(request, 'Passwords should match')
-            return render(request, 'signup.html')
-    return render(request, 'signup.html')
+            return render(request, 'accounts/signup.html')
+    return render(request, 'accounts/signup.html')
 
 
 def logout(request):
     "logout user"
-    if request.method == 'POST':
+    if request.method == "POST":
         auth.logout(request)
-        return redirect('home')
+        return render(request, 'home.html')
+    auth.logout(request)
+    return render(request, 'home.html')

@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/css/profile.css' %}">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     crossorigin="anonymous">
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
@@ -20,19 +21,26 @@
     <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
       <i class="fas fa-bars fa-2x my-auto"></i>
     </a>
-    <nav id="sidebar" class="sidebar-wrapper">
+    <nav id="sidebar" class="sidebar-wrapper" style="margin-right: 0px; ">
       <div class="sidebar-content">
         <div class="sidebar-brand">
-          <a href="#">DashBoard Menu</a>
+          <a href="{% url 'dashboard' %}">DashBoard Menu</a>
           <div id="close-sidebar">
             <i class="fas fa-times"></i>
           </div>
         </div>
         <div class="sidebar-header">
           <div class="user-pic">
-            <img class="img-responsive img-rounded"
+            
+              {% if profile.image %}
+              <img class="img-responsive img-rounded"
+              src="{{ profile.image.url }}"
+              alt="User picture">
+              {% else %}
+              <img class="img-responsive img-rounded"
               src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
               alt="User picture">
+              {% endif %}
           </div>
           <div class="user-info">
             <span class="user-name">
@@ -167,20 +175,23 @@
       </div>
     </nav>
     <!-- sidebar-wrapper  -->
-    <main class="page-content">
-      <div class="container-fluid">
-        <h2>Dashboard</h2>
-        <hr>
-   
-        <h5>Home</h5>
-        <hr>
-        
-      </div>
-
+    <main class="page-content" style="padding-top: 0;">
+      <div class="container-fluid" style="padding-left: 0px; padding-right:0px; padding-top:0px;">
+        <nav class="bg-dark d-flex justify-content-around">
+          <h2 class=" text-white">Dashboard</h2>
+            <a href="{% url 'userProfile' %}" class="text-white my-auto ">
+              <h4 class="text-white my-auto">My Profile</h4>
+            </a>
+            <a href="{% url 'logout' %}" class="text-white my-auto">
+              <h4>Sign Out</h4>
+            </a>         
+        </nav>
+        {% block content %}
+          
+        {% endblock content %}
     </main>
     <!-- page-content" -->
   </div>
-  <!-- page-wrapper -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
   </script>
