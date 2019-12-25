@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from classform.models import ClassRoom, ClassRoomStudent
 from .models import StudentInfo, PermanentAddress, CurrentAddress, ParentInfo, Documents
-from openpyxl import Workbook
+from openpyxl import load_workbook
 
 
 # Create your views here.
@@ -57,11 +57,10 @@ def form(request):
             return redirect('recordForm')
         student_info.firstName = f_name
         student_info.lastName = l_name
-        student_info.full_name = f_name + l_name
+        student_info.fullName = f_name + " "+l_name
         student_info.attributes = attributes
         student_info.dob = s_dob
         # student_info.classSection = classSection
-        student_info.permanentAddress = perm_add1 + perm_add2
         student_info.gender = gender
         student_info.mobileNumber = phone_number
         student_info.religion = religion
@@ -70,8 +69,7 @@ def form(request):
         student_info.aadharNumber = anumber
         student_info.feeWaiverCategory = feeCategory
         student_info.siblingID = siblingid
-        student_info.f_name = fathername
-        student_info.prevSchool_name = prevschool_name
+        student_info.prevSchoolName = prevschool_name
         student_info.save()
 
         
@@ -218,7 +216,7 @@ def update(request):
             student_info.aadharNumber = a_number
             student_info.feeWaiverCategory = fee_category
             student_info.siblingID = sibling_id
-            student_info.prevSchool_name = prevschool_name
+            student_info.prevSchoolName = prevschool_name
             student_info.save()
             messages.info(request, 'Updated the details')
             return redirect('updateInfo')
@@ -289,17 +287,16 @@ def search(request):
 
 def upload_excel_data(request):
     if request.method == "POST":
-        wb = Workbook()
-        wb = wb.load_workbook(request.FILES.get("excel"))
+        wb = load_workbook(request.FILES.get("excel"))
         sheet = wb.get_sheet_by_name('Student_Details')
-        permanent = wb.get_sheet_by_name('Permanent_Address')
-        current = wb.get_sheet_by_name('Current_Address')
+        permanent_sheet = wb.get_sheet_by_name('PermanentAddress')
+        current_sheet = wb.get_sheet_by_name('CurrentAddress')
         i = 2
         while sheet[f"A{i}"].value != None:
             student_info = StudentInfo.objects.create(admissionNumber=sheet[f"A{i}"].value)
             student_info.firstName = sheet[f"B{i}"].value
             student_info.lastName = sheet[f"C{i}"].value
-            student_info.full_name = sheet[f"B{i}"].value + " " + sheet[f"C{i}"] .value 
+            student_info.fullName = sheet[f"B{i}"].value + " " + sheet[f"C{i}"] .value 
             # student_info.attributes = sheet[f"E{i}"]
             student_info.dob = sheet[f"D{i}"].value
             # student_info.permanentAddress = sheet[f"G{i}"]
@@ -311,7 +308,7 @@ def upload_excel_data(request):
             student_info.aadharNumber = sheet[f"J{i}"].value
             student_info.feeWaiverCategory = sheet[f"K{i}"].value
             student_info.siblingID = sheet[f"L{i}"].value
-            student_info.prevSchool_name = sheet[f"M{i}"].value
+            student_info.prevSchoolName = sheet[f"M{i}"].value
             student_info.save()
             parent_info = ParentInfo.objects.create(student=student_info)
             parent_info.fatherName = sheet[f"N{i}"].value
@@ -322,28 +319,29 @@ def upload_excel_data(request):
             parent_info.altMobileNumber = sheet[f"S{i}"].value
             # parent_info.gaurdianName = sheet[f"N{i}"]
             parent_info.gaurdianQual = sheet[f"T{i}"].value
-            parent_info.guardianOccup =sheet[f"U{i}"].value .value
+            parent_info.guardianOccup =sheet[f"U{i}"].value
             parent_info.email = sheet[f"V{i}"].value
             parent_info.motherOccup = sheet[f"W{i}"].value
             parent_info.motherQual = sheet[f"X{i}"].value
             parent_info.save()
-            student_info = StudentInfo.objects.get(admissionNumber=permanent[f"A{i}"].value)
+            student_info = StudentInfo.objects.get(admissionNumber=permanent_sheet[f"A{i}"].value)
             permanent = PermanentAddress.objects.create(student=student_info)
-            permanent.Address1 = permanent[f"B{i}"].value
-            permanent.Address2 = permanent[f"C{i}"].value
-            permanent.Address = permanent[f"B{i}"].value + ', '+ permanent[f"C{i}"].value
-            permanent.zipCode = permanent[f"D{i}"].value
-            permanent.state = permanent[f"E{i}"].value
-            permanent.city = permanent[f"F{i}"].value
+            permanent.Address1 = permanent_sheet[f"B{i}"].value
+            permanent.Address2 = permanent_sheet[f"C{i}"].value
+            permanent.Address = permanent_sheet[f"B{i}"].value + ', '+ permanent_sheet[f"C{i}"].value
+            permanent.zipCode = permanent_sheet[f"D{i}"].value
+            permanent.state = permanent_sheet[f"E{i}"].value
+            permanent.city = permanent_sheet[f"F{i}"].value
             permanent.save()
-            student_info = StudentInfo.objects.get(admissionNumber=current[f"A{i}"].value)
+            student_info = StudentInfo.objects.get(admissionNumber=current_sheet[f"A{i}"].value)
             current = CurrentAddress.objects.create(student=student_info)
-            current.Address1 = current[f"B{i}"].value
-            current.Address2 = current[f"C{i}"].value
-            current.Address = current[f"B{i}"].value + ', '+ current[f"C{i}"].value
-            current.zipCode = current[f"D{i}"].value
-            current.city = current[f"E{i}"].value
-            current.state = current[f"F{i}"].value
+            current.Address1 = current_sheet[f"B{i}"].value
+            current.Address2 = current_sheet[f"C{i}"].value
+            current.Address = current_sheet[f"B{i}"].value + ', '+ current_sheet[f"C{i}"].value
+            current.zipCode = current_sheet[f"D{i}"].value
+            current.city = current_sheet[f"E{i}"].value
+            current.state = current_sheet[f"F{i}"].value
             current.save()
+            i+=1
         messages.success(request, 'Data Uploaded Successfully')
     return render(request, 'form/uploadExcelData.html')

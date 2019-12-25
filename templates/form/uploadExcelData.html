@@ -10,6 +10,7 @@ Bulk Add
     
 <h2 class="text-center">Upload Excel File Upload Students Data</h2>
 <form action="{% url 'uploadExcelData' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
     <div class="form-group col-md-3">
                 <label for="">Upload Excell:</label>
                 <input type="file" class="form-control" id="" name="excel">

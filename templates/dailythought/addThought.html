@@ -9,9 +9,10 @@ Add Thought
 
           <form action="{% url 'addThought'  %}" method="GET">
               <div class="form-group">
-                  <label for="">Add Thought</label>
-                  <input type="text" class="form-control" name="thought" id="" aria-describedby="helpId" placeholder="">
+                  <label for=""> <strong>Add Thought</strong></label>
+                  <textarea class="form-control" name="thought" id="" rows="3"></textarea>
                 </div>
+                  
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
             
