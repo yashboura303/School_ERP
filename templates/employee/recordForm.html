@@ -1,6 +1,10 @@
-{% extends 'form/base.html' %}
-{% block title %}Employee | Form{% endblock %}
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Employee Info
+{% endblock %}
 {% block content %}
+
+{% include "message.html" %}
 <style type="text/css" media="print">
 .no-print {
     display: none;
@@ -24,8 +28,6 @@ input[type=number] {
   -moz-appearance:textfield;
 }
 </style>
-{% include './navBar.html' %}
-{% include 'message.html' %}
 <form class="container" id="myForm" method="POST" action="{% url 'employeeForm' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <div>
@@ -68,7 +70,7 @@ input[type=number] {
             </div>
             <div class="form-group col-md-3">
                 <label for="username">Phone Number:</label>
-                <input type="number" class="form-control" id="phone_number" name="phone_number" onwheel="this.blur()">
+                <input type="number" class="form-control" id="phone_number" name="phone_number" min="0" onwheel="this.blur()">
             </div>
         </div>
     </div>
@@ -165,19 +167,17 @@ input[type=number] {
                 <option value="other">Other</option>
             </select>
         </div>
-        <div id="othersss">
-        <div class="form-group col-md-4">
-            <label for="other_input">Others:</label>
-            <input type="text" class="form-control" id="other_input" name="others">
-        </div>
+        <div class="form-group col-md-4 " id="othersss">
+            <label for="other_input">Other:</label>
+            <input type="text" class="form-control" id="other_input" name="other">
         </div>
         <div class="form-group col-md-4">
             <label for="a_number">Aadhar Number:</label>
             <input type="number" class="form-control" id="a_number" name="a_number">
         </div>
     </div>
-    </div>
-    </div>
+    <!-- </div>
+    </div> -->
     <div id="teacher">
         <h3 class="my-4 text-info border-top border-dark pt-4 ">Teacher Details </h3>
         <div class="form-row mt-2 ">
@@ -241,13 +241,12 @@ function teacherOption() {
     otherDiv = document.getElementById('othersss')
     teacherDiv = document.getElementById('teacher')
     if (inputSelect.value == "other") {
-        console.log(99999999);
-        console.log(otherDiv.style.display)
         otherDiv.style.display = "block";
-        console.log(otherDiv.style.display);
+        teacherDiv.style.display = "none";
     }
-    if (inputSelect.value == "teacher") {
+    else if (inputSelect.value == "teacher") {
         teacherDiv.style.display = "block";
+        otherDiv.style.display = "none";
     } 
     else {
         teacherDiv.style.display = "none";

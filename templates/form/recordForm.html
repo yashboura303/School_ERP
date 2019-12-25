@@ -1,8 +1,10 @@
-{% extends './base.html' %}
-
-{% block title %}Form{% endblock %}
-
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Student Info
+{% endblock %}
 {% block content %}
+
+{% include "message.html" %}
 
 
 <style type="text/css" media="print">
@@ -23,9 +25,6 @@ input[type=number] {
   -moz-appearance:textfield;
 }
 </style>
-
-{% include './navBar.html' %}
-{% include 'message.html' %}
 
 <form class="container" id="myForm" method="POST" action={% url 'recordForm' %} enctype="multipart/form-data">
     {% csrf_token %}
@@ -66,7 +65,7 @@ input[type=number] {
             </div>
             <div class="form-group col-md-3">
                 <label for="username">Phone Number:</label>
-                <input type="number" class="form-control" id="phonenumber" name="phonenumber"onwheel="this.blur()">
+                <input min="0" type="number" class="form-control" id="phonenumber" name="phonenumber"onwheel="this.blur()">
             </div>
         </div>
 
@@ -161,9 +160,6 @@ input[type=number] {
             <input type="text" class="form-control" id="prevschoolname" name="prevschoolname">
         </div>
     </div>
-    </div>
-
-    </div>
 
 
 
@@ -183,7 +179,7 @@ input[type=number] {
     <h3 class="my-4 text-info border-top border-dark pt-4">Parent/Gaurdian Details </h3>
     <div class="form-row mt-2">
         <div class="form-group col-md-3">
-            <label for="fathername">Father Name:</label>
+            <label for="fathername">Father/Gaurdian Name:</label>
             <input type="text" class="form-control" id="fathername" aria-describedby="emailHelp" name="fathername">
         </div>
         <div class="form-group col-md-3">
@@ -202,11 +198,11 @@ input[type=number] {
     <div class="form-row mt-3">
         <div class="form-group col-md-3">
             <label for="username">Phone Number:</label>
-            <input type="number" class="form-control" id="phone_number" name="phone_number">
+            <input min="0" type="number" class="form-control" id="phone_number" name="phone_number">
         </div>
         <div class="form-group col-md-3">
             <label for="username">Alternate Phone Number:</label>
-            <input type="number" class="form-control" id="alt_phone_number" name="alt_phone_number">
+            <input min="0" type="number" class="form-control" id="alt_phone_number" name="alt_phone_number">
         </div>
         <div class="form-group col-md-3">
             <label for="prevschoolname">E-Mail:</label>
@@ -215,15 +211,11 @@ input[type=number] {
     </div>
     <div class="form-row mt-3">
         <div class="form-group col-md-4">
-            <label for="mothername">Guardian Name:</label>
-            <input type="text" class="form-control" id="gname" aria-describedby="" name="gname">
-        </div>
-        <div class="form-group col-md-4">
-            <label for="mothername">Guardian Qualification:</label>
+            <label for="mothername">Father/Guardian Qualification:</label>
             <input type="text" class="form-control" id="g_qual" aria-describedby="emailHelp" name="g_qual">
         </div>
         <div class="form-group col-md-4">
-            <label for="mothername">Guardian Occuptation:</label>
+            <label for="mothername">Fahter/Guardian Occuptation:</label>
             <input type="text" class="form-control" id="g_occup" aria-describedby="emailHelp" name="g_occup">
         </div>
     </div>

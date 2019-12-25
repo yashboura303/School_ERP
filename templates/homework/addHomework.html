@@ -1,8 +1,12 @@
-{% extends "./base.html" %}
-
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Homework
+{% endblock %}
 {% block content %}
-<div class="container mx-auto px-auto m-3">
 
+{% include "message.html" %}
+<div class="container mx-auto px-auto m-3">
+    <h3 class="text-center">Add Homework</h3>
     <form action="{% url 'homeworkHome' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group w-50">

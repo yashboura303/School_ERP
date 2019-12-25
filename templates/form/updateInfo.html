@@ -1,12 +1,10 @@
-{% extends './base.html' %}
-
-{% block title %}Form{% endblock %}
-
+{% extends "dashboard/base.html" %}
+{% block title %}
+Update Student Info
+{% endblock %}
 {% block content %}
 
-
-{% include './navBar.html' %}
-{% include 'message.html' %}
+{% include "message.html" %}
 <div class="container">
 <form class="container w-75" id="myForm" method="POST" action={% url 'updateInfo' %} ></form>
 <h3 class="my-2 text-info ">Update Student Details</h3>
@@ -47,7 +45,7 @@
 
 <div class="form-group">
     <label for="username">Phone Number</label>
-    <input type="number" class="form-control" id="phonenumber" name="phonenumber" value = 
+    <input type="number" min="0" class="form-control" id="phonenumber" name="phonenumber" value = 
     {{student.mobileNumber}}>
 </div>
 <div class="form-group">

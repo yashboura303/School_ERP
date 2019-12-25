@@ -54,10 +54,11 @@ def check_homework(request):
         print(len(subjects_in_homework))
         print("subject_x", subject_x)
         print("y_axis", y_axis)
-        color = ["#444444", "#008fd5", "#349912", "#876543", "#642111","#076666"]
+        color = ["#444444", "#008fd5", "#349912",
+                 "#876543", "#642111", "#076666"]
         for i in range(len(subjects_in_homework)):
-            plt.bar(subject_x + width*i, y_axis,color=color[i],align='edge',
-                label=subjects_in_homework[i], width=width-0.02)
+            plt.bar(subject_x + width*i, y_axis, color=color[i], align='edge',
+                    label=subjects_in_homework[i], width=width-0.02)
         # plt.xticks(subject_x, subjects_in_homework)
         plt.xticks([])
 
@@ -74,3 +75,15 @@ def check_homework(request):
         redirect('checkHomework')
 
     return render(request, 'homework/checkHomework.html', context)
+
+
+def syllabus(request):
+    if request.method == "POST":
+        print(request.FILES)
+        print(request.POST)
+        class_section = request.POST.get("class_room")
+        description = request.POST.get("description")
+        document = request.FILES.get("syllabus_file")
+        HomeWork.objects.create(classRoom=ClassRoom.objects.get(classSection=class_section), description=description,
+                                date_published=datetime.today(), document=document)
+    return render(request, 'homework/syllabus.html', {'class_rooms': ClassRoom.objects.all()})

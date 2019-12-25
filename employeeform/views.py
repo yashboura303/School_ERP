@@ -74,6 +74,8 @@ def form(request):
         employee.aadharNumber = a_number
         employee.father_name = father_name
         employee.mother_name = mother_name
+        if emp_category == "other":
+            employee.empCategory = request.POST.get("other", "")
         employee.empCategory = emp_category
         employee.save()
 

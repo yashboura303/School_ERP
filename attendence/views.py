@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from employeeform.models import Teacher
-from classform.models import ClassRoomStudent
+from classform.models import ClassRoomStudent, ClassRoom
 from .models import StudentAttendence, TeacherAttendence
 
 
@@ -24,6 +24,7 @@ def student_attendence(request):
     """
 
     # FOR DISPLAYING STUDENTS
+    classrooms = ClassRoom.objects.all()
     if request.method == "GET":
         if "add_no" in request.GET:
             add_no = request.GET["add_no"]
@@ -34,7 +35,7 @@ def student_attendence(request):
             request.session["class_name"] = class_name
             students = students.filter(
                 classRoom__classSection__icontains=class_name)
-            return render(request, 'attendence/student.html', {"students": students})
+            return render(request, 'attendence/student.html', {"students": students, 'class_rooms':classrooms})
 
     # FOR MARKING ATTENDENCE
     if request.method == "POST":
@@ -55,7 +56,7 @@ def student_attendence(request):
                         classroomstudent.student.admissionNumber)])
                     s.save()
 
-    return render(request, 'attendence/student.html')
+    return render(request, 'attendence/student.html', {'class_rooms':classrooms})
 
 
 def student_pie_chart(request):

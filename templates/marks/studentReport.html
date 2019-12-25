@@ -1,7 +1,10 @@
-{% extends './base.html' %}
+{% extends "dashboard/base.html" %}
+{% block title %}
+Student Report
+{% endblock %}
 {% block content %}
-{% load static %}
-{% include 'message.html' %}
+
+{% include "message.html" %}
 
 <div class="container-fluid">
 	<h3 class="text-center my-3">Select Student and Exam for Bar Graph Report</h3>

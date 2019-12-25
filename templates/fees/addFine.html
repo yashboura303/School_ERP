@@ -1,7 +1,10 @@
-{% extends "./base.html" %}
-
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Marks
+{% endblock %}
 {% block content %}
 
+{% include "message.html" %}
 
 <div class="container">
         <form action="{% url 'addFine' %}" method="GET">

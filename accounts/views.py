@@ -7,7 +7,6 @@ from django.contrib import auth, messages
 from accounts.models import UserProfile
 
 
-
 def login(request):
     """
     login user
@@ -51,7 +50,7 @@ def signup(request):
                 auth.login(request, user)
                 user_profile = UserProfile.objects.create(
                     user=request.user)
-                user_profile.fullName = request.POST['name'] 
+                user_profile.fullName = request.POST['name']
                 user_profile.mobile_no = request.POST["phonenumber"]
                 user_profile.user_type = request.POST["usertype"]
                 print(request.FILES)

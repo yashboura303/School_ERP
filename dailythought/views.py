@@ -5,6 +5,7 @@ import datetime
 def add_thought(request):
     if request.method=="GET":
         thought = request.GET.get("thought")
-        Thoughts.objects.create(thought=thought, timestamp = datetime.datetime.today())
+        if thought:
+        	Thoughts.objects.create(thought=thought, timestamp = datetime.datetime.today())
 
     return render(request, 'dailythought/addThought.html')

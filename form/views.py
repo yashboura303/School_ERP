@@ -100,7 +100,7 @@ def form(request):
         f_dob = request.POST.get("fDOB", False)
         pphone_number = request.POST.get("pphone_number", False)
         alt_pphone_number = request.POST.get("alt_pphone_number", False)
-        gname = request.POST.get("gname", False)
+        # gname = request.POST.get("gname", False)
         g_qual = request.POST.get("g_qual", False)
         pemail = request.POST.get("pemail", False)
         m_qual = request.POST.get("m_qual", False)
@@ -117,7 +117,7 @@ def form(request):
         parent_info.Motherdob = m_dob
         parent_info.MobileNumber = pphone_number
         parent_info.altMobileNumber = alt_pphone_number
-        parent_info.gaurdianName = gname
+        # parent_info.gaurdianName = gname
         parent_info.gaurdianQual = g_qual
         parent_info.guardianOccup = g_occup
         parent_info.email = pemail
@@ -267,7 +267,6 @@ def search(request):
         # parentInfo = ParentInfo.objects.all()
         if "f_name" in request.GET:
             f_name = request.GET["f_name"]
-            # studentsInfo = studentsInfo.filter(f_name__icontains = f_name)
             students = students.filter(parent__fatherName__icontains=f_name)
         if "name" in request.GET:
             name = request.GET["name"]
@@ -292,55 +291,59 @@ def upload_excel_data(request):
     if request.method == "POST":
         wb = Workbook()
         wb = wb.load_workbook(request.FILES.get("excel"))
-        sheet = wb.get_sheet_by_name('Sheet1')
+        sheet = wb.get_sheet_by_name('Student_Details')
+        permanent = wb.get_sheet_by_name('Permanent_Address')
+        current = wb.get_sheet_by_name('Current_Address')
         i = 2
-        while sheet[f"A{i}"] != "":
-            student_info = StudentInfo.objects.create(admissionNumber=sheet[f"A{i}"])
-            student_info.firstName = sheet[f"B{i}"]
-            student_info.lastName = sheet[f"C{i}"]
-            student_info.full_name = sheet[f"D{i}"]
-            student_info.attributes = sheet[f"E{i}"]
-            student_info.dob = sheet[f"F{i}"]
-            student_info.permanentAddress = sheet[f"G{i}"]
-            student_info.gender = sheet[f"H{i}"]
-            student_info.mobileNumber = sheet[f"I{i}"]
-            student_info.religion = sheet[f"J{i}"]
-            student_info.caste = sheet[f"K{i}"]
-            student_info.tcNumber = sheet[f"L{i}"]
-            student_info.aadharNumber = sheet[f"M{i}"]
-            student_info.feeWaiverCategory = sheet[f"N{i}"]
-            student_info.siblingID = sheet[f"O{i}"]
-            student_info.f_name = sheet[f"P{i}"]
-            student_info.prevSchool_name = sheet[f"Q{i}"]
+        while sheet[f"A{i}"].value != None:
+            student_info = StudentInfo.objects.create(admissionNumber=sheet[f"A{i}"].value)
+            student_info.firstName = sheet[f"B{i}"].value
+            student_info.lastName = sheet[f"C{i}"].value
+            student_info.full_name = sheet[f"B{i}"].value + " " + sheet[f"C{i}"] .value 
+            # student_info.attributes = sheet[f"E{i}"]
+            student_info.dob = sheet[f"D{i}"].value
+            # student_info.permanentAddress = sheet[f"G{i}"]
+            student_info.gender = sheet[f"E{i}"].value
+            student_info.mobileNumber = sheet[f"F{i}"].value
+            student_info.religion = sheet[f"G{i}"].value
+            student_info.caste = sheet[f"H{i}"].value
+            student_info.tcNumber = sheet[f"I{i}"].value
+            student_info.aadharNumber = sheet[f"J{i}"].value
+            student_info.feeWaiverCategory = sheet[f"K{i}"].value
+            student_info.siblingID = sheet[f"L{i}"].value
+            student_info.prevSchool_name = sheet[f"M{i}"].value
             student_info.save()
             parent_info = ParentInfo.objects.create(student=student_info)
-            parent_info.fatherName = sheet[f"R{i}"]
-            parent_info.motherName = sheet[f"S{i}"]
-            parent_info.Fatherdob = sheet[f"T{i}"]
-            parent_info.Motherdob = sheet[f"U{i}"]
-            parent_info.MobileNumber = sheet[f"V{i}"]
-            parent_info.altMobileNumber = sheet[f"W{i}"]
-            parent_info.gaurdianName = sheet[f"X{i}"]
-            parent_info.gaurdianQual = sheet[f"Y{i}"]
-            parent_info.guardianOccup =sheet[f"Z{i}"] 
-            parent_info.email = sheet[f"AA{i}"]
-            parent_info.motherOccup = sheet[f"AB{i}"]
-            parent_info.motherQual = sheet[f"AC{i}"]
+            parent_info.fatherName = sheet[f"N{i}"].value
+            parent_info.motherName = sheet[f"O{i}"].value
+            parent_info.Fatherdob = sheet[f"P{i}"].value
+            parent_info.Motherdob = sheet[f"Q{i}"].value
+            parent_info.MobileNumber = sheet[f"R{i}"].value
+            parent_info.altMobileNumber = sheet[f"S{i}"].value
+            # parent_info.gaurdianName = sheet[f"N{i}"]
+            parent_info.gaurdianQual = sheet[f"T{i}"].value
+            parent_info.guardianOccup =sheet[f"U{i}"].value .value
+            parent_info.email = sheet[f"V{i}"].value
+            parent_info.motherOccup = sheet[f"W{i}"].value
+            parent_info.motherQual = sheet[f"X{i}"].value
             parent_info.save()
+            student_info = StudentInfo.objects.get(admissionNumber=permanent[f"A{i}"].value)
             permanent = PermanentAddress.objects.create(student=student_info)
-            permanent.Address = sheet[f"AD{i}"]
-            permanent.Address1 = sheet[f"AE{i}"]
-            permanent.Address2 = sheet[f"AF{i}"]
-            permanent.zipCode = sheet[f"AG{i}"]
-            permanent.state = sheet[f"AH{i}"]
-            permanent.city = sheet[f"AI{i}"]
+            permanent.Address1 = permanent[f"B{i}"].value
+            permanent.Address2 = permanent[f"C{i}"].value
+            permanent.Address = permanent[f"B{i}"].value + ', '+ permanent[f"C{i}"].value
+            permanent.zipCode = permanent[f"D{i}"].value
+            permanent.state = permanent[f"E{i}"].value
+            permanent.city = permanent[f"F{i}"].value
             permanent.save()
+            student_info = StudentInfo.objects.get(admissionNumber=current[f"A{i}"].value)
             current = CurrentAddress.objects.create(student=student_info)
-            current.Address1 = sheet[f"AJ{i}"]
-            current.Address = sheet[f"AK{i}"]
-            current.Address2 = sheet[f"AL{i}"]
-            current.zipCode = sheet[f"AM{i}"]
-            current.city = sheet[f"AN{i}"]
-            current.state = sheet[f"AO{i}"]
+            current.Address1 = current[f"B{i}"].value
+            current.Address2 = current[f"C{i}"].value
+            current.Address = current[f"B{i}"].value + ', '+ current[f"C{i}"].value
+            current.zipCode = current[f"D{i}"].value
+            current.city = current[f"E{i}"].value
+            current.state = current[f"F{i}"].value
             current.save()
+        messages.success(request, 'Data Uploaded Successfully')
     return render(request, 'form/uploadExcelData.html')

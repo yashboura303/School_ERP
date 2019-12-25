@@ -1,25 +1,10 @@
-<!doctype html>
-<html lang="en">
-{% load static %}
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Newsletter
+{% endblock %}
+{% block content %}
 
-<head>
-  <title>Add Newsletter</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link href='https://fonts.googleapis.com/css?family=Dosis|Candal' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="{% static 'newsletter/css/newsletter.css' %}">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-  crossorigin="anonymous">
-<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-</head>
-
-<body>
+{% include "message.html" %}
   <div class="container-fluid">
     <h2 class="text-center mt-3" >Add Newsletter</h2>
     <form action="{% url 'addNewsletter' %}" method="GET" onsubmit="prepareDiv()">
@@ -63,19 +48,6 @@
     function prepareDiv() {
       document.getElementById("hidden_input").value = document.getElementById("editor").innerHTML;
   }
-    var colorPalette = ['000000', 'FF9966', '6699FF', '99FF66', 'CC0000', '00CC00', '0000CC', '333333', '0066FF',
-      'FFFFFF'
-    ];
-    var forePalette = $('.fore-palette');
-    var backPalette = $('.back-palette');
-
-    for (var i = 0; i < colorPalette.length; i++) {
-      forePalette.append('<a href="#" data-command="forecolor" data-value="' + '#' + colorPalette[i] +
-        '" style="background-color:' + '#' + colorPalette[i] + ';" class="palette-item"></a>');
-      backPalette.append('<a href="#" data-command="backcolor" data-value="' + '#' + colorPalette[i] +
-        '" style="background-color:' + '#' + colorPalette[i] + ';" class="palette-item"></a>');
-    }
-
     $('.toolbar a').click(function (e) {
       var command = $(this).data('command');
       if (command == 'h1' || command == 'h2' || command == 'p') {
@@ -90,6 +62,4 @@
       } else document.execCommand($(this).data('command'), false, null);
     });
   </script>
-</body>
-
-</html>
+{% endblock %}

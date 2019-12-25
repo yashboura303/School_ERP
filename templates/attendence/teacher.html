@@ -1,11 +1,12 @@
-{% extends './base.html' %}
-
-{% block title %}Attendence | Teacher{% endblock %}
-{% block name %}Teacher{% endblock %}
-{% block url %}{% url 'piechartTeacher' %}{% endblock %}
-
+{% extends "dashboard/base.html" %}
+{% block title %}
+Notice Class
+{% endblock %}
 {% block content %}
+
+{% include "message.html" %}
 <div class="container">
+    <h2 class="text-center mt-2">Mark Teacher Attendence</h2>
     <form class="row" method="GET" action="{% url 'attendenceTeacher' %}">
         {% csrf_token %}
         <div class="form-group col-5">

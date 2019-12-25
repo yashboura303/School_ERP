@@ -1,10 +1,12 @@
-{% extends './base.html' %}
-
+{% extends "dashboard/base.html" %}
+{% block title %}
+Marks Section
+{% endblock %}
 {% block content %}
-{% load static %}
-    {% include 'message.html' %}
-    <div class="container-fluid row  justify-content-around mt-3 border-bottom border-dark pb-2">
-        <div class="col-md-5 border-right border-dark ">
+
+{% include "message.html" %}
+    <div class="container-fluid mt-3 border-bottom border-dark pb-2">
+        <div class="container w-75">
             <h3 class="">Add Exam</h3>
             <hr>
             <form action="" id="add_exam_form" class="">
@@ -17,10 +19,10 @@
                     <label for="">Description</label>
                     <input type="text" class="form-control" name="" id="description" aria-describedby="helpId" placeholder="">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary mb-4">Submit</button>
             </form>
         </div>
-        <div class="col-md-5">
+        <div class="container w-75">
             <h3>Exam Type</h3>
             <hr>
             <form action="" id="exam_type_form">
@@ -54,8 +56,8 @@
             </form>
         </div>
     </div>
-    <div class="container m-3 row justify-content-around">
-        <div class="col-md-5">
+    <div class="container-fluid m-3 border-bottom">
+        <div class="container w-75">
         <h3 class="text-center">Exam Mapping</h3>
         <hr>
         <form action="" id="exam_mapping">
@@ -94,7 +96,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
-    <div class="col-md-5">
+    <div class="container w-75">
         <h3 class="text-center">Additional Subject</h3>
         <hr>
         <form action="" id="additional_subject">
@@ -134,7 +136,6 @@
     </div>
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="{% static 'marks/js/add_exam_form.js' %}"></script>
     <script>
     $(document).on('submit', '#add_exam_form', function(e) {
 

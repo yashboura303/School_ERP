@@ -1,7 +1,11 @@
-{% extends './base.html' %}
+{% extends "dashboard/base.html" %}
+{% block title %}
+Class Report
+{% endblock %}
 {% block content %}
-{% load static %}
-{% include 'message.html' %}
+
+{% include "message.html" %}
+
 <div class="container-fluid">
     <h3 class="text-center my-3">Select Student and Exam for Bar Graph Report</h3>
     <form method="GET" action="{% url 'reportClass' %}" id="" class="">
