@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 from django.shortcuts import render, redirect
 from .models import ExamType, Exam, ExamMapping, Marks, AdditionalSubjectMapping
 from classform.models import ClassRoom, ClassRoomStudent
+from attendence.models import StudentAttendence, TeacherAttendence
 from django.http import HttpResponse
 from django.contrib import messages
 from django.http import JsonResponse
@@ -185,48 +186,101 @@ def report_card(request):
     Issue: Formating of excell sheet get's overlapped
     """
     if request.method == "POST":
+        class_room = request.POST.get("class_room")
         pk = request.POST.get("add_number")
-        if pk:
+        if pk and class_room:
             class_room_student = ClassRoomStudent.objects.get(
                 student__admissionNumber=pk)
             additional_sub = AdditionalSubjectMapping.objects.filter(
                 classroomStudent=class_room_student)[0].subject
-            class_room = class_room_student.classRoom
+            class_room = class_room
             marks = Marks.objects.filter(classroomStudent=class_room_student)
             subjects = []
             exam_mapping = ExamMapping.objects.filter(classroom=class_room)
+            
             # get subjects
             for a in exam_mapping:
                 if a.subject not in subjects:
                     subjects.append(a.subject)
             subjects.sort()
-            # get marks for term1, term2 and final exam
-            term1_marks_list = []
-            exam_name = Exam.objects.get(examName='SA-1')
-            marks_term1 = marks.filter(examName=exam_name)
+            
+            # get marks for unit test, note-book, half-yearly, SEA exam
+            ut_1_marks_list = []
+            exam_name = Exam.objects.get(examName='UT-1')
+            marks_ut_1 = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
             for sub in subjects:
-                term1_marks_list.append(marks_term1.get(subject=sub).marks)
+                ut_1_marks_list.append(marks_ut_1.get(subject=sub).marks)
 
-            term1_marks_list.append(AdditionalSubjectMapping.objects.get(
+            ut_1_marks_list.append(AdditionalSubjectMapping.objects.get(
                 subject=additional_sub, classroomStudent=class_room_student, examName=exam_name).marks)
 
-            term2_marks_list = []
-            exam_name = Exam.objects.get(examName='SA-2')
-            marks_term2 = marks.filter(examName=exam_name)
+            ut_2_marks_list = []
+            exam_name = Exam.objects.get(examName='UT-2')
+            marks_ut_2 = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
             for sub in subjects:
-                term2_marks_list.append(marks_term2.get(subject=sub).marks)
+                ut_2_marks_list.append(marks_ut_2.get(subject=sub).marks)
 
-            term2_marks_list.append(AdditionalSubjectMapping.objects.get(
+            ut_2_marks_list.append(AdditionalSubjectMapping.objects.get(
                 subject=additional_sub, classroomStudent=class_room_student, examName=exam_name).marks)
 
-            final_term_marks_list = []
-            exam_name = Exam.objects.get(examName='Final')
-            marks_final_term = marks.filter(examName=exam_name)
+            annual_term_marks_list = []
+            exam_name = Exam.objects.get(examName='Annual')
+            marks_annual_term = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
             for sub in subjects:
-                final_term_marks_list.append(
-                    marks_final_term.get(subject=sub).marks)
+                annual_term_marks_list.append(
+                    marks_annual_term.get(subject=sub).marks)
 
-            final_term_marks_list.append(AdditionalSubjectMapping.objects.get(
+            annual_term_marks_list.append(AdditionalSubjectMapping.objects.get(
+                subject=additional_sub, classroomStudent=class_room_student, examName=exam_name).marks)
+
+            half_yearly_marks_list = []
+            exam_name = Exam.objects.get(examName='Half-Yearly')
+            marks_half_yearly = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            for sub in subjects:
+                half_yearly_marks_list.append(
+                    marks_half_yearly.get(subject=sub).marks)
+
+            half_yearly_marks_list.append(AdditionalSubjectMapping.objects.get(
+                subject=additional_sub, classroomStudent=class_room_student, examName=exam_name).marks)
+
+            sea1_term_marks_list = []
+            exam_name = Exam.objects.get(examName='SEA-1')
+            marks_sea1_term = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            for sub in subjects:
+                sea1_term_marks_list.append(
+                    marks_sea1_term.get(subject=sub).marks)
+
+            sea1_term_marks_list.append(AdditionalSubjectMapping.objects.get(
+                subject=additional_sub, classroomStudent=class_room_student, examName=exam_name).marks)
+
+            sea2_term_marks_list = []
+            exam_name = Exam.objects.get(examName='SEA-2')
+            marks_sea2_term = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            for sub in subjects:
+                sea2_term_marks_list.append(
+                    marks_sea2_term.get(subject=sub).marks)
+
+            sea2_term_marks_list.append(AdditionalSubjectMapping.objects.get(
+                subject=additional_sub, classroomStudent=class_room_student, examName=exam_name).marks)
+
+            notebook_1_marks_list = []
+            exam_name = Exam.objects.get(examName='NoteBook-1')
+            marks_notebook_1 = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            for sub in subjects:
+                notebook_1_marks_list.append(
+                    marks_notebook_1.get(subject=sub).marks)
+
+            notebook_1_marks_list.append(AdditionalSubjectMapping.objects.get(
+                subject=additional_sub, classroomStudent=class_room_student, examName=exam_name).marks)
+
+            notebook_2_marks_list = []
+            exam_name = Exam.objects.get(examName='NoteBook-2')
+            marks_notebook_2 = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            for sub in subjects:
+                notebook_2_marks_list.append(
+                    marks_notebook_2.get(subject=sub).marks)
+
+            notebook_2_marks_list.append(AdditionalSubjectMapping.objects.get(
                 subject=additional_sub, classroomStudent=class_room_student, examName=exam_name).marks)
 
             subjects.append(additional_sub)
@@ -235,19 +289,41 @@ def report_card(request):
                 excel_file = request.FILES["excel"]
 
                 wb = load_workbook(excel_file)
-                sheet = wb.get_sheet_by_name('Sheet1')
+                sheet = wb.get_sheet_by_name('ANNUAL')
+
+                # set name, parents name, dob, addmission number, class, attendence
+                sheet["B9"] = class_room_student.student.fullName
+                sheet["B11"] = class_room_student.student.admissionNumber
+                sheet["B10"] = class_room_student.student.parent.fatherName
+                sheet["L10"] = class_room_student.student.parent.motherName
+                sheet["K9"] = class_room_student.roll_number
+                sheet["B12"] = class_room_student.student.dob
+                sheet["G9"] = class_room_student.classRoom.classSection
+                
+                # get total attendence data
+                total_days = StudentAttendence.objects.filter(student=class_room_student).count()
+                present_days = StudentAttendence.objects.filter(student=class_room_student, status="present").count()
+                sheet["L11"] = present_days
+                sheet["N11"] = total_days
+
+
 
                 for i in range(len(subjects)):
-                    sheet[f'B{i+9}'].value = subjects[i]
-                    sheet[f'D{i+9}'].value = term1_marks_list[i]
-                    sheet[f'G{i+9}'].value = term2_marks_list[i]
-                    sheet[f'J{i+9}'].value = final_term_marks_list[i]
+                    sheet[f'A{i+17}'].value = subjects[i]
+                    sheet[f'B{i+17}'].value = ut_1_marks_list[i]
+                    sheet[f'C{i+17}'].value = sea1_term_marks_list[i]
+                    sheet[f'D{i+17}'].value = half_yearly_marks_list[i]
 
-                sheet.delete_rows(14, 3)
+                    sheet[f'G{i+17}'].value = subjects[i]
+                    sheet[f'H{i+17}'].value = ut_2_marks_list[i]
+                    sheet[f'I{i+17}'].value = sea2_term_marks_list[i]
+                    sheet[f'J{i+17}'].value = annual_term_marks_list[i]
+
+                sheet.delete_rows(17+len(subjects), 9 - len(subjects))
                 sheet['C14'].value = sheet['F14'].value = sheet['I14'].value = len(subjects) * 100
-                sheet['D14'].value = sum(term1_marks_list)
-                sheet['G14'].value = sum(term2_marks_list)
-                sheet['J14'].value = sum(final_term_marks_list)
+                # sheet['D14'].value = sum(term1_marks_list)
+                # sheet['G14'].value = sum(term2_marks_list)
+                # sheet['J14'].value = sum(final_term_marks_list)
 
             
 
