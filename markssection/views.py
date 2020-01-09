@@ -1,3 +1,5 @@
+import io
+import urllib, base64
 import matplotlib
 import numpy as np
 from openpyxl import load_workbook
@@ -197,17 +199,18 @@ def report_card(request):
             marks = Marks.objects.filter(classroomStudent=class_room_student)
             subjects = []
             exam_mapping = ExamMapping.objects.filter(classroom=class_room)
-            
+
             # get subjects
             for a in exam_mapping:
                 if a.subject not in subjects:
                     subjects.append(a.subject)
             subjects.sort()
-            
+
             # get marks for unit test, note-book, half-yearly, SEA exam
             ut_1_marks_list = []
             exam_name = Exam.objects.get(examName='UT-1')
-            marks_ut_1 = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            marks_ut_1 = marks.filter(
+                examName=exam_name, classRoomStudent=class_room_student)
             for sub in subjects:
                 ut_1_marks_list.append(marks_ut_1.get(subject=sub).marks)
 
@@ -216,7 +219,8 @@ def report_card(request):
 
             ut_2_marks_list = []
             exam_name = Exam.objects.get(examName='UT-2')
-            marks_ut_2 = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            marks_ut_2 = marks.filter(
+                examName=exam_name, classRoomStudent=class_room_student)
             for sub in subjects:
                 ut_2_marks_list.append(marks_ut_2.get(subject=sub).marks)
 
@@ -225,7 +229,8 @@ def report_card(request):
 
             annual_term_marks_list = []
             exam_name = Exam.objects.get(examName='Annual')
-            marks_annual_term = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            marks_annual_term = marks.filter(
+                examName=exam_name, classRoomStudent=class_room_student)
             for sub in subjects:
                 annual_term_marks_list.append(
                     marks_annual_term.get(subject=sub).marks)
@@ -235,7 +240,8 @@ def report_card(request):
 
             half_yearly_marks_list = []
             exam_name = Exam.objects.get(examName='Half-Yearly')
-            marks_half_yearly = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            marks_half_yearly = marks.filter(
+                examName=exam_name, classRoomStudent=class_room_student)
             for sub in subjects:
                 half_yearly_marks_list.append(
                     marks_half_yearly.get(subject=sub).marks)
@@ -245,7 +251,8 @@ def report_card(request):
 
             sea1_term_marks_list = []
             exam_name = Exam.objects.get(examName='SEA-1')
-            marks_sea1_term = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            marks_sea1_term = marks.filter(
+                examName=exam_name, classRoomStudent=class_room_student)
             for sub in subjects:
                 sea1_term_marks_list.append(
                     marks_sea1_term.get(subject=sub).marks)
@@ -255,7 +262,8 @@ def report_card(request):
 
             sea2_term_marks_list = []
             exam_name = Exam.objects.get(examName='SEA-2')
-            marks_sea2_term = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            marks_sea2_term = marks.filter(
+                examName=exam_name, classRoomStudent=class_room_student)
             for sub in subjects:
                 sea2_term_marks_list.append(
                     marks_sea2_term.get(subject=sub).marks)
@@ -265,7 +273,8 @@ def report_card(request):
 
             notebook_1_marks_list = []
             exam_name = Exam.objects.get(examName='NoteBook-1')
-            marks_notebook_1 = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            marks_notebook_1 = marks.filter(
+                examName=exam_name, classRoomStudent=class_room_student)
             for sub in subjects:
                 notebook_1_marks_list.append(
                     marks_notebook_1.get(subject=sub).marks)
@@ -275,7 +284,8 @@ def report_card(request):
 
             notebook_2_marks_list = []
             exam_name = Exam.objects.get(examName='NoteBook-2')
-            marks_notebook_2 = marks.filter(examName=exam_name, classRoomStudent=class_room_student)
+            marks_notebook_2 = marks.filter(
+                examName=exam_name, classRoomStudent=class_room_student)
             for sub in subjects:
                 notebook_2_marks_list.append(
                     marks_notebook_2.get(subject=sub).marks)
@@ -299,14 +309,14 @@ def report_card(request):
                 sheet["K9"] = class_room_student.roll_number
                 sheet["B12"] = class_room_student.student.dob
                 sheet["G9"] = class_room_student.classRoom.classSection
-                
+
                 # get total attendence data
-                total_days = StudentAttendence.objects.filter(student=class_room_student).count()
-                present_days = StudentAttendence.objects.filter(student=class_room_student, status="present").count()
+                total_days = StudentAttendence.objects.filter(
+                    student=class_room_student).count()
+                present_days = StudentAttendence.objects.filter(
+                    student=class_room_student, status="present").count()
                 sheet["L11"] = present_days
                 sheet["N11"] = total_days
-
-
 
                 for i in range(len(subjects)):
                     sheet[f'A{i+17}'].value = subjects[i]
@@ -319,22 +329,12 @@ def report_card(request):
                     sheet[f'I{i+17}'].value = sea2_term_marks_list[i]
                     sheet[f'J{i+17}'].value = annual_term_marks_list[i]
 
-                sheet.delete_rows(17+len(subjects), 9 - len(subjects))
-                sheet['C14'].value = sheet['F14'].value = sheet['I14'].value = len(subjects) * 100
+                sheet.delete_rows(16+len(subjects), 9 - len(subjects))
+                wb.save('report-card.xlsx')
+                # sheet['C14'].value = sheet['F14'].value = sheet['I14'].value = len(subjects) * 100
                 # sheet['D14'].value = sum(term1_marks_list)
                 # sheet['G14'].value = sum(term2_marks_list)
                 # sheet['J14'].value = sum(final_term_marks_list)
-
-            
-
-
-
-            print(subjects)
-            print(term1_marks_list)
-            print(term2_marks_list)
-            print(final_term_marks_list)
-
-
 
     return render(request, 'marks/reportCard.html')
 
@@ -363,7 +363,7 @@ def report_analysis(request):
                 if a.subject not in subject_x:
                     subject_x.append(a.subject)
             subject_x.sort()
-
+            print(term)
             # Get UT and SA marks according to term 1 or term 2
             try:
                 if 'term1' in term and 'term2' not in term:
@@ -375,7 +375,7 @@ def report_analysis(request):
 
                     sa_1_y = []
                     marks = Marks.objects.filter(
-                        examName__examName='SA-1', classroomStudent=class_student)
+                        examName__examName='SEA-1', classroomStudent=class_student)
                     for subject in subject_x:
                         sa_1_y.append(marks.get(subject=subject).marks)
 
@@ -386,13 +386,20 @@ def report_analysis(request):
                     plt.bar(subject_x-width, ut1_y, color="#444444",
                             label="UT-1", width=width)
                     plt.bar(subject_x, sa_1_y, color="#008fd5",
-                            label="SA-1", width=width)
+                            label="SEA-1", width=width)
                     plt.legend()
                     plt.title("Marks of Term 1")
                     plt.xlabel("Subjects")
                     plt.ylabel("Marks")
                     plt.tight_layout()
-                    plt.show()
+                    # plt.show()
+                    fig1 = plt.gcf()
+                    buf1 = io.BytesIO()
+                    fig1.savefig(buf1, format='png')
+                    buf1.seek(0)
+                    string = base64.b64encode(buf1.read())
+                    uri = 'data:image/png;base64,' + urllib.parse.quote(string)
+                    return render(request, 'marks/studentReport.html', {'image':uri})
 
                 elif 'term2' in term and 'term1' not in term:
                     marks = Marks.objects.filter(
@@ -403,7 +410,7 @@ def report_analysis(request):
 
                     sa_2_y = []
                     marks = Marks.objects.filter(
-                        examName__examName='SA-2', classroomStudent=class_student)
+                        examName__examName='SEA-2', classroomStudent=class_student)
                     for subject in subject_x:
                         sa_2_y.append(marks.get(subject=subject).marks)
 
@@ -415,13 +422,20 @@ def report_analysis(request):
                     plt.bar(subject_x-width, ut2_y, color="#444444",
                             label="UT-2", width=width)
                     plt.bar(subject_x, sa_2_y, color="#008fd5",
-                            label="SA-2", width=width)
+                            label="SEA-2", width=width)
                     plt.legend()
                     plt.title("Marks of Term 2")
                     plt.xlabel("Subjects")
                     plt.ylabel("Marks")
                     plt.tight_layout()
-                    plt.show()
+                    # plt.show()
+                    fig2 = plt.gcf()
+                    buf2 = io.BytesIO()
+                    fig2.savefig(buf2, format='png')
+                    buf2.seek(0)
+                    string = base64.b64encode(buf2.read())
+                    urii = 'data:image/png;base64,' + urllib.parse.quote(string)
+                    return render(request, 'marks/studentReport.html', {'image':urii})
 
                 else:
                     marks = Marks.objects.filter(
@@ -432,7 +446,7 @@ def report_analysis(request):
 
                     sa_1_y = []
                     marks = Marks.objects.filter(
-                        examName__examName='SA-1', classroomStudent=class_student)
+                        examName__examName='SEA-1', classroomStudent=class_student)
                     for subject in subject_x:
                         sa_1_y.append(marks.get(subject=subject).marks)
 
@@ -444,7 +458,7 @@ def report_analysis(request):
 
                     sa_2_y = []
                     marks = Marks.objects.filter(
-                        examName__examName='SA-2', classroomStudent=class_student)
+                        examName__examName='SEA-2', classroomStudent=class_student)
                     for subject in subject_x:
                         sa_2_y.append(marks.get(subject=subject).marks)
 
@@ -456,22 +470,30 @@ def report_analysis(request):
                     plt.bar(subject_x-width, ut1_y, color="#444444",
                             label="UT-1", width=width, align='center')
                     plt.bar(subject_x, sa_1_y, color="#008fd5",
-                            label="SA-1", width=width, align='center')
+                            label="SEA-1", width=width, align='center')
                     plt.bar(subject_x+width, ut2_y, color="#4d6c67",
                             label="UT-2", width=width, align='center')
                     plt.bar(subject_x + width+width, sa_2_y, color="#c7ea56",
-                            label="SA-2", width=width, align='center')
+                            label="SEA-2", width=width, align='center')
                     plt.legend()
                     plt.title("Marks of Term 1 & Term 2")
                     plt.xlabel("Subjects")
                     plt.ylabel("Marks")
-                    # plt.tight_layout()
-                    plt.show()
+                    plt.tight_layout()
+                    # plt.show()
+                    fig3 = plt.gcf()
+                    buf3 = io.BytesIO()
+                    fig3.savefig(buf3, format='png')
+                    buf3.seek(0)
+                    string = base64.b64encode(buf3.read())
+                    uri = 'data:image/png;base64,' + urllib.parse.quote(string)
+                    return render(request, 'marks/studentReport.html', {'image':uri})
             except:
                 messages.error(
-                    request, "Ensure that marks and subjects are entered properly")
+                    request, "Ensure that marks and subjects are entered properly for the student")
                 redirect('reportStudent')
-            redirect('reportStudent')
+            # redirect('reportStudent')
+            return render(request, 'marks/studentReport.html', {'image':uri})
     return render(request, 'marks/studentReport.html')
 
 

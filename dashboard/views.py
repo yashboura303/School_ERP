@@ -16,7 +16,8 @@ def home(request):
         thought = Thoughts.objects.all()
         if thought[0].timestamp != datetime.date.today():
             thought[0].timestamp = datetime.date.today()
-            today_thought = thought.get(id=randrange(len(thought))+7)
+            print(thought)
+            today_thought = thought[randrange(len(thought)-1)]
         else:
             today_thought = thought.last()
 

@@ -49,6 +49,7 @@ def add_fee_class(request):
             redirect('addFeeClass')
     return render(request, 'fees/addClassFee.html', {"category": FeeCategory.objects.all(), "class_rooms": ClassRoom.objects.all()})
 
+
 def add_fee_cycle(request):
     if request.method == 'GET':
         cycle = request.GET.get("cycle")
@@ -59,6 +60,7 @@ def add_fee_cycle(request):
         FeeCycle.objects.create(lastSubmissionDate=ending_date, firstSubmissionDate=starting_date, cycle=cycle)
 
     return render(request, 'fees/home.html')
+
 
 def home(request):
     if request.method == 'GET':
@@ -75,6 +77,7 @@ def home(request):
             Fee.objects.create(regNo=reg_no, student=student, classSection=classRoom, submissionDate=date.today(),monthsPaid=months, payment_method=payment_method )
 
     return render(request, 'fees/home.html', {"class_rooms": ClassRoom.objects.all()})
+
 
 def fee_discount(request):
     if request.method =="GET":
