@@ -382,6 +382,8 @@ def report_analysis(request):
                     width = 0.25
                     subjects = subject_x
                     subject_x = np.arange(len(subject_x))
+                    plt.clf()
+
                     plt.xticks(subject_x, subjects)
                     plt.bar(subject_x-width, ut1_y, color="#444444",
                             label="UT-1", width=width)
@@ -418,6 +420,7 @@ def report_analysis(request):
                     subjects = subject_x
                     subject_x = np.arange(len(subject_x))
                     plt.xticks(subject_x, subjects)
+                    plt.clf()
 
                     plt.bar(subject_x-width, ut2_y, color="#444444",
                             label="UT-2", width=width)
@@ -465,6 +468,8 @@ def report_analysis(request):
                     width = 0.18
                     subjects = subject_x
                     subject_x = np.arange(len(subject_x))
+                    plt.clf()
+
                     plt.xticks(subject_x, subjects)
 
                     plt.bar(subject_x-width, ut1_y, color="#444444",
