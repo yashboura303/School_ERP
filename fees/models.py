@@ -30,7 +30,9 @@ class ClassSectionFees(models.Model):
 	def __str__(self):
 	 return f"{self.classSection} {self.feeCategory} {self.fees}"
 
-
+def user_directory_path(instance, filename):
+    """file will be uploaded to given path"""
+    return 'fee-slip/{0}/{1}'.format(instance.student.admissionNumber, filename)
 class Fee(models.Model):
 	regNo = models.IntegerField()
 	classSection = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
@@ -39,6 +41,7 @@ class Fee(models.Model):
 	submissionDate = models.DateField()
 	amount = models.IntegerField()
 	monthsPaid = models.CharField(max_length=50)
+	feeSlip = models.FileField(upload_to=user_directory_path)
 
 	def __str__(self):
 	 return f"{self.student} {self.amount} {self.monthsPaid}"

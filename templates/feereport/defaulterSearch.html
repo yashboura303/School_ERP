@@ -4,9 +4,10 @@ Search Defaulters
 {% endblock %}
 {% block content %}
 
-{% include "message.html" %}
+
 
 <div class="jumbotron jumbotron-fluid">
+    {% include "message.html" %}
     <div class="container">
         <h2 class="display-5">Search Defaulters</h2>
         <form class="form-inline my-2 my-lg-0" action="{% url 'searchDefaulter'%}" method="GET">

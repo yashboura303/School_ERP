@@ -1,6 +1,6 @@
 {% extends "dashboard/base.html" %}
 {% block title %}
-Add Marks
+Fee Section
 {% endblock %}
 {% block content %}
 
@@ -29,7 +29,7 @@ Add Marks
                 <input class="form-check-input"  type="checkbox" name="check"onclick="myFunction()" id="my_check" value="recurring"> Recurring
             </label>
         </div>
-        <div class="form-group " id="select_mode">
+        <div class="form-group mt-3 w-75" id="select_mode">
           <label for="">Select Mode</label>
           <select class="form-control" name="mode" id="">
             <option>Monthly</option>
@@ -44,14 +44,15 @@ Add Marks
 </div>
     <div class="container w-75">
         <h3 class="text-center mt-2">Fee Collection</h3>
-        <form action="{% url 'feesHome' %}" method="GET">
+        <form action="{% url 'feesHome' %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
             <div class="form-group">
               <label for="">Register Number</label>
-              <input type="number" class="form-control" name="register_number" id="" aria-describedby="helpId" placeholder="">
+              <input type="number" class="form-control"  name="register_number" id="" aria-describedby="helpId" placeholder=""min="0">
             </div>
             <div class="form-group">
                 <label for="">Student Admission Number</label>
-                <input type="text" class="form-control" name="add_number" id="" aria-describedby="helpId" placeholder="">
+                <input type="number" class="form-control" name="add_number" id="" aria-describedby="helpId" placeholder=""min="0">
               </div>
             <div class="form-group w-50">
                 <label class="pr-1" for="">Class/Section:</label>
@@ -61,6 +62,10 @@ Add Marks
                     <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
                     {% endfor %}
                 </select>
+            </div>
+            <div class="form-group">
+              <label for="">Amount</label>
+              <input type="number" class="form-control"  name="amount" id="" aria-describedby="helpId" placeholder=""min="0">
             </div>
               <div class="form-group">
                 <label for="">Payment Method</label>
@@ -74,6 +79,10 @@ Add Marks
                 <label for="">Remarks</label>
                 <input type="text" class="form-control" name="remarks" id="" aria-describedby="helpId" placeholder="">
               </div>
+              <div class="form-group w-50">
+                <label for="">Upload Fee Slip Template:</label>
+                <input type="file" class="form-control" id="" name="excel">
+            </div>
              
               <button type="submit" class="btn btn-primary d-block">Submit</button>
         </form>
@@ -108,7 +117,7 @@ Add Marks
       <form action="{% url 'addFeeDiscount' %}" method="get">
         <div class="form-group">
           <label for="">Admission Number</label>
-          <input type="number" class="form-control" name="add_number" id="" aria-describedby="helpId" placeholder="">
+          <input type="number" class="form-control" name="add_number" id="" aria-describedby="helpId" placeholder=""min="0">
         </div>
         <div class="form-group">
           <label for="">Description</label>
@@ -116,11 +125,11 @@ Add Marks
         </div>
         <div class="form-group">
           <label for="">Discount %</label>
-          <input type="number" class="form-control" name="discount" id="" aria-describedby="helpId" placeholder="">
+          <input type="number" class="form-control" name="discount" id="" aria-describedby="helpId" placeholder=""min="0">
         </div>
         <div class="form-group">
           <label for="">Total Off</label>
-          <input type="number" class="form-control" name="total_off" id="" aria-describedby="helpId" placeholder="">
+          <input type="number" class="form-control" name="total_off" id="" aria-describedby="helpId" placeholder=""min="0">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
