@@ -2,11 +2,13 @@ import io
 import urllib, base64
 import matplotlib
 import numpy as np
+from tempfile import NamedTemporaryFile
+from django.core.files import File
 from openpyxl import load_workbook
 from matplotlib import pyplot as plt
 from django.shortcuts import render, redirect
 from .models import ExamType, Exam, ExamMapping, Marks, AdditionalSubjectMapping
-from classform.models import ClassRoom, ClassRoomStudent
+from classform.models import ClassRoom, ClassRoomStudent, ReportCard
 from attendence.models import StudentAttendence, TeacherAttendence
 from django.http import HttpResponse
 from django.contrib import messages
@@ -330,7 +332,34 @@ def report_card(request):
                     sheet[f'J{i+17}'].value = annual_term_marks_list[i]
 
                 sheet.delete_rows(16+len(subjects), 9 - len(subjects))
-                wb.save('report-card.xlsx')
+                # wb.save('report-card.xlsx')
+                with NamedTemporaryFile() as tmp:
+                    wb.save(tmp.name)
+                    tmp.seek(0)
+
+                    report_card = ReportCard.objects.create(class_room_student=class_room_student)
+                    report_card.reportCard.save("reportcard",File(tmp), True)
+                    report_card.save()
+                
+                    try:
+                        from win32com import client
+                        import win32api
+
+                        excel = client.DispatchEx("Excel.Application")
+                        excel.Visible = 0
+
+                        wb = excel.Workbooks.Open(tmp)
+                        ws = wb.Worksheets[1]
+                        try:
+                            wb.SaveAs('c:\\targetfolder\\feeslip.pdf', FileFormat=57)
+                        except:
+                            print ("Failed to convert")
+                        finally:
+                            wb.Close()
+                            excel.Quit()
+                    except:
+                        pass
+
                 # sheet['C14'].value = sheet['F14'].value = sheet['I14'].value = len(subjects) * 100
                 # sheet['D14'].value = sum(term1_marks_list)
                 # sheet['G14'].value = sum(term2_marks_list)

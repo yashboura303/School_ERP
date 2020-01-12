@@ -32,7 +32,7 @@ class ClassSectionFees(models.Model):
 
 def user_directory_path(instance, filename):
     """file will be uploaded to given path"""
-    return 'fee-slip/{0}/{1}'.format(instance.student.admissionNumber, filename)
+    return 'fee-slip/{0}/{1}'.format(instance.student.student.admissionNumber, filename)
 class Fee(models.Model):
 	regNo = models.IntegerField()
 	classSection = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)

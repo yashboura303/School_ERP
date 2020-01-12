@@ -1,4 +1,5 @@
 from tempfile import NamedTemporaryFile
+from django.core.files import File
 from openpyxl import load_workbook
 from datetime import date
 from django.shortcuts import render, redirect
@@ -125,28 +126,31 @@ def home(request):
             with NamedTemporaryFile() as tmp:
                 wb.save(tmp.name)
                 tmp.seek(0)
-                stream = tmp.read()
 
-            Fee.objects.create(regNo=reg_no, student=student, classSection=classRoom, submissionDate=date.today(
-            ), monthsPaid=months, payment_method=payment_method, amount=amount, feeSlip=stream)
-            try:
-                from win32com import client
-                import win32api
+                Fee.objects.create(regNo=reg_no, student=student, classSection=classRoom, submissionDate=date.today(
+                ), monthsPaid=months, payment_method=payment_method, amount=amount)
+                fee = Fee.objects.get(student=student, regNo=reg_no, submissionDate=date.today())
+                fee.feeSlip.save("fee-slip",File(tmp), True)
+                fee.save()
 
-                excel = client.DispatchEx("Excel.Application")
-                excel.Visible = 0
-
-                wb = excel.Workbooks.Open(stream)
-                ws = wb.Worksheets[1]
                 try:
-                    wb.SaveAs('c:\\targetfolder\\feeslip.pdf', FileFormat=57)
+                    from win32com import client
+                    import win32api
+
+                    excel = client.DispatchEx("Excel.Application")
+                    excel.Visible = 0
+
+                    wb = excel.Workbooks.Open(tmp)
+                    ws = wb.Worksheets[1]
+                    try:
+                        wb.SaveAs('c:\\targetfolder\\feeslip.pdf', FileFormat=57)
+                    except:
+                        print ("Failed to convert")
+                    finally:
+                        wb.Close()
+                        excel.Quit()
                 except:
-                    print ("Failed to convert")
-                finally:
-                    wb.Close()
-                    excel.Quit()
-            except:
-                pass
+                    pass
 
 
     return render(request, 'fees/home.html', {"class_rooms": ClassRoom.objects.all()})

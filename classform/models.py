@@ -15,6 +15,11 @@ class ClassRoom(models.Model):
         return f"Class:{self.classSection}| Teacher: {self.teacher.fullName}"
 
 
+def user_directory_path(instance, filename):
+    """file will be uploaded to given path"""
+    return 'report-card/{0}/{1}'.format(instance.class_room_student.student.admissionNumber, filename)
+
+
 class ClassRoomStudent(models.Model):
     classRoom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
     roll_number = models.IntegerField()
@@ -30,3 +35,8 @@ class ClassRoomStudent(models.Model):
         else:
             self.roll_number = 1
         return super(ClassRoomStudent, self).save(*args, **kwargs)
+
+class ReportCard(models.Model):
+    class_room_student = models.ForeignKey(ClassRoomStudent, on_delete=models.CASCADE)
+    reportCard = models.FileField(upload_to=user_directory_path)
+
