@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'holiday.apps.HolidayConfig',
     'fees.apps.FeesConfig',
     'feereport.apps.FeereportConfig',
+    'transport.apps.TransportConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

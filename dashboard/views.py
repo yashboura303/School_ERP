@@ -11,6 +11,10 @@ from accounts.models import UserProfile
 
 
 def home(request):
+    """
+    Main view page of dashboard. 
+
+    """
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
         thought = Thoughts.objects.all()

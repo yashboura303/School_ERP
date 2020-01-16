@@ -1,0 +1,89 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Notice Class
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance:textfield;
+    }
+    </style>
+    <div class="container-fluid mx-auto px-auto m-3">
+<h3 class="text-center pb-2">Vehicle</h3>
+<form action="" method="get">
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="username">Vehicle No:</label>
+            <input type="number" min="0" class="form-control" id="firstname" aria-describedby="emailHelp" name="vehicleNumber">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="username">Device ID or IMEI NO:</label>
+            <input type="number" min="0"class="form-control" id="firstname"name="deviceID">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="username">No of Seats:</label>
+            <input type="text" class="form-control" id="lastname" name="seats">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="username">Maximum Allowed:</label>
+            <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="maximum">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="username">Vehicle Type:</label>
+            <input type="number" min="0"class="form-control" id="firstname" aria-describedby="emailHelp" name="vehicleType">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="username">Contact Person:</label>
+            <input type="text" class="form-control" id="firstname"name="contactPerson">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="username">Insurance Company:</label>
+            <input type="text" class="form-control"  name="insuranceCompany">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="username">Insurance Date:</label>
+            <input type="date" class="form-control" name="insuranceDate">
+        </div>
+    </div>
+    <div class="form-row">
+        
+        <div class="form-group col-md-3">
+            <label for="username">Pollution Exp Cert Date:</label>
+            <input type="date" class="form-control" id=""name="pollutionCertDate">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="username">Permit Valid Date:</label>
+            <input type="date" class="form-control" id=""name="permitValidDate">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="username">Service Due Date:</label>
+            <input type="date" class="form-control" id=""name="serviceDueDate">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="username">Service ID:</label>
+            <input type="number" min="0"class="form-control" id="" name="serviceID">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="username">Fitness Service Date:</label>
+            <input type="date" class="form-control" id="" name="fitnessServiceDate">
+        </div>
+    </div>
+</form>
+</div>
+
+    {% endblock content %}

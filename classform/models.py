@@ -7,7 +7,9 @@ from employeeform.models import Teacher
 
 
 class ClassRoom(models.Model):
-    # standard = models.CharField(max_length=50)
+    """
+    Table for Class Room details with Class/Section and Class Teacher Assigned
+    """
     classSection = models.CharField(max_length=50)
     teacher = models.OneToOneField(Teacher, on_delete=models.CASCADE)
 
@@ -21,6 +23,9 @@ def user_directory_path(instance, filename):
 
 
 class ClassRoomStudent(models.Model):
+    """
+    Table for Student related to a classroom with roll number and student(foreign key) attributes
+    """
     classRoom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
     roll_number = models.IntegerField()
     student = models.OneToOneField(StudentInfo, on_delete=models.CASCADE)
@@ -37,6 +42,9 @@ class ClassRoomStudent(models.Model):
         return super(ClassRoomStudent, self).save(*args, **kwargs)
 
 class ReportCard(models.Model):
+    """
+    Table for Report Card for a class room student
+    """
     class_room_student = models.ForeignKey(ClassRoomStudent, on_delete=models.CASCADE)
     reportCard = models.FileField(upload_to=user_directory_path)
 

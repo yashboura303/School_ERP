@@ -165,7 +165,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li>   
                         <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fas fa-chart-area"></i>
@@ -187,6 +187,29 @@
                                     </li>
                                     <li>
                                         <a href="{% url 'reportCard' %}">Report Card</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fas fa-bus"></i>
+                                        <span>Transport</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'addVehicle' %}">Add Vehicle</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'updateInfo' %}">Vehicle List</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'searchPage' %}">Driver</a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="{% url 'uploadExcelData' %}">Routes</a>
                                     </li>
                                 </ul>
                             </div>
