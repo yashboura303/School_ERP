@@ -13,6 +13,7 @@ class Vehicle(models.Model):
     insurance_date = models.DateField(null=True,blank=True)
     permit_valid_date = models.DateField(null=True,blank=True)
     pollution_cert_exp_date = models.DateField(null=True,blank=True)
+    service_date = models.DateField(null=True,blank=True)
     fitness_service_date = models.DateField(null=True,blank=True)
 
 def user_directory_path(instance, filename):

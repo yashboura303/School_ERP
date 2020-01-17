@@ -6,6 +6,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.transport, name="addVehicle"),
+    path('addVehicle', views.vehicle_register, name="addVehicle"),
+    path('addDriver', views.driver_register, name="addDriver"),
 
 ]
