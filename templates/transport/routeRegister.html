@@ -1,6 +1,6 @@
 {% extends "dashboard/base.html" %}
 {% block title %}
-Driver Register
+Route Register
 {% endblock %}
 {% block content %}
 
@@ -19,8 +19,8 @@ Driver Register
     }
 </style>
 <div class="container-fluid mx-auto px-auto m-3">
-    <h3 class="text-center pb-2">Driver</h3>
-    <form action="{% url 'addDriver' %}" method="POST" enctype="multipart/form-data" >
+    <h3 class="text-center pb-2">Route</h3>
+    <form action="{% url 'addRoute' %}" method="POST">
         {% csrf_token %}
         <div class="form-row">
             <div class="form-group col-md-3">
@@ -33,52 +33,52 @@ Driver Register
                 </select>
             </div>
             <div class="form-group col-md-3">
-                <label >Name:</label>
-                <input type="text" min="0" class="form-control"  name="name">
+                <label >Route Code:</label>
+                <input type="number" min="0" class="form-control"  name="route_code">
             </div>
             <div class="form-group col-md-3">
-                <label >Date Of Birth:</label>
-                <input type="date" class="form-control"  name="dob">
+                <label >Start Place:</label>
+                <input type="text" class="form-control"  name="start_place">
             </div>
             <div class="form-group col-md-3">
-                <label >License No:</label>
-                <input type="number" min="0" class="form-control"  name="licenseNo">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <label >Mobile Number:</label>
-                <input type="number" min="0" class="form-control"  name="mobileNumber">
-            </div>
-            <div class="form-group col-md-3">
-                <label >Current Address:</label>
-                <input type="text" class="form-control"  name="caddress">
-            </div>
-            <div class="form-group col-md-3">
-                <label >Permanent Address:</label>
-                <input type="text" class="form-control" name="paddress">
-            </div>
-            <div class="form-group col-md-3">
-                <label >Batch Number:</label>
-                <input type="text" class="form-control" name="batchNumber">
+                <label >End Place:</label>
+                <input type="text" class="form-control"  name="end_place">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label >Employee ID:</label>
-                <input type="number" min="0" class="form-control"  name="empID">
+                <label >Route Distance:</label>
+                <input type="number" min="0" class="form-control"  name="route_distance">
             </div>
             <div class="form-group col-md-3">
-                <label >Driver Pic:</label>
-                <input type="file" class="form-control" name="pic">
+                <label >Remarks:</label>
+                <input type="text" class="form-control"  name="remarks">
             </div>
             <div class="form-group col-md-3">
-                <label >Driver License:</label>
-                <input type="file" class="form-control"  name="driverLicense">
+                <label class="pr-1" >Shift Time:</label>
+                <select name="shift" class="form-control mr-2">
+                    <option selected="true" disabled="disabled" >Select</option>
+                    <option selected="true"  value="Morning">Morning</option>
+                    <option selected="true" value="Afternoon">Afternoon</option>
+                </select>
             </div>
             <div class="form-group col-md-3">
-                <label >Driver ID:</label>
-                <input type="file" class="form-control"  name="driverID">
+                <label >Stoppage Name:</label>
+                <input type="text" class="form-control" name="stoppage_name">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label >Stoppage ID:</label>
+                <input type="text" min="0" class="form-control"  name="stoppage_id">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Longitude:</label>
+                <input type="text" class="form-control" name="longitude">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Lattitude:</label>
+                <input type="text" class="form-control"  name="lattitude">
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

@@ -37,7 +37,7 @@ class Driver(models.Model):
 
 
 class Routes(models.Model):
-    rout_code = models.BigIntegerField()
+    route_code = models.BigIntegerField()
     vehicle = models.ForeignKey(Vehicle,on_delete=models.CASCADE)
     start_place = models.CharField(max_length=30,default="")
     end_place = models.CharField(max_length=30,default="")
@@ -46,8 +46,8 @@ class Routes(models.Model):
     stoppage_id = models.IntegerField(primary_key=True)
     remarks = models.CharField(max_length=50,default="")
     route_distance = models.IntegerField()
-    longitude = models.IntegerField()
-    lattitude = models.IntegerField()
+    longitude = models.DecimalField(max_digits=5, decimal_places=2)
+    lattitude = models.DecimalField(max_digits=5, decimal_places=2)
 
 
     
