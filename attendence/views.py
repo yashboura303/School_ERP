@@ -25,16 +25,19 @@ def student_attendence(request):
 
     # FOR DISPLAYING STUDENTS
     classrooms = ClassRoom.objects.all()
+    students=False
     if request.method == "GET":
         if "add_no" in request.GET:
             add_no = request.GET["add_no"]
             students = ClassRoomStudent.objects.filter(
-                student__admissionNumber__icontains=add_no)
-        if "class_name" in request.GET:
-            class_name = request.GET["class_name"]
-            request.session["class_name"] = class_name
+                student__admissionNumber=add_no)
+            request.session["add_no"] = add_no
+        if "class_room" in request.GET:
+            class_name = request.GET["class_room"]
             students = students.filter(
                 classRoom__classSection__icontains=class_name)
+            request.session["class_name"] = class_name
+        if students:
             return render(request, 'attendence/student.html', {"students": students, 'class_rooms':classrooms})
 
     # FOR MARKING ATTENDENCE
@@ -47,11 +50,11 @@ def student_attendence(request):
                 redirect('attendenceStudent')
             classstudents = ClassRoomStudent.objects.filter(
                 classRoom__classSection__icontains=request.session["class_name"])
+            classstudents = ClassRoomStudent.objects.filter(
+                student__admissionNumber=request.session["add_no"])
 
             for classroomstudent in classstudents:
-
                 if str(classroomstudent.student.admissionNumber) in request.POST:
-                    print(classroomstudent)
                     s = StudentAttendence.objects.create(student=classroomstudent, date=_date, status=request.POST[str(
                         classroomstudent.student.admissionNumber)])
                     s.save()

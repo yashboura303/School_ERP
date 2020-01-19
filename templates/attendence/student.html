@@ -33,12 +33,12 @@ Notice Class
         {% csrf_token %}
         <div class="form-group col-md-3 mt-3 mx-auto">
             <label for="username" class="font-weight-bold">Select Date:</label>
-            <input type="date" class="form-control" id="date_" aria-describedby="" name="date">
+            <input type="date" class="form-control" id="date_" aria-describedby="" name="date" required>
         </div>
         <table class="mb-5 table table-secondary table-striped">
 
-            <thead>
-                <tr>
+            <thead class="table-dark">
+                <tr class="">
                     <th scope="col">Name</th>
                     <th scope="col">Roll Number</th>
                     <th scope="col">Admission Number</th>
