@@ -1,0 +1,71 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Vehcile List
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<div class="container-fluid">
+    <h2 class="text-center mt-3 ">Vehicle List</h2>
+    <a href="{% url 'vehicleListExcel' %}" class="text-dark float-md-right mr-1 mb-1"><i
+            class="far fa-file-excel fa-2x text-success"></i></a>
+            <a href="{% url 'vehicleListPdf' %}" class="text-dark float-md-right mr-1 mb-1"><i class="far fa-file-pdf text-danger fa-2x"></i></a>
+
+
+    <table class="mb-5 table table-secondary table-striped">
+
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Vehcile No</th>
+                <th scope="col">Device ID</th>
+                <th scope="col">Service ID</th>
+                <th scope="col">No of Seats</th>
+                <th scope="col">Maximum Allowed</th>
+                <th scope="col">Vehcile Type</th>
+                <th scope="col">Insurance Company</th>
+                <th scope="col">Contact Person</th>
+                <th scope="col">Insurance Date</th>
+                <th scope="col">Permit Valid Date</th>
+                <th scope="col">Pollution Valid Date</th>
+                <th scope="col">Service Date</th>
+                <th scope="col">Fitness Servcie Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehicle in vehicles %}
+            <tr>
+                <th scope="row">{{ vehicle.vehicle_no}}</th>
+                <td>{{ vehicle.device_id }}</td>
+                <td>{{ vehicle.service_id }}</td>
+                <td>{{ vehicle.no_of_seat }}</td>
+                <td>{{ vehicle.maximum_allowed }}</td>
+                <td>{{ vehicle.vehicle_type }}</td>
+                <td>{{ vehicle.insurance_company }}</td>
+                <td>{{ vehicle.contact_person }}</td>
+                <td>{{ vehicle.insurance_date|date:" d M Y" }}</td>
+                <td>{{ vehicle.permit_valid_date |date:" d M Y"}}</td>
+                <td>{{ vehicle.pollution_cert_exp_date|date:" d M Y" }}</td>
+                <td>{{ vehicle.service_date|date:" d M Y" }}</td>
+                <td>{{ vehicle.fitness_service_date|date:" d M Y" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock content %}

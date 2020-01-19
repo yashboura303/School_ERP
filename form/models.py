@@ -3,7 +3,7 @@ Tables for student form
 """
 from django.db import models
 from PIL import Image
-
+from transport.models import Routes
 # Create your models here.
 
 
@@ -113,3 +113,10 @@ class Documents(models.Model):
         # else ingore
         except:
             pass
+
+class StudentRoute(models.Model):
+    student = models.OneToOneField(
+        StudentInfo, primary_key=True, on_delete=models.CASCADE)
+    route_code = models.BigIntegerField()
+    route_stoppage = models.CharField(max_length=30)
+    shift = models.CharField(max_length=30)

@@ -5,7 +5,7 @@ from datetime import date
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from classform.models import ClassRoom, ClassRoomStudent
-from .models import StudentInfo, PermanentAddress, CurrentAddress, ParentInfo, Documents
+from .models import StudentInfo, PermanentAddress, CurrentAddress, ParentInfo, Documents, StudentRoute
 from openpyxl import load_workbook
 
 
@@ -44,7 +44,10 @@ def form(request):
         feeCategory = request.POST.get("feeCategory", False)
         siblingid = request.POST.get("siblingid", False)
         prevschool_name = request.POST.get("prevschool_name", False)
-        fathername = request.POST.get("fathername", False)
+        route_code = request.POST.get("route_code", False)
+        stoppage_name = request.POST.get("stoppage_name", False)
+        shift = request.POST.get("shift", False)
+
         student_info = StudentInfo.objects.create(admissionNumber=add_number)
         # class Section check
         try:
@@ -115,13 +118,20 @@ def form(request):
         parent_info.Motherdob = m_dob
         parent_info.MobileNumber = pphone_number
         parent_info.altMobileNumber = alt_pphone_number
-        # parent_info.gaurdianName = gname
         parent_info.gaurdianQual = g_qual
         parent_info.guardianOccup = g_occup
         parent_info.email = pemail
         parent_info.motherQual = m_qual
         parent_info.motherQual = m_occup
         parent_info.save()
+
+
+        #Route details
+        route = StudentRoute.objects.create(student=student_info)
+        route.route_stoppage = stoppage_name
+        route.shift = shift
+        route.route_code = route_code
+        route.save()
 
         documents = Documents.objects.create(student=student_info)
         documents.idProof = request.FILES["idproof"]
