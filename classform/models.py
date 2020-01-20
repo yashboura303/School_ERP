@@ -4,6 +4,7 @@ Database tables for classform app
 from django.db import models
 from form.models import StudentInfo
 from employeeform.models import Teacher
+from datetime import datetime
 
 
 class ClassRoom(models.Model):
@@ -47,4 +48,16 @@ class ReportCard(models.Model):
     """
     class_room_student = models.ForeignKey(ClassRoomStudent, on_delete=models.CASCADE)
     reportCard = models.FileField(upload_to=user_directory_path)
+
+class StudentRouteAttendence(models.Model):
+    """
+    Student Attendence table
+    """
+    student = models.ForeignKey(ClassRoomStudent, on_delete=models.CASCADE)
+    status = models.CharField(max_length=50)
+    date = models.DateField()
+    time = models.DateTimeField(default=datetime.now, blank=True)
+
+    def __str__(self):
+        return f"Name:{self.student.student.fullName}| Date:{self.date} | Status:{self.status}"
 

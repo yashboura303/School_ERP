@@ -1,12 +1,15 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from xhtml2pdf import pisa
 from io import BytesIO
 from django.template import Context
 from .models import Vehicle, Routes, Driver
+from form.models import StudentRoute, StudentInfo
 from datetime import date
+from django.contrib import messages
 from employeeform.models import Employee
 from .admin import VehicleList
 from django.template.loader import get_template
+from classform.models import StudentRouteAttendence, ClassRoomStudent
 # Create your views here.
 
 
@@ -102,9 +105,13 @@ def vehicle_list_excel(request):
     response.write(dataset.xlsx)
     return response
 
+
 def vehicle_list_pdf(request):
+    """
+    Export vehicle list to pdf 
+    """
     template_path = 'transport/vehicleListPdf.html'
-    context = {"vehicles":Vehicle.objects.all()}
+    context = {"vehicles": Vehicle.objects.all()}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="vehicle-list.pdf"'
@@ -114,8 +121,37 @@ def vehicle_list_pdf(request):
 
     # create a pdf
     pisaStatus = pisa.CreatePDF(
-       html, dest=response)
+        html, dest=response)
     # if error then show some funy view
     if pisaStatus.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+
+def route_attendence(request):
+    routes = Routes.objects.all()
+    if request.method == "POST":
+        route_code = request.POST.get("route_code")
+        student_routes = StudentRoute.objects.filter(route_code=route_code)
+        return render(request, 'transport/routeAttendence.html', {"routes": Routes.objects.all(), "student_routes": student_routes})
+    return render(request, 'transport/routeAttendence.html', {"routes": routes})
+
+
+def mark_attendence(request):
+    routes = Routes.objects.all()
+    if request.method == "POST":
+        if "date" in request.POST:
+            _date = request.POST["date"]
+            _date = date(*map(int, _date.split('-')))
+            if _date.weekday() == 6:
+                messages.info(request, "Selected Date is a holiday!")
+                redirect('attendenceStudent')
+            class_students = ClassRoomStudent.objects.all()
+
+            for s in class_students:
+                if str(s.student.admissionNumber) in request.POST:
+                    StudentRouteAttendence.objects.create(status=request.POST[str(
+                        s.student.admissionNumber)], date=_date, student=s)
+            messages.success(request, "Marked Attendence")
+            redirect('routeAttendence')
+    return render(request, 'transport/routeAttendence.html', {"routes": routes})

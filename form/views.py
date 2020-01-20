@@ -5,6 +5,7 @@ from datetime import date
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from classform.models import ClassRoom, ClassRoomStudent
+from transport.models import Routes
 from .models import StudentInfo, PermanentAddress, CurrentAddress, ParentInfo, Documents, StudentRoute
 from openpyxl import load_workbook
 
@@ -143,7 +144,7 @@ def form(request):
         documents.save()
         messages.success(request, "Record successfully added")
 
-    return render(request, 'form/recordForm.html')
+    return render(request, 'form/recordForm.html',{"routes":Routes.objects.all()})
 
 
 def update(request):

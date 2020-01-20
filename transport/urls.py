@@ -12,5 +12,6 @@ urlpatterns = [
     path('vehicleList', views.vehicle_list, name="vehicleList"),
     path('vehicleListExcel', views.vehicle_list_excel, name="vehicleListExcel"),
     path('vehicleListPdf', views.vehicle_list_pdf, name="vehicleListPdf"),
-
+    path('routeAttendence', views.route_attendence, name="routeAttendence"),
+    path('markAttendence', views.mark_attendence, name="markAttendence"),
 ]

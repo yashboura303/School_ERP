@@ -52,3 +52,6 @@ class Routes(models.Model):
     route_distance = models.IntegerField()
     longitude = models.DecimalField(max_digits=5, decimal_places=2)
     lattitude = models.DecimalField(max_digits=5, decimal_places=2)
+
+
+
