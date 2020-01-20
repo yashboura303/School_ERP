@@ -145,10 +145,11 @@ def mark_attendence(request):
             _date = date(*map(int, _date.split('-')))
             if _date.weekday() == 6:
                 messages.info(request, "Selected Date is a holiday!")
-                redirect('attendenceStudent')
+                redirect('routeAttendence')
             class_students = ClassRoomStudent.objects.all()
-
+            
             for s in class_students:
+                print(str(s.student.admissionNumber))
                 if str(s.student.admissionNumber) in request.POST:
                     StudentRouteAttendence.objects.create(status=request.POST[str(
                         s.student.admissionNumber)], date=_date, student=s)
