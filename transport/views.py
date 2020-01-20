@@ -156,3 +156,38 @@ def mark_attendence(request):
             messages.success(request, "Marked Attendence")
             redirect('routeAttendence')
     return render(request, 'transport/routeAttendence.html', {"routes": routes})
+
+def route_report(request):
+    if request.method == "POST":
+        route_code = request.POST.get("route_code")
+        request.session["route_code"] = route_code
+        routes_list = Routes.objects.filter(route_code=route_code)
+        student_routes_list = StudentRoute.objects.filter(route_code=route_code)
+        mylist = zip(routes_list, student_routes_list)
+        return render(request, 'transport/report.html', {"routes":Routes.objects.all(), "my_list":mylist})
+    return render(request, 'transport/report.html', {"routes":Routes.objects.all()})
+
+def route_report_pdf(request):
+    """
+    Export route report to pdf 
+    """
+    route_code = request.session["route_code"]
+    routes_list = Routes.objects.filter(route_code=route_code)
+    student_routes_list = StudentRoute.objects.filter(route_code=route_code)
+    mylist = zip(routes_list, student_routes_list)
+    template_path = 'transport/routeReportPdf.html'
+    context = {"my_list":mylist}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="route-report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render((context))
+
+    # create a pdf
+    pisaStatus = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisaStatus.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response

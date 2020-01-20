@@ -1,0 +1,70 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Vehcile List
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<div class="container-fluid">
+    <h2 class="text-center mt-3 ">Get Report By Selecting Route</h2>
+
+    <form method="POST" action="{% url 'routeReport' %}">
+        {% csrf_token %}
+        <div class="form-group w-50">
+            <label class="pr-1" for="">Routes:</label>
+            <select name="route_code" class="form-control mr-2">
+                <option selected="true" disabled="disabled" value="a">Select</option>
+                {% for route in routes %}
+                <option value='{{ route.route_code }}'>{{ route.route_code }}-{{route.shift_time}} Shift</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+    {% if my_list %}
+        <a href="{% url 'routeReportPdf' %}" class="text-dark float-md-right mr-1 mb-1"><i class="far fa-file-pdf text-danger fa-2x"></i></a>
+    <table class="mt-5 table table-secondary table-striped">
+
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Sr. No</th>
+                <th scope="col">Route No</th>
+                <th scope="col">Route</th>
+                <th scope="col">Name</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Drop Place</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for route, student_route in my_list %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ route.route_code }}</td>
+                <td>{{ route.start_place}} - {{ route.end_place }}</td>
+                <td>{{ student_route.student.fullName }}</td>
+                <td>{{ student_route.student.mobileNumber }}</td>
+                <td>{{ student_route.route_stoppage }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+    {% endif %}
+</div>
+
+{% endblock content %}
