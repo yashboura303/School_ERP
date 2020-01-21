@@ -26,4 +26,5 @@ urlpatterns = [
     path('fees/', include('fees.urls')),
     path('feeReport/', include('feereport.urls')),
     path('transport/', include('transport.urls')),
+    path('visitor/', include('visitors.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,89 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Visitor List
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+    .table-img{
+        border-radius: 50%;
+        height: 100px;
+        width: 100px;
+    }
+    
+</style>
+<div class="container-fluid">
+    <h2 class="text-center mt-3 ">Visitor List</h2>
+
+    <form method="POST" action="{% url 'visitorList' %}">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-4">
+            <label class="pr-1" for="">Select Date:</label>
+            <input type="date" class="form-control" name="date" >
+        </div>
+        <div class="form-group col-4">
+             <label for="">Select Month</label>
+            <select id="month" class="form-control" name="month">
+                <option value='1'>Janaury</option>
+                <option value='2'>February</option>
+                <option value='3'>March</option>
+                <option value='4'>April</option>
+                <option value='5'>May</option>
+                <option value='6'>June</option>
+                <option value='7'>July</option>
+                <option value='8'>August</option>
+                <option value='9'>September</option>
+                <option value='10'>October</option>
+                <option value='11'>November</option>
+                <option value='12'>December</option>
+            </select>
+        </div>
+        </div>
+        
+       
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+    {% if visitors %}
+    <table class="mt-5 table table-secondary table-striped">
+
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Visitor ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Contact To</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Photo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for visitor in visitors %}
+            <tr>
+                <td>{{ visitor.id }}</td>
+                <td>{{ visitor.name }}</td>
+                <td>{{ visitor.contact_to}}</td>
+                <td>{{ visitor.mobile_no }}</td>
+                <td><img src="{{visitor.photo.url}}" class="table-img" alt=""></td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+    {% endif %}
+</div>
+
+{% endblock content %}

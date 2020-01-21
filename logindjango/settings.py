@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'newsletter.apps.NewsletterConfig',
     'schoolinfo.apps.SchoolinfoConfig',
     'holiday.apps.HolidayConfig',
+    'visitors.apps.VisitorsConfig',
     'fees.apps.FeesConfig',
     'feereport.apps.FeereportConfig',
     'transport.apps.TransportConfig',
