@@ -35,8 +35,6 @@ def signup(request):
     input: user_type,user_name,password,phone number
     """
     if request.method == 'POST':
-        print(request.FILES)
-        print(request.FILES['profile_picture'])
         if request.POST['password1'] == request.POST['password2']:
             try:
                 user = User.objects.get(username=request.POST['username'])
@@ -64,7 +62,9 @@ def signup(request):
 
 
 def logout(request):
-    "logout user"
+    """
+    logout user
+    """
     if request.method == "POST":
         auth.logout(request)
         return render(request, 'home.html')

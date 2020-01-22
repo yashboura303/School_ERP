@@ -3,8 +3,10 @@
 """
 from datetime import date
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.contrib import messages
 from classform.models import ClassRoom
+from accounts.models import UserProfile
 from .models import Employee, Teacher, EmployeeDocuments, PermanentAddress, CurrentAddress
 
 
@@ -103,6 +105,13 @@ def form(request):
             teacher.specialization = specialization
             teacher.designation = designation
             teacher.save()
+
+            #create id and password for teacher 
+            user = User.objects.create_user(emp_id, email, emp_id)
+            user_profile = UserProfile.objects.create(
+                    user=user, fullName=f_name + " " + l_name)
+            user_profile.user_type = "Teacher"
+            user_profile.save()
             # alert message when class has already a class teacher
             try:
                 ClassRoom.objects.filter(classSection__exact=classTeacher)

@@ -21,7 +21,6 @@ def visitor_list(request):
 	if request.method == "POST":
 		_date = request.POST.get("date")
 		_month = request.POST.get("month")
-		
 		if _date:
 			_date = date(*map(int, _date.split('-')))
 			visitors = Visitor.objects.filter(date_time__date=_date)
