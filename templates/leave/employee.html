@@ -1,0 +1,41 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Newsletter
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+  <div class="container-fluid">
+    <h2 class="text-center">Apply for Leave</h2>
+    <form action="{% url 'employeeLeave' %}" method="POST" >
+      {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label > Employee ID:</label>
+                <input type="text" class="form-control"  name="emp_id">
+            </div>
+            <div class="form-group col-md-4">
+                <label >Subject:</label>
+                <input type="text" class="form-control"  name="subject">
+            </div>
+        </div>
+        <div class="form-row mt-2 ">
+            <div class="form-group col-md-10">
+                <label >Description:</label>
+               <textarea class="form-control" rows="3" name="description"></textarea>
+        </div>
+        </div>
+        <div class="form-row mt-2">
+            <div class="form-group col-md-4">
+                <label >Date-From:</label>
+                <input type="date" class="form-control"   name="date_from">
+            </div>
+            <div class="form-group col-md-4">
+                <label >Date-To:</label>
+                <input type="date" class="form-control"   name="date_to">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+   </div>
+{% endblock %}

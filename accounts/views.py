@@ -18,11 +18,8 @@ def login(request):
             username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             user_profile = UserProfile.objects.get(user=user)
-            if user_profile.user_type == "Admin":
-                auth.login(request, user)
-                return redirect('dashboard')
-            else:
-                return redirect('home')
+            auth.login(request, user)
+            return redirect('dashboard')
         else:
             messages.error(request, 'Invalid credentials')
             return redirect('login')
@@ -67,6 +64,6 @@ def logout(request):
     """
     if request.method == "POST":
         auth.logout(request)
-        return render(request, 'home.html')
+        return render(request, 'accounts/login.html')
     auth.logout(request)
-    return render(request, 'home.html')
+    return render(request, 'accounts/login.html')

@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <link href='https://fonts.googleapis.com/css?family=Dosis|Candal' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="{% static 'newsletter/css/newsletter.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Dosis|Candal' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static 'newsletter/css/newsletter.css' %}">
     <title>{% block title %}Dashboard{% endblock %}</title>
 </head>
 
@@ -52,6 +52,7 @@
                         <li class="header-menu">
                             <span>General</span>
                         </li>
+                        {% if user.userprofile.user_type == "Admin" %}
                         <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fa fa-user"></i>
@@ -72,6 +73,7 @@
                                 </ul>
                             </div>
                         </li>
+                        {% endif %}
                         <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="far fa-user-circle"></i>
@@ -79,6 +81,11 @@
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
+                                    {% if user.userprofile.user_type == "Teacher" %}
+                                    <li>
+                                        <a href="{% url 'studentList' %}">Check Student Details</a>
+                                    </li>
+                                    {% else %}
                                     <li>
                                         <a href="{% url 'recordForm' %}">Student Registration</a>
                                     </li>
@@ -88,10 +95,10 @@
                                     <li>
                                         <a href="{% url 'searchPage' %}">Search Students</a>
                                     </li>
-                                    
                                     <li>
                                         <a href="{% url 'uploadExcelData' %}">Bulk Upload </a>
                                     </li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </li>
@@ -143,31 +150,6 @@
                         </li>
                         <li class="sidebar-dropdown">
                             <a href="#">
-                                <i class="far fa-credit-card"></i>
-                                <span>Fees</span>
-                            </a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li>
-                                        <a href="{% url 'feesHome' %}">Fee Home</a>
-                                    </li>
-                                    <li>
-                                        <a href="{% url 'addFine' %}">Fine</a>
-                                    </li>
-                                    <li>
-                                        <a href="{% url 'addFeeClass' %}">Class Fee Collection</a>
-                                    </li>
-                                    <li>
-                                        <a href="{% url 'searchDefaulter' %}">Search Defaulter</a>
-                                    </li>
-                                    <li>
-                                        <a href="{% url 'feeCollectionReport' %}">Fee Collection Report</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>   
-                        <li class="sidebar-dropdown">
-                            <a href="#">
                                 <i class="fas fa-chart-area"></i>
                                 <span>Marks</span>
                             </a>
@@ -191,10 +173,36 @@
                                 </ul>
                             </div>
                         </li>
+                        {% if user.userprofile.user_type == "Admin" %}
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="far fa-credit-card"></i>
+                                <span>Fees</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'feesHome' %}">Fee Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'addFine' %}">Fine</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'addFeeClass' %}">Class Fee Collection</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'searchDefaulter' %}">Search Defaulter</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'feeCollectionReport' %}">Fee Collection Report</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                         <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fas fa-bus"></i>
-                                        <span>Transport</span>
+                                <span>Transport</span>
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
@@ -210,7 +218,6 @@
                                     <li>
                                         <a href="{% url 'routeAttendence' %}">Rout Wise Attendence</a>
                                     </li>
-                                    
                                     <li>
                                         <a href="{% url 'addRoute' %}">Routes</a>
                                     </li>
@@ -220,10 +227,10 @@
                                 </ul>
                             </div>
                         </li>
-                                                <li class="sidebar-dropdown">
+                        <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fas fa-user"></i>
-                                        <span>Visitors</span>
+                                <span>Visitors</span>
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
@@ -233,10 +240,33 @@
                                     <li>
                                         <a href="{% url 'visitorList' %}">Visitor List</a>
                                     </li>
-                                    
                                 </ul>
                             </div>
                         </li>
+                        {% endif %}
+                        {% if user.userprofile.user_type != "Admin" %}
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fas fa-check-square"></i></i>
+                                <span>Leave</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    {% if user.userprofile.user_type == "Student" %}
+                                    <li>
+                                        <a href="{% url 'studentLeave' %}">Add Leave</a>
+                                    </li>
+                                   {% else %}
+                                    <li>
+                                        <a href="{% url 'employeeLeave' %}">Add Leave</a>
+                                    </li>
+                                    {% endif %}
+        
+                                </ul>
+                            </div>
+                        </li>
+                        {% endif %}
+                        {% if user.userprofile.user_type == "Admin" %}
                         <li class="header-menu">
                             <span>Others</span>
                         </li>
@@ -264,6 +294,7 @@
                                 <span>Add Holdiay</span>
                             </a>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <!-- sidebar-menu  -->
