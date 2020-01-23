@@ -1,0 +1,22 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Video
+{% endblock %}
+{% block content %}
+{% include "message.html" %}
+<div class="container-fluid">
+    <h3 class="text-center">Add Video File</h3>
+    <form action="{% url 'addVideo' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Add File:</label>
+            <input type="file" class="form-control" name="video">
+        </div>
+        <div class="form-group">
+            <label for="username">Video Subject/Name:</label>
+            <input type="text" class="form-control" name="video_name">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock content %}
