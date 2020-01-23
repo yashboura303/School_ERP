@@ -3,6 +3,7 @@
 """
 from datetime import date
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from classform.models import ClassRoom, ClassRoomStudent
 from transport.models import Routes
@@ -17,7 +18,6 @@ def form(request):
     """
     add student info to student and media path for documents
     input: form values
-
     """
     if request.method == "POST":
         # Student Details
@@ -78,7 +78,13 @@ def form(request):
         student_info.prevSchoolName = prevschool_name
         student_info.save()
 
-        
+        #create id and password for student 
+        user = User.objects.create_user(username=add_number, password=add_number)
+        user_profile = UserProfile.objects.create(
+                user=user, fullName=f_name + " " + l_name, addmission_number=add_number)
+        user_profile.user_type = "Student"
+        user_profile.save()
+
 
         permanent = PermanentAddress.objects.create(student=student_info)
         permanent.Address = perm_add1 + perm_add2

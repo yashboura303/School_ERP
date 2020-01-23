@@ -8,11 +8,14 @@ from openpyxl import load_workbook
 from matplotlib import pyplot as plt
 from django.shortcuts import render, redirect
 from .models import ExamType, Exam, ExamMapping, Marks, AdditionalSubjectMapping
+from employeeform.models import Teacher, Employee
 from classform.models import ClassRoom, ClassRoomStudent, ReportCard
 from attendence.models import StudentAttendence, TeacherAttendence
 from django.http import HttpResponse
 from django.contrib import messages
 from django.http import JsonResponse
+from accounts.models import UserProfile
+
 
 matplotlib.use('TkAgg')
 
@@ -102,7 +105,15 @@ def add_marks(request):
     """
     exam_types = ExamType.objects.all()
     exam_names = Exam.objects.all()
-    class_rooms = ClassRoom.objects.all()
+    user_profile = UserProfile.objects.get(user=request.user)
+    if user_profile.user_type == "Teacher":
+        emp_id = user_profile.emp_id
+        employee = Employee.objects.get(empID=emp_id)
+        teacher = Teacher.objects.get(employee=employee)
+        class_section=teacher.classTeacher
+        class_rooms= ClassRoom.objects.filter(classSection=class_section)
+    else:
+       class_rooms = ClassRoom.objects.all()
 
     if request.method == "GET":
 

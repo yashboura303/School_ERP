@@ -8,6 +8,8 @@ class EmployeeLeave(models.Model):
 	subject = models.CharField(max_length=20)
 	date_from = models.DateField()
 	date_to = models.DateField()
+	approved = models.BooleanField(default=False)
+	rejected = models.BooleanField(default=False)
 
 class StudentLeave(models.Model):
 	student = models.ForeignKey(StudentInfo, on_delete=models.CASCADE)
@@ -15,3 +17,5 @@ class StudentLeave(models.Model):
 	subject = models.CharField(max_length=20)
 	date_from = models.DateField()
 	date_to = models.DateField()
+	approved = models.BooleanField(default=False)
+	rejected = models.BooleanField(default=False)

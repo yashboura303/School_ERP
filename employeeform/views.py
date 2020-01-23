@@ -15,7 +15,6 @@ def form(request):
     """
     add new employee info to employee and teacher table and set media path of documents
     input: form values
-
     """
     if request.method == "POST":
         # Student Details

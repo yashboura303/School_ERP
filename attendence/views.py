@@ -6,9 +6,10 @@ import matplotlib
 from matplotlib import pyplot as plt
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from employeeform.models import Teacher
+from employeeform.models import Teacher, Employee
 from classform.models import ClassRoomStudent, ClassRoom
 from .models import StudentAttendence, TeacherAttendence
+from accounts.models import UserProfile
 
 
 
@@ -24,19 +25,31 @@ def student_attendence(request):
     """
 
     # FOR DISPLAYING STUDENTS
-    classrooms = ClassRoom.objects.all()
+    user_profile = UserProfile.objects.get(user=request.user)
+    if user_profile.user_type == "Teacher":
+        emp_id = user_profile.emp_id
+        employee = Employee.objects.get(empID=emp_id)
+        teacher = Teacher.objects.get(employee=employee)
+        class_section=teacher.classTeacher
+        classrooms= ClassRoom.objects.filter(classSection=class_section)
+    else:
+       classrooms = ClassRoom.objects.all()
     students=False
     if request.method == "GET":
         if "add_no" in request.GET:
             add_no = request.GET["add_no"]
-            students = ClassRoomStudent.objects.filter(
-                student__admissionNumber=add_no)
-            request.session["add_no"] = add_no
+            if add_no:
+                students = ClassRoomStudent.objects.filter(
+                    student__admissionNumber=add_no)
+                request.session["add_no"] = add_no
+            else:
+                students = ClassRoomStudent.objects.all()
         if "class_room" in request.GET:
             class_name = request.GET["class_room"]
-            students = students.filter(
-                classRoom__classSection__icontains=class_name)
-            request.session["class_name"] = class_name
+            if class_name:
+                students = students.filter(
+                    classRoom__classSection__icontains=class_name)
+                request.session["class_name"] = class_name
         if students:
             return render(request, 'attendence/student.html', {"students": students, 'class_rooms':classrooms})
 
@@ -50,8 +63,9 @@ def student_attendence(request):
                 redirect('attendenceStudent')
             classstudents = ClassRoomStudent.objects.filter(
                 classRoom__classSection__icontains=request.session["class_name"])
-            classstudents = ClassRoomStudent.objects.filter(
-                student__admissionNumber=request.session["add_no"])
+            if "add_no" in request.session:
+                classstudents = ClassRoomStudent.objects.filter(
+                    student__admissionNumber=request.session["add_no"])
 
             for classroomstudent in classstudents:
                 if str(classroomstudent.student.admissionNumber) in request.POST:

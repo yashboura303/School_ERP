@@ -133,18 +133,21 @@
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
+                                    {% if user.userprofile.user_type == "Teacher" %}
                                     <li>
                                         <a href="{% url 'attendenceStudent' %}">Student Attendence</a>
-                                    </li>
-                                    <li>
-                                        <a href="{% url 'attendenceTeacher' %}">Teacher Attendence</a>
                                     </li>
                                     <li>
                                         <a href="{% url 'piechartStudent' %}">Student Attendence Report</a>
                                     </li>
                                     <li>
+                                        <a href="{% url 'attendenceTeacher' %}">Teacher Attendence</a>
+                                    </li>
+                                    <li>
                                         <a href="{% url 'piechartTeacher' %}">Teacher Attendence Report</a>
                                     </li>
+                                    {% else %}
+                                    {% endif %}
                                 </ul>
                             </div>
                         </li>
@@ -155,14 +158,16 @@
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li>
-                                        <a href="{% url 'marksHome' %}">Marks Home</a>
-                                    </li>
+                                    {% if user.userprofile.user_type == "Teacher" %}
                                     <li>
                                         <a href="{% url 'addMarks' %}">Add Marks</a>
                                     </li>
                                     <li>
                                         <a href="{% url 'reportStudent' %}">Student Report</a>
+                                    </li>
+                                    {% else %}
+                                    <li>
+                                        <a href="{% url 'marksHome' %}">Marks Home</a>
                                     </li>
                                     <li>
                                         <a href="{% url 'reportClass' %}">Class Report</a>
@@ -170,6 +175,7 @@
                                     <li>
                                         <a href="{% url 'reportCard' %}">Report Card</a>
                                     </li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </li>
@@ -243,6 +249,25 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="far fa-images"></i>
+                                <span>Gallery</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'addAlbum' %}">Add Album</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'addPhoto' %}">Add Photo</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'addVideo' %}">Add Video</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                         {% endif %}
                         {% if user.userprofile.user_type != "Admin" %}
                         <li class="sidebar-dropdown">
@@ -256,12 +281,14 @@
                                     <li>
                                         <a href="{% url 'studentLeave' %}">Add Leave</a>
                                     </li>
-                                   {% else %}
+                                    {% else %}
+                                    <li>
+                                        <a href="{% url 'viewStudentLeaves' %}">Approve/Reject Leaves</a>
+                                    </li>
                                     <li>
                                         <a href="{% url 'employeeLeave' %}">Add Leave</a>
                                     </li>
                                     {% endif %}
-        
                                 </ul>
                             </div>
                         </li>

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'fees.apps.FeesConfig',
     'feereport.apps.FeereportConfig',
     'transport.apps.TransportConfig',
+    'gallery.apps.GalleryConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
