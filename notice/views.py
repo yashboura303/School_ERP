@@ -2,13 +2,25 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from classform.models import ClassRoom, ClassRoomStudent
 from .models import ClassNotice, StudentNotice
+from accounts.models import UserProfile
+from employeeform.models import Employee, Teacher
 # Create your views here.
 
 
 def notice_home(request):
-    context = {
-        "class_rooms": ClassRoom.objects.all()
-    }
+    user_profile = UserProfile.objects.get(user=request.user)
+    if user_profile.user_type == "Teacher":
+        emp_id = user_profile.emp_id
+        employee = Employee.objects.get(empID=emp_id)
+        teacher = Teacher.objects.get(employee=employee)
+        class_section=teacher.classTeacher
+        context = {
+        "class_rooms": ClassRoom.objects.filter(classSection=class_section)
+        }
+    else:
+        context = {
+            "class_rooms": ClassRoom.objects.all()
+        }
     if request.method == "POST":
         class_section = request.POST.get("class_room")
         notice = request.POST.get("notice")

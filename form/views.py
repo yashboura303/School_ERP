@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from classform.models import ClassRoom, ClassRoomStudent
 from transport.models import Routes
+from employeeform.models import Employee, Teacher
+from accounts.models import UserProfile
 from .models import StudentInfo, PermanentAddress, CurrentAddress, ParentInfo, Documents, StudentRoute
 from openpyxl import load_workbook
 
@@ -356,3 +358,13 @@ def upload_excel_data(request):
             i+=1
         messages.success(request, 'Data Uploaded Successfully')
     return render(request, 'form/uploadExcelData.html')
+
+
+def get_students_list(request):
+    teacher_profile = UserProfile.objects.get(user=request.user)
+    emp_id = teacher_profile.emp_id
+    employee = Employee.objects.get(empID=emp_id)
+    teacher = Teacher.objects.get(employee=employee)
+    class_section=teacher.classTeacher
+    students = ClassRoomStudent.objects.filter(classRoom__classSection=class_section)
+    return render(request, "form/studentList.html",{"class_room_students":students})

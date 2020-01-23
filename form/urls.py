@@ -11,4 +11,5 @@ urlpatterns = [
     path('uploadExcel', views.upload_excel_data, name="uploadExcelData"),
     path('update/<int:admission_number>/', views.update_with_data, name="updateInfoWithData"),
     path('print/<int:admission_number>/', views.printinfo, name="printStudentData"),
+    path('studentList', views.get_students_list, name="studentList"),
 ]

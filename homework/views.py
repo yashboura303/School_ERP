@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from classform.models import ClassRoom
+from accounts.models import UserProfile
+from employeeform.models import Employee, Teacher
 from matplotlib import pyplot as plt
 import numpy as np
 import matplotlib
@@ -13,13 +15,22 @@ plt.style.use("fivethirtyeight")
 
 def homework_home(request):
     subjects = (ExamMapping.objects.all().values('subject').distinct())
-    context = {
+    user_profile = UserProfile.objects.get(user=request.user)
+    if user_profile.user_type == "Teacher":
+        emp_id = user_profile.emp_id
+        employee = Employee.objects.get(empID=emp_id)
+        teacher = Teacher.objects.get(employee=employee)
+        class_section=teacher.classTeacher
+        context = {
+        "class_rooms": ClassRoom.objects.filter(classSection=class_section),
+        "subjects": subjects
+        }
+    else:
+        context = {
         "class_rooms": ClassRoom.objects.all(),
         "subjects": subjects
     }
     if request.method == "POST":
-        print(request.FILES)
-        print(request.POST)
         class_section = request.POST.get("class_room")
         subject = request.POST.get("subject")
         description = request.POST.get("detail")
@@ -78,12 +89,23 @@ def check_homework(request):
 
 
 def syllabus(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    if user_profile.user_type == "Teacher":
+        emp_id = user_profile.emp_id
+        employee = Employee.objects.get(empID=emp_id)
+        teacher = Teacher.objects.get(employee=employee)
+        class_section=teacher.classTeacher
+        context = {
+        "class_rooms": ClassRoom.objects.filter(classSection=class_section)
+        }
+    else:
+        context = {
+            "class_rooms": ClassRoom.objects.all()
+        }
     if request.method == "POST":
-        print(request.FILES)
-        print(request.POST)
         class_section = request.POST.get("class_room")
         description = request.POST.get("description")
         document = request.FILES.get("syllabus_file")
         HomeWork.objects.create(classRoom=ClassRoom.objects.get(classSection=class_section), description=description,
                                 date_published=datetime.today(), document=document)
-    return render(request, 'homework/syllabus.html', {'class_rooms': ClassRoom.objects.all()})
+    return render(request, 'homework/syllabus.html', context)

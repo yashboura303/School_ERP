@@ -11,6 +11,8 @@ class UserProfile(models.Model):
 	user_type = models.CharField(max_length=20,default="")
 	mobile_no = models.BigIntegerField(default=0)
 	image = models.ImageField(default='default.jpg',upload_to ='profile_pics')
+	emp_id = models.BigIntegerField(default=0)
+	addmission_number = models.BigIntegerField(default=0)
 
 	def __str__(self):
 		return f"{self.user}"
