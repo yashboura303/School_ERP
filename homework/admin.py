@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import HomeWork
+from .models import HomeWork, Syllabus
 # Register your models here.
 
 class HomeWorkAdmin(admin.ModelAdmin):
@@ -7,3 +7,4 @@ class HomeWorkAdmin(admin.ModelAdmin):
     # list_display = ('marks',)
 
 admin.site.register(HomeWork, HomeWorkAdmin)
+admin.site.register(Syllabus)

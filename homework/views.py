@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from classform.models import ClassRoom
 from accounts.models import UserProfile
+from classform.models import ClassRoomStudent
 from employeeform.models import Employee, Teacher
 from matplotlib import pyplot as plt
 import numpy as np
 import matplotlib
 from markssection.models import ExamMapping
-from .models import HomeWork
+from .models import HomeWork, Syllabus
 from datetime import datetime
 matplotlib.use('TkAgg')
 plt.style.use("fivethirtyeight")
@@ -106,6 +107,31 @@ def syllabus(request):
         class_section = request.POST.get("class_room")
         description = request.POST.get("description")
         document = request.FILES.get("syllabus_file")
-        HomeWork.objects.create(classRoom=ClassRoom.objects.get(classSection=class_section), description=description,
+        Syllabus.objects.create(classRoom=ClassRoom.objects.get(classSection=class_section), description=description,
                                 date_published=datetime.today(), document=document)
     return render(request, 'homework/syllabus.html', context)
+
+
+def check_class_homework(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    if user_profile.user_type == "Student":
+        addmission_number = user_profile.addmission_number
+        student = ClassRoomStudent.objects.get(student__admissionNumber=addmission_number)
+        class_room = student.classRoom
+        homeworks = HomeWork.objects.filter(classRoom=class_room)
+        if len(homeworks) > 0:
+            return render(request, 'homework/studentClassHomework.html', {"homeworks":homeworks})
+        else:
+            return render(request, 'homework/studentClassHomework.html')
+
+def check_class_syllabus(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    if user_profile.user_type == "Student":
+        addmission_number = user_profile.addmission_number
+        student = ClassRoomStudent.objects.get(student__admissionNumber=addmission_number)
+        class_room = student.classRoom
+        syllabuss = Syllabus.objects.filter(classRoom=class_room)
+        if len(syllabuss) > 0:
+            return render(request, 'homework/checkSyllabus.html', {"syllabuss":syllabuss})
+        else:
+            return render(request, 'homework/checkSyllabus.html')
