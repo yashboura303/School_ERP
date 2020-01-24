@@ -16,24 +16,29 @@
                     <label for="username">User Name</label>
                     <input type="text" class="form-control" id="username" aria-describedby="emailHelp" name="username" value="{{profile.user.username }}">
                 </div>
+                {% if user.userprofile.user_type == "Teacher" %}
                 <div class="form-group col-md-4">
                     <label for="username">Name</label>
                     <input type="text" class="form-control" id="first_name" aria-describedby="emailHelp" name="first_name" value="{{profile.fullName }}">
                 </div>
+                
                 <div class="form-group col-md-4">
                     <label for="exampleInputPassword1"> Change Profile Pic</label>
                     <input type="file" class="form-control" id="" name="profile_picture"
                     value="{{ profile.image.url }}}">
                 </div>
+                {% endif %}
             </div>
             
             <div class="form-row">
+                {% if user.userprofile.user_type == "Teacher" %}
                 <div class="form-group col-md-4">
                     <label for="username">Phone Number</label>
                     <input type="number" class="form-control" id="username" aria-describedby="emailHelp" name="phonenumber"value="{{ profile.mobile_no }}">
                 </div>
+                {% endif %}
             </div>
-            
+            {% if user.userprofile.user_type == "Teacher" %}
             <p class="mt-2"> <strong>Change Password:</strong></p>
             <div class="form-group w-50">
                 <label for="current_password"> Current Password</label>
@@ -49,6 +54,7 @@
             </div>
             <div class="form-group">
             </div>
+            {% endif %}
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>

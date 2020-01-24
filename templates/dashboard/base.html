@@ -109,6 +109,16 @@
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
+                                    {% if user.userprofile.user_type == "Student" %}
+                                    <li>
+                                        <a href="{% url 'checkStudentNotice' %}">Check Personal Notice
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'checkClassNotice' %}">Check Class Notice
+                                        </a>
+                                    </li>
+                                    {% else %}
                                     <li>
                                         <a href="{% url 'noticeHome' %}">Notice to Class
                                         </a>
@@ -123,6 +133,7 @@
                                         <a href="{% url 'syllabus' %}">Add Syllabus
                                         </a>
                                     </li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </li>

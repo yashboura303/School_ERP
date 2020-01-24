@@ -58,3 +58,36 @@ def notice__student(request, pk):
         StudentNotice.objects.create(
             student=student, notice=notice, notice_document=document)
     return render(request, 'notice/noticeStudent.html', {"student": student})
+
+
+def check_notice_student(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    if user_profile.user_type == "Student":
+        addmission_number = user_profile.addmission_number
+        notice = StudentNotice.objects.filter(student__student__admissionNumber=addmission_number)
+        # notice = StudentNotice.objects.filter(student=student)
+        if len(notice)>0:
+            return render(request, 'notice/checkStudentNotice.html', {"notices":notice})
+        else:
+            return render(request, 'notice/checkStudentNotice.html')
+
+def check_class_notice(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    if user_profile.user_type == "Student":
+        addmission_number = user_profile.addmission_number
+        student = ClassRoomStudent.objects.get(student__admissionNumber=addmission_number)
+        class_room = student.classRoom
+        notice = ClassNotice.objects.filter(classRoom=class_room)
+        if len(notice)>0:
+            return render(request, 'notice/checkClassNotice.html', {"notices":notice})
+        else:
+            return render(request, 'notice/checkClassNotice.html')
+
+
+def download_class_notice(request, pk):
+    notice = ClassNotice.objects.get(id=pk)
+    filename = notcie.notice_document.split('/')[-1]
+    response = HttpResponse(object_name.file, content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+    return response
