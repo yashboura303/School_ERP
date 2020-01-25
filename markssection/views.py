@@ -1,11 +1,12 @@
 import io
 import urllib, base64
 import matplotlib
+matplotlib.use('TkAgg')
 import numpy as np
 from tempfile import NamedTemporaryFile
 from django.core.files import File
 from openpyxl import load_workbook
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 from django.shortcuts import render, redirect
 from .models import ExamType, Exam, ExamMapping, Marks, AdditionalSubjectMapping
 from employeeform.models import Teacher, Employee
@@ -17,7 +18,7 @@ from django.http import JsonResponse
 from accounts.models import UserProfile
 
 
-matplotlib.use('TkAgg')
+
 
 
 def home(request):
