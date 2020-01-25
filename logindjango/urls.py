@@ -5,11 +5,12 @@ from django.urls import path
 from django.conf.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
+import accounts.views as account_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('home.urls')),
+    path('', account_view.login, name="login"),
     path('auth/', include('accounts.urls')),
     path('studentForm/', include('form.urls')),
     path('marks/', include('markssection.urls')),
