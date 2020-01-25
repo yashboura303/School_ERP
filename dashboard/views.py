@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from dailythought.models import Thoughts
 from newsletter.models import Newsletter
+from gallery.models import Photo
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages, auth
 import datetime
@@ -26,7 +27,14 @@ def home(request):
             today_thought = thought.last()
 
         news = Newsletter.objects.filter(date=datetime.date.today())
-        return render(request, 'dashboard/dashboard.html', {"thought": today_thought, "news": news, "profile": profile})
+
+        context = { "thought": today_thought,
+                    "news": news,
+                    "profile": profile,
+                    "photos": Photo.objects.all()
+                }
+        print(Photo.objects.all()[0].photo_name)
+        return render(request, 'dashboard/dashboard.html',context)
     else:
         return render(request, 'accounts/login.html')
 

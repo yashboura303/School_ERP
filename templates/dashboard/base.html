@@ -14,7 +14,11 @@
     <link rel="stylesheet" href="{% static 'newsletter/css/newsletter.css' %}">
     <title>{% block title %}Dashboard{% endblock %}</title>
 </head>
-
+<style>
+    body{
+        font-family: 'Dosis', 'Candal', sans-serif ;
+    }
+</style>
 <body>
     <div class="page-wrapper chiller-theme toggled">
         <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
@@ -74,6 +78,7 @@
                             </div>
                         </li>
                         {% endif %}
+                        {% if user.userprofile.user_type != "Student" %}
                         <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="far fa-user-circle"></i>
@@ -85,7 +90,7 @@
                                     <li>
                                         <a href="{% url 'studentList' %}">Check Student Details</a>
                                     </li>
-                                    {% else %}
+                                    {% elif user.userprofile.user_type == "Admin" %}
                                     <li>
                                         <a href="{% url 'recordForm' %}">Student Registration</a>
                                     </li>
@@ -102,6 +107,7 @@
                                 </ul>
                             </div>
                         </li>
+                        {% endif %}
                         <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fa fa-file-alt"></i>
@@ -153,7 +159,7 @@
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    {% if user.userprofile.user_type == "Teacher" %}
+                                    {% if user.userprofile.user_type == "Admin" %}
                                     <li>
                                         <a href="{% url 'attendenceStudent' %}">Student Attendence</a>
                                     </li>
@@ -166,7 +172,10 @@
                                     <li>
                                         <a href="{% url 'piechartTeacher' %}">Teacher Attendence Report</a>
                                     </li>
-                                    {% else %}
+                                    {% elif user.userprofile.user_type == "Student" %}
+                                    <li>
+                                        <a href="{% url 'piechartStudent' %}">Check Attendence</a>
+                                    </li>
                                     {% endif %}
                                 </ul>
                             </div>
@@ -392,9 +401,7 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-    <script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    <script>
     $(".sidebar-dropdown > a").click(function() {
         $(".sidebar-submenu").slideUp(200);
         if (

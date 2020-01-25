@@ -1,7 +1,16 @@
 {% extends "./base.html" %}
 
 {% block content %}
-
+<style type="text/css">
+  .image {
+    height: 400px;
+    width: 100%;
+  }
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <div class="container-fluid border border-top border-bottom border-success text-center py-3">
   <h5><i class="fas fa-podcast mr-1"></i><strong>Today's Thought: </strong>{{thought.thought}}</h5>
 </div>
@@ -16,5 +25,38 @@
       {% endfor %}
 </div>
 {% endif %}
+
+{% if photos %}
+<div class="container-fluid">
+  <h5 class="my-2"><i class="far fa-images mr-2"></i><strong>School Gallery:</strong>
+    <h5>
+  <div id="demo" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      {% for photo in photos %}
+      {% if forloop.counter0 == 0 %}
+      <li data-target="#demo" data-slide-to="{{ forloop.counter0 }}" class="active"></li>
+      {% else %}
+      <li data-target="#demo" data-slide-to="{{ forloop.counter0 }}"></li>
+      {% endif %}
+      {% endfor %}
+    </ol>
+    <div class="carousel-inner">
+      {% for photo in photos %}
+      <div class="carousel-item active">
+        <img src="{{photo.file.url}}" class="d-block w-100 image" alt="image">
+      </div>
+      {% endfor %}
+    </div>
+    <a class="carousel-control-prev" href="#demo" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#demo" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
 </div>
+{% endif %}
 {% endblock content %}

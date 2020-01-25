@@ -1,17 +1,19 @@
 """
 Attendence app handling
 """
+import io
+import urllib
+import base64
 from datetime import date, datetime
 import matplotlib
 from matplotlib import pyplot as plt
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from accounts.models import UserProfile
 from employeeform.models import Teacher, Employee
 from classform.models import ClassRoomStudent, ClassRoom
 from .models import StudentAttendence, TeacherAttendence
 from accounts.models import UserProfile
-
-
 
 
 matplotlib.use('TkAgg')
@@ -30,11 +32,11 @@ def student_attendence(request):
         emp_id = user_profile.emp_id
         employee = Employee.objects.get(empID=emp_id)
         teacher = Teacher.objects.get(employee=employee)
-        class_section=teacher.classTeacher
-        classrooms= ClassRoom.objects.filter(classSection=class_section)
+        class_section = teacher.classTeacher
+        classrooms = ClassRoom.objects.filter(classSection=class_section)
     else:
-       classrooms = ClassRoom.objects.all()
-    students=False
+        classrooms = ClassRoom.objects.all()
+    students = False
     if request.method == "GET":
         if "add_no" in request.GET:
             add_no = request.GET["add_no"]
@@ -51,7 +53,7 @@ def student_attendence(request):
                     classRoom__classSection__icontains=class_name)
                 request.session["class_name"] = class_name
         if students:
-            return render(request, 'attendence/student.html', {"students": students, 'class_rooms':classrooms})
+            return render(request, 'attendence/student.html', {"students": students, 'class_rooms': classrooms})
 
     # FOR MARKING ATTENDENCE
     if request.method == "POST":
@@ -73,7 +75,7 @@ def student_attendence(request):
                         classroomstudent.student.admissionNumber)])
                     s.save()
 
-    return render(request, 'attendence/student.html', {'class_rooms':classrooms})
+    return render(request, 'attendence/student.html', {'class_rooms': classrooms})
 
 
 def student_pie_chart(request):
@@ -94,10 +96,14 @@ def student_pie_chart(request):
         if "month" in request.POST:
             _month = request.POST["month"]
             student_attendence = student_attendence.filter(date__month=_month)
-        if "add_no" in request.POST:
-            add_no = request.POST["add_no"]
-            student_attendence = student_attendence.filter(
-                student__student__admissionNumber=add_no)
+        user_profile = UserProfile.objects.get(user=request.user)
+        if user_profile.user_type == "Student":
+            add_no = user_profile.addmission_number
+        else:
+            if "add_no" in request.POST:
+                add_no = request.POST["add_no"]
+        student_attendence = student_attendence.filter(
+            student__student__admissionNumber=add_no)
         for student in student_attendence:
             name = student.student.student.fullName
             if student.status == "present":
@@ -108,9 +114,16 @@ def student_pie_chart(request):
         plt.pie(slices, labels=labels, startangle=90, autopct='%1.1f%%')
         plt.title(f"Attendence for {name}")
         plt.tight_layout()
-        fig = plt.figure()
-        plt.show()
-
+        # fig = plt.figure()
+        # plt.show()
+        plt.tight_layout()
+        fig3 = plt.gcf()
+        buf3 = io.BytesIO()
+        fig3.savefig(buf3, format='png')
+        buf3.seek(0)
+        string = base64.b64encode(buf3.read())
+        uri = 'data:image/png;base64,' + urllib.parse.quote(string)
+        return render(request, 'attendence/studentPieChart.html', {'image': uri})
     return render(request, 'attendence/studentPieChart.html')
 
 
