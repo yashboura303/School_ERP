@@ -16,7 +16,7 @@ from .models import StudentAttendence, TeacherAttendence
 from accounts.models import UserProfile
 
 
-matplotlib.use('TkAgg')
+matplotlib.use('Agg')
 
 
 def student_attendence(request):

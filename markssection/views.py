@@ -1,7 +1,7 @@
 import io
 import urllib, base64
 import matplotlib
-matplotlib.use('TkAgg')
+matplotlib.use('Agg')
 import numpy as np
 from tempfile import NamedTemporaryFile
 from django.core.files import File

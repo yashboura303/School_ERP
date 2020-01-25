@@ -9,7 +9,7 @@ import matplotlib
 from markssection.models import ExamMapping
 from .models import HomeWork, Syllabus
 from datetime import datetime
-matplotlib.use('TkAgg')
+matplotlib.use('Agg')
 plt.style.use("fivethirtyeight")
 # Create your views here.
 
