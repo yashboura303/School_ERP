@@ -4,7 +4,7 @@ from employeeform.models import Employee
 
 
 class Vehicle(models.Model):
-    vehicle_no = models.BigIntegerField()
+    vehicle_no = models.BigIntegerField(primary_key=True)
     device_id = models.BigIntegerField()
     service_id = models.BigIntegerField()
     no_of_seat = models.IntegerField()

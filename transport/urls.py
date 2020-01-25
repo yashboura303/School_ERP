@@ -16,4 +16,5 @@ urlpatterns = [
     path('routeAttendence', views.route_attendence, name="routeAttendence"),
     path('markAttendence', views.mark_attendence, name="markAttendence"),
     path('routeReport', views.route_report, name="routeReport"),
+    path('getStudentRoute', views.get_student_transport_route, name="getStudentRoute"),
 ]

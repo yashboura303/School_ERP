@@ -4,6 +4,7 @@ from io import BytesIO
 from django.template import Context
 from .models import Vehicle, Routes, Driver
 from form.models import StudentRoute, StudentInfo
+from accounts.models import UserProfile
 from datetime import date
 from django.contrib import messages
 from employeeform.models import Employee
@@ -147,7 +148,7 @@ def mark_attendence(request):
                 messages.info(request, "Selected Date is a holiday!")
                 redirect('routeAttendence')
             class_students = ClassRoomStudent.objects.all()
-            
+
             for s in class_students:
                 print(str(s.student.admissionNumber))
                 if str(s.student.admissionNumber) in request.POST:
@@ -157,15 +158,18 @@ def mark_attendence(request):
             redirect('routeAttendence')
     return render(request, 'transport/routeAttendence.html', {"routes": routes})
 
+
 def route_report(request):
     if request.method == "POST":
         route_code = request.POST.get("route_code")
         request.session["route_code"] = route_code
         routes_list = Routes.objects.filter(route_code=route_code)
-        student_routes_list = StudentRoute.objects.filter(route_code=route_code)
+        student_routes_list = StudentRoute.objects.filter(
+            route_code=route_code)
         mylist = zip(routes_list, student_routes_list)
-        return render(request, 'transport/report.html', {"routes":Routes.objects.all(), "my_list":mylist})
-    return render(request, 'transport/report.html', {"routes":Routes.objects.all()})
+        return render(request, 'transport/report.html', {"routes": Routes.objects.all(), "my_list": mylist})
+    return render(request, 'transport/report.html', {"routes": Routes.objects.all()})
+
 
 def route_report_pdf(request):
     """
@@ -176,7 +180,7 @@ def route_report_pdf(request):
     student_routes_list = StudentRoute.objects.filter(route_code=route_code)
     mylist = zip(routes_list, student_routes_list)
     template_path = 'transport/routeReportPdf.html'
-    context = {"my_list":mylist}
+    context = {"my_list": mylist}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="route-report.pdf"'
@@ -187,7 +191,23 @@ def route_report_pdf(request):
     # create a pdf
     pisaStatus = pisa.CreatePDF(
         html, dest=response)
-    # if error then show some funy view
     if pisaStatus.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+def get_student_transport_route(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    if user_profile.user_type == "Student":
+        addmission_number = user_profile.addmission_number
+        student_route = StudentRoute.objects.get(student__admissionNumber=addmission_number)
+        route_code = student_route.route_code
+        route = Routes.objects.get(route_code=route_code)
+        vehicle = route.vehicle
+        driver = Driver.objects.get(vehicle=vehicle)
+        context = {
+        "student_route":student_route,
+            "route":route,
+            "driver":driver
+        }
+        return render(request, 'transport/getStudentRoute.html', context)
+

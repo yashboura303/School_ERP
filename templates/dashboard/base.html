@@ -199,6 +199,21 @@
                                 </ul>
                             </div>
                         </li>
+                        {% if user.userprofile.user_type == "Student" %}
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fas fa-bus"></i>
+                                <span>Transport</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'getStudentRoute' %}">Transport Route</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        {% endif %}
                         {% if user.userprofile.user_type == "Admin" %}
                         <li class="sidebar-dropdown">
                             <a href="#">
