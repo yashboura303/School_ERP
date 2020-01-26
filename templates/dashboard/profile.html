@@ -16,7 +16,7 @@
                     <label for="username">User Name</label>
                     <input type="text" class="form-control" id="username" aria-describedby="emailHelp" name="username" value="{{profile.user.username }}">
                 </div>
-                {% if user.userprofile.user_type!= "Student" %}
+                {% if user.userprofile.user_type != "Student" %}
                 <div class="form-group col-md-4">
                     <label for="username">Name</label>
                     <input type="text" class="form-control" id="first_name" aria-describedby="emailHelp" name="first_name" value="{{profile.fullName }}">
