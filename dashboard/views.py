@@ -19,22 +19,21 @@ def home(request):
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
         thought = Thoughts.objects.all()
-        if thought[0].timestamp != datetime.date.today():
-            thought[0].timestamp = datetime.date.today()
-            print(thought)
-            today_thought = thought[randrange(len(thought)-1)]
-        else:
-            today_thought = thought.last()
+        if len(thought) > 0:
+            if thought[0].timestamp != datetime.date.today():
+                thought[0].timestamp = datetime.date.today()
+                print(thought)
+                today_thought = thought[randrange(len(thought)-1)]
+            else:
+                today_thought = thought.last()
+            news = Newsletter.objects.filter(date=datetime.date.today())
 
-        news = Newsletter.objects.filter(date=datetime.date.today())
-
-        context = { "thought": today_thought,
-                    "news": news,
-                    "profile": profile,
-                    "photos": Photo.objects.all()
-                }
-        print(Photo.objects.all()[0].photo_name)
-        return render(request, 'dashboard/dashboard.html',context)
+            context = { "thought": today_thought,
+                        "news": news,
+                        "profile": profile,
+                        "photos": Photo.objects.all()
+                    }
+            return render(request, 'dashboard/dashboard.html',context)
     else:
         return render(request, 'accounts/login.html')
 
