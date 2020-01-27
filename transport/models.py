@@ -50,8 +50,8 @@ class Routes(models.Model):
     stoppage_id = models.IntegerField(primary_key=True)
     remarks = models.CharField(max_length=50, default="")
     route_distance = models.IntegerField()
-    longitude = models.DecimalField(max_digits=5, decimal_places=2)
-    lattitude = models.DecimalField(max_digits=5, decimal_places=2)
+    longitude = models.DecimalField(max_digits=8, decimal_places=4)
+    lattitude = models.DecimalField(max_digits=8, decimal_places=4)
 
 
 
