@@ -71,7 +71,7 @@ def driver_register(request):
 
 def route_register(request):
     if request.method == "POST":
-        vehicle_id = request.POST.get("vehicle")
+        vehicle_no = request.POST.get("vehicle")
         route_code = request.POST.get("route_code")
         start_place = request.POST.get("start_place")
         end_place = request.POST.get("end_place")
@@ -82,7 +82,7 @@ def route_register(request):
         stoppage_id = request.POST.get("stoppage_id")
         longitude = request.POST.get("longitude")
         lattitude = request.POST.get("lattitude")
-        vehicle = Vehicle.objects.get(id=vehicle_id)
+        vehicle = Vehicle.objects.get(vehicle_no=vehicle_no)
         stoppage_id = str(route_code) + stoppage_id
         Routes.objects.create(vehicle=vehicle, route_code=route_code, start_place=start_place, end_place=end_place, shift_time=shift,
                               stoppage_names=stoppage_name, stoppage_id=stoppage_id, remarks=remarks, route_distance=route_distance, longitude=longitude, lattitude=lattitude)

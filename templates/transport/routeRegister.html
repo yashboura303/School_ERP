@@ -28,7 +28,7 @@ Route Register
                 <select name="vehicle" class="form-control mr-2">
                     <option selected="true" disabled="disabled" value="a">Select</option>
                     {% for vehicle in vehicles %}
-                    <option value='{{ vehicle.id }}'>{{ vehicle.id }}- {{vehicle.vehicle_no}}</option>
+                    <option value='{{ vehicle.vehicle_no }}'>{{vehicle.vehicle_no}}</option>
                     {% endfor %}
                 </select>
             </div>
