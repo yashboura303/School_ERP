@@ -46,7 +46,7 @@ class Routes(models.Model):
     start_place = models.CharField(max_length=30, default="")
     end_place = models.CharField(max_length=30, default="")
     shift_time = models.CharField(max_length=30, default="")
-    stoppage_names = models.CharField(max_length=30, default="")
+    stoppage_names = models.CharField(max_length=100, default="")
     stoppage_id = models.IntegerField(primary_key=True)
     remarks = models.CharField(max_length=50, default="")
     route_distance = models.IntegerField()
