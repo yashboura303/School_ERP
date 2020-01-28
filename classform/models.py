@@ -6,10 +6,17 @@ from form.models import StudentInfo
 from employeeform.models import Teacher
 from datetime import datetime
 
+# class ClassTable(models.Model):
+#     """
+#     Table for Class-Section 
+#     """
+#     class_section = models.CharField(max_length=50)
+#     def __str__(self):
+#         return f"Class:{self.class_section}"
 
 class ClassRoom(models.Model):
     """
-    Table for Class Room details with Class/Section and Class Teacher Assigned
+    Table for Class Room details with Class-Section and Class Teacher Assigned
     """
     classSection = models.CharField(max_length=50)
     teacher = models.OneToOneField(Teacher, on_delete=models.CASCADE)
