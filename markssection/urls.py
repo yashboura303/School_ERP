@@ -15,4 +15,5 @@ urlpatterns = [
     path('report', views.report_analysis, name="reportStudent"),
     path('reportClass', views.class_report_analysis, name="reportClass"),
     path('reportCard', views.report_card, name="reportCard"),
+    path('studentMarksFilter', views.student_marks_filter, name="studentMarksFilter"),
 ]

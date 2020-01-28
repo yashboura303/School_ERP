@@ -404,7 +404,7 @@ def report_analysis(request):
                 if a.subject not in subject_x:
                     subject_x.append(a.subject)
             subject_x.sort()
-            print(term)
+
             # Get UT and SA marks according to term 1 or term 2
             try:
                 if 'term1' in term and 'term2' not in term:
@@ -629,3 +629,33 @@ def class_report_analysis(request):
             redirect('reportClass')
 
     return render(request, 'marks/classReport.html', {"class_rooms": ClassRoom.objects.all()})
+
+
+def student_marks_filter(request):
+    """
+    Display and filter the marks according to exam name, exam type, subject
+    """
+    user_profile = UserProfile.objects.get(user=request.user)
+    exam_types = ExamType.objects.all().values('examType').distinct()
+    exam_names = Exam.objects.all()
+    exam_mapping_subjects = ExamMapping.objects.all().values('subject').distinct()
+    addmission_number = user_profile.addmission_number
+    student = ClassRoomStudent.objects.get(student__admissionNumber=addmission_number)
+    marks = Marks.objects.filter(classroomStudent=student)
+    exam_name = request.GET.get("exam_name")
+    exam_type = request.GET.get("exam_type")
+    subject = request.GET.get("subject")
+    if exam_name != '' and exam_name is not None:
+        marks = Marks.objects.filter(examName__examName=(exam_name))
+    if exam_type != '' and exam_type is not None:
+        marks = Marks.objects.filter(examType__examType=(exam_type))
+    if subject != '' and subject is not None:
+        marks = Marks.objects.filter(subject=subject)
+
+    context = {
+        "exam_names":exam_names,
+        "exam_types":exam_types,
+        "exam_mapping_subjects":exam_mapping_subjects,
+        "marks":marks
+    }
+    return render(request, "marks/studentMarksFilter.html", context)

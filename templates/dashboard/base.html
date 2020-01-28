@@ -194,6 +194,10 @@
                                     <li>
                                         <a href="{% url 'reportStudent' %}">Student Report</a>
                                     </li>
+                                    {% elif user.userprofile.user_type == "Student" %}
+                                    <li>
+                                        <a href="{% url 'studentMarksFilter' %}">Check Marks</a>
+                                    </li>
                                     {% else %}
                                     <li>
                                         <a href="{% url 'marksHome' %}">Marks Home</a>

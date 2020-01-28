@@ -1,0 +1,62 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Marks
+{% endblock %}
+{% block content %}
+{% include "message.html" %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h2 class="display-5 mb-3">Get your marks</h2>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'studentMarksFilter'%}" method="GET">
+            <div class="form-group mx-2">
+                <label class="pr-1" for="">Subjects:</label>
+                <select name="subject" class="form-control mr-2">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for exam_mapping_subject in exam_mapping_subjects %}
+                    <option value='{{ exam_mapping_subject.subject }}'>{{ exam_mapping_subject.subject }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group mx-2">
+                <label class="pr-1" for="">Exam Name:</label>
+                <select name="exam_name" class="form-control mr-2">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for exam_name in exam_names %}
+                    <option value='{{ exam_name.examName }}'>{{ exam_name.examName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group mx-2">
+                <label class="pr-1" for="">Exam Type:</label>
+                <select name="exam_type" class="form-control mr-2" id=>
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for exam_type in exam_types %}
+                    <option value='{{ exam_type.examType }}'>{{ exam_type.examType }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit " class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+<div class="container-fluid">
+    <table class="mb-5 table table-secondary table-striped">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th scope="col">Subject</th>
+                <th scope="col">Exam </th>
+                <th scope="col"> Marks</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mark in marks %}
+            <tr>
+                <th scope="row">{{ mark.subject }}</th>
+                <td>{{ mark.examName.examName }}- {{mark.examType.examType}}</td>
+                <td>{{ mark.marks }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
