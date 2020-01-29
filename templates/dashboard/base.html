@@ -176,6 +176,10 @@
                                     <li>
                                         <a href="{% url 'piechartStudent' %}">Check Attendence</a>
                                     </li>
+                                    {% else %}
+                                    <li>
+                                        <a href="{% url 'piechartTeacher' %}">Check Attendence</a>
+                                    </li>
                                     {% endif %}
                                 </ul>
                             </div>

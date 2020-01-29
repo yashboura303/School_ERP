@@ -111,11 +111,9 @@ def student_pie_chart(request):
             else:
                 absent += 1
         slices = [present, absent]
+        plt.clf()
         plt.pie(slices, labels=labels, startangle=90, autopct='%1.1f%%')
-        plt.title(f"Attendence for {name}")
-        plt.tight_layout()
-        # fig = plt.figure()
-        # plt.show()
+        plt.title(f"Attendence Report")
         plt.tight_layout()
         fig3 = plt.gcf()
         buf3 = io.BytesIO()
@@ -180,17 +178,18 @@ def teacher_pie_chart(request):
     absent = 0
     labels = ['Present', 'Absent']
     if request.method == "POST":
-        if "year" in request.POST:
-            _year = request.POST["year"]
-            teacher_attendence = TeacherAttendence.objects.filter(
-                date__year=_year)
-        if "month" in request.POST:
-            _month = request.POST["month"]
-            teacher_attendence = teacher_attendence.filter(date__month=_month)
-        if "emp_id_no" in request.POST:
-            emp_id_no = request.POST["emp_id_no"]
-            teacher_attendence = teacher_attendence.filter(
-                teacher__employee__empID=emp_id_no)
+        _year = request.POST.get("year")
+        teacher_attendence = TeacherAttendence.objects.filter(
+            date__year=_year)
+        _month = request.POST.get("month")
+        teacher_attendence = teacher_attendence.filter(date__month=_month)
+        user_profile = UserProfile.objects.get(user=request.user)
+        if user_profile.user_type == "Teacher":
+            emp_id_no = user_profile.emp_id
+        else:
+            emp_id_no = request.POST.get("emp_id_no")
+        teacher_attendence = teacher_attendence.filter(
+            teacher__employee__empID=emp_id_no)
         for teacher in teacher_attendence:
             name = teacher.teacher.fullName
             if teacher.status == "present":
@@ -198,11 +197,23 @@ def teacher_pie_chart(request):
             else:
                 absent += 1
         slices = [present, absent]
+        # plt.pie(slices, labels=labels, startangle=90, autopct='%1.1f%%')
+        # plt.title(f"Attendence for {name}")
+        # plt.tight_layout()
+        # fig = plt.figure()
+        # plt.show()
+        # redirect('piechartTeacher')
+        plt.clf()
         plt.pie(slices, labels=labels, startangle=90, autopct='%1.1f%%')
-        plt.title(f"Attendence for {name}")
+        plt.title(f"Attendence Report")
         plt.tight_layout()
-        fig = plt.figure()
-        plt.show()
-        redirect('piechartTeacher')
+        fig3 = plt.gcf()
+        buf3 = io.BytesIO()
+        fig3.savefig(buf3, format='png')
+        buf3.seek(0)
+        string = base64.b64encode(buf3.read())
+        uri = 'data:image/png;base64,' + urllib.parse.quote(string)
+        return render(request, 'attendence/teacherPieChart.html', {'image': uri})
+
 
     return render(request, 'attendence/teacherPieChart.html')

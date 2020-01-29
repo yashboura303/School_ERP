@@ -31,16 +31,22 @@ Teacher Attendence Report
                 <option value='12'>December</option>
             </select>
         </div>
+        {% if user.userprofile.user_type != "Teacher" %}
         <div class="form-group">
                 <label for="">Emp ID Number</label>
                 <input type="text" class="form-control" name="emp_id_no" id="" aria-describedby="helpId" placeholder="">
               </div>
+        {% endif %}
         <button type="submit" class="btn btn-primary my-auto">Submit</button>
         <form>
+            <div class="container text-center mt-5">
+                <img src="{{ image }}" alt="" class="img img-fluid">
+            </div>
+
 </div>
 
 <script>
-    var start = 2000;
+    var start = 2019;
     var end = new Date().getFullYear();
     var options = "";
     for (var year = start; year <= end; year++) {
