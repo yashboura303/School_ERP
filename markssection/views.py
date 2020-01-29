@@ -546,9 +546,19 @@ def report_analysis(request):
 def class_report_analysis(request):
     """
     Generate two graphs one for pass/fail and other for min/max/avg in classroom.
+    Graph is generated for Half-Yearly and Annual Exam combined
     Input: Class/Section
     Output: Two graph, pass/fail pie chart & bar graph of min/max/avg
     """
+    user_profile = UserProfile.objects.get(user=request.user)
+    if user_profile.user_type == "Teacher":
+        emp_id = user_profile.emp_id
+        employee = Employee.objects.get(empID=emp_id)
+        teacher = Teacher.objects.get(employee=employee)
+        class_section = teacher.classTeacher
+        classrooms = ClassRoom.objects.filter(classSection=class_section)
+    else:
+        classrooms = ClassRoom.objects.all()
     if request.method == "GET":
         plt.style.use("fivethirtyeight")
         if "class_room" in request.GET:
@@ -557,7 +567,7 @@ def class_report_analysis(request):
                 classroomStudent__classRoom__classSection=class_room)
             # ut_marks = marks.filter(examName__examName='UT-1') | marks.filter(examName__examName='UT-2')
             sa_marks = marks.filter(
-                examName__examName='SA-1') | marks.filter(examName__examName='SA-2')
+                examName__examName='Half-Yearly') | marks.filter(examName__examName='Annual')
             pass_students = 0
             fail_students = 0
             didnt_appear = 0
@@ -570,10 +580,18 @@ def class_report_analysis(request):
                     didnt_appear += 1
             labels = ['Pass', 'Fail', "Didn't Appear"]
             slices = [pass_students, fail_students, didnt_appear]
+            plt.clf()
             plt.pie(slices, labels=labels, startangle=90, autopct='%1.1f%%')
-            plt.title(f"Report for {class_room}")
+            plt.title(f"Report for Half-Yearly and Annual Exam")
             plt.tight_layout()
             plt.show()
+            fig1 = plt.gcf()
+            buf1 = io.BytesIO()
+            fig1.savefig(buf1, format='png')
+            buf1.seek(0)
+            string = base64.b64encode(buf1.read())
+            uri1 = 'data:image/png;base64,' + urllib.parse.quote(string)
+
 
             # max, min and abg bar graph
             class_room = ClassRoom.objects.get(classSection=class_room)
@@ -590,7 +608,7 @@ def class_report_analysis(request):
             minimum = []
             average = []
             marks = marks.filter(
-                examName__examName='SA-1') | marks.filter(examName__examName='SA-2')
+                examName__examName='Half-Yearly') | marks.filter(examName__examName='Annual')
 
             for sub in subject_x:
                 _marks = marks.filter(subject=sub)
@@ -613,7 +631,7 @@ def class_report_analysis(request):
             width = 0.22
             subjects = subject_x
             subject_x = np.arange(len(subject_x))
-            print(subject_x)
+            plt.clf()
             plt.xticks(subject_x, subjects)
             plt.bar(subject_x - width, highest, color="#444444",
                     label="Max Marks", width=width, align='center')
@@ -625,10 +643,19 @@ def class_report_analysis(request):
             plt.title("Max, Avg and Min Standing")
             plt.xlabel("Subjects")
             plt.ylabel("Marks")
-            plt.show()
-            redirect('reportClass')
+            # plt.show()
+            # redirect('reportClass')
+            plt.tight_layout()
+            fig1 = plt.gcf()
+            buf1 = io.BytesIO()
+            fig1.savefig(buf1, format='png')
+            buf1.seek(0)
+            string = base64.b64encode(buf1.read())
+            uri2 = 'data:image/png;base64,' + urllib.parse.quote(string)
+            return render(request, 'marks/classReport.html', {'image1':uri1, "class_rooms": classrooms,'image2':uri2})
 
-    return render(request, 'marks/classReport.html', {"class_rooms": ClassRoom.objects.all()})
+
+    return render(request, 'marks/classReport.html', {"class_rooms": classrooms})
 
 
 def student_marks_filter(request):

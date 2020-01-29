@@ -22,59 +22,66 @@ def form(request):
     if request.method == "POST":
         # Student Details
         s_dob = request.POST["sDOB"]
-        s_dob = date(*map(int, s_dob.split('-')))
-        attributes = request.POST.get("attributes", False)
-        f_name = request.POST.get("firstname", False)
-        l_name = request.POST.get("lastname", False)
-        gender = request.POST.get("gender", False)
-        class_section = request.POST.get("classsection", False)
-        add_number = request.POST.get("addmissionnumber", False)
-        phone_number = request.POST.get("phone_number", False)
-        current_add1 = request.POST.get("currentinputAddress", False)
-        current_add2 = request.POST.get("currentinputAddress2", False)
-        current_city = request.POST.get("inputCity", False)
-        current_state = request.POST.get("inputState", False)
-        current_zip = request.POST.get("inputZip", False)
-        perm_add1 = request.POST.get("perminputAddress", False)
-        perm_add2 = request.POST.get("perminputAddress2", False)
-        perm_city = request.POST.get("perminputCity", False)
-        perm_state = request.POST.get("perminputState", False)
-        perm_zip = request.POST.get("perminputZip", False)
-        religion = request.POST.get("religion", False)
-        caste = request.POST.get("caste", False)
-        tc_number = request.POST.get("tcnumber", False)
-        anumber = request.POST.get("anumber", False)
-        feeCategory = request.POST.get("feeCategory", False)
-        siblingid = request.POST.get("siblingid", False)
-        prevschool_name = request.POST.get("prevschool_name", False)
-        route_code = request.POST.get("route_code", False)
-        stoppage_name = request.POST.get("stoppage_name", False)
-        shift = request.POST.get("shift", False)
+        if s_dob:
+            s_dob = date(*map(int, s_dob.split('-')))
+        attributes = request.POST.get("attributes", "")
+        f_name = request.POST.get("firstname", "")
+        l_name = request.POST.get("lastname", "")
+        gender = request.POST.get("gender", "")
+        class_section = request.POST.get("classsection", "")
+        add_number = request.POST.get("addmissionnumber", "")
+        phone_number = request.POST.get("phone_number", "")
+        current_add1 = request.POST.get("currentinputAddress", "")
+        current_add2 = request.POST.get("currentinputAddress2", "")
+        current_city = request.POST.get("inputCity", "")
+        current_state = request.POST.get("inputState", "")
+        current_zip = request.POST.get("inputZip", "")
+        perm_add1 = request.POST.get("perminputAddress", "")
+        perm_add2 = request.POST.get("perminputAddress2", "")
+        perm_city = request.POST.get("perminputCity", "")
+        perm_state = request.POST.get("perminputState", "")
+        perm_zip = request.POST.get("perminputZip", "")
+        religion = request.POST.get("religion", "")
+        caste = request.POST.get("caste", "")
+        tc_number = request.POST.get("tcnumber", "")
+        anumber = request.POST.get("anumber", "")
+        feeCategory = request.POST.get("feeCategory", "")
+        siblingid = request.POST.get("siblingid", "")
+        prevschool_name = request.POST.get("prevschool_name", "")
+        route_code = request.POST.get("route_code", "")
+        stoppage_name = request.POST.get("stoppage_name", "")
+        shift = request.POST.get("shift", "")
 
         student_info = StudentInfo.objects.create(admissionNumber=add_number)
+
+        if class_section:
         # class Section check
-        try:
-            class_room = ClassRoom.objects.get(classSection=class_section)
-            student_info.classSection = class_section
-            student_info.save()
-            ClassRoomStudent.objects.create(classRoom=class_room, student=student_info)
-        except:
-            messages.error(request, "Class Doesn't Exist")
-            return redirect('recordForm')
+            try:
+                class_room = ClassRoom.objects.get(classSection=class_section)
+                student_info.classSection = class_section
+                student_info.save()
+                ClassRoomStudent.objects.create(classRoom=class_room, student=student_info)
+            except:
+                messages.error(request, "Class Doesn't Exist")
+                return redirect('recordForm')
         student_info.firstName = f_name
         student_info.lastName = l_name
         student_info.fullName = f_name + " "+l_name
         student_info.attributes = attributes
-        student_info.dob = s_dob
-        # student_info.classSection = classSection
+        if s_dob:
+            student_info.dob = s_dob
         student_info.gender = gender
-        student_info.mobileNumber = phone_number
+        if phone_number:
+            student_info.mobileNumber = phone_number
         student_info.religion = religion
         student_info.caste = caste
-        student_info.tcNumber = tc_number
-        student_info.aadharNumber = anumber
+        if tc_number:
+            student_info.tcNumber = tc_number
+        if anumber:
+            student_info.aadharNumber = anumber
         student_info.feeWaiverCategory = feeCategory
-        student_info.siblingID = siblingid
+        if siblingid:
+            student_info.siblingID = siblingid
         student_info.prevSchoolName = prevschool_name
         student_info.save()
 
@@ -103,30 +110,33 @@ def form(request):
         current.state = current_state
 
         # Parent Details
-        pattributes = request.POST.get("pattributes", False)
-        father_name = request.POST.get("fathername", False)
-        mother_name = request.POST.get("mothername", False)
-        m_dob = request.POST.get("mDOB", False)
-        f_dob = request.POST.get("fDOB", False)
-        pphone_number = request.POST.get("pphone_number", False)
-        alt_pphone_number = request.POST.get("alt_pphone_number", False)
-        # gname = request.POST.get("gname", False)
-        g_qual = request.POST.get("g_qual", False)
-        pemail = request.POST.get("pemail", False)
-        m_qual = request.POST.get("m_qual", False)
-        m_occup = request.POST.get("m_occup", False)
-        g_occup = request.POST.get("g_occup", False)
-        mDOB = date(*map(int, mDOB.split('-')))
-        fDOB = date(*map(int, fDOB.split('-')))
+        father_name = request.POST.get("fathername")
+        mother_name = request.POST.get("mothername")
+        m_dob = request.POST.get("mDOB")
+        f_dob = request.POST.get("fDOB")
+        pphone_number = request.POST.get("pphone_number")
+        alt_pphone_number = request.POST.get("alt_pphone_number")
+        g_qual = request.POST.get("g_qual")
+        pemail = request.POST.get("pemail")
+        m_qual = request.POST.get("m_qual")
+        m_occup = request.POST.get("m_occup")
+        g_occup = request.POST.get("g_occup")
+        if m_dob:
+            mDOB = date(*map(int, mDOB.split('-')))
+        if f_dob:
+            fDOB = date(*map(int, fDOB.split('-')))
 
         parent_info = ParentInfo.objects.create(student=student_info)
-        parent_info.attributes = pattributes
         parent_info.fatherName = father_name
         parent_info.motherName = mother_name
-        parent_info.Fatherdob = f_dob
-        parent_info.Motherdob = m_dob
-        parent_info.MobileNumber = pphone_number
-        parent_info.altMobileNumber = alt_pphone_number
+        if f_dob:
+            parent_info.Fatherdob = f_dob
+        if m_dob:
+            parent_info.Motherdob = m_dob
+        if pphone_number:
+            parent_info.MobileNumber = pphone_number
+        if alt_pphone_number:
+            parent_info.altMobileNumber = alt_pphone_number
         parent_info.gaurdianQual = g_qual
         parent_info.guardianOccup = g_occup
         parent_info.email = pemail
@@ -136,19 +146,21 @@ def form(request):
 
 
         #Route details
-        route = StudentRoute.objects.create(student=student_info)
-        route.route_stoppage = stoppage_name
-        route.shift = shift
-        route.route_code = route_code
-        route.save()
+        
+        if route_code:
+            route = StudentRoute.objects.create(student=student_info)
+            route.route_stoppage = stoppage_name
+            route.shift = shift
+            route.route_code = route_code
+            route.save()
 
         documents = Documents.objects.create(student=student_info)
-        documents.idProof = request.FILES["idproof"]
-        documents.photo = request.FILES["photgraph"]
-        documents.castCertificate = request.FILES["castcert"]
-        documents.domicile = request.FILES["domicile"]
-        documents.tc = request.FILES["tc"]
-        documents.characterCertificate = request.FILES["charcert"]
+        documents.idProof = request.FILES.get("idproof")
+        documents.photo = request.FILES.get("photgraph")
+        documents.castCertificate = request.FILES.get("castcert")
+        documents.domicile = request.FILES.get("domicile")
+        documents.tc = request.FILES.get("tc")
+        documents.characterCertificate = request.FILES.get("charcert")
         documents.save()
         messages.success(request, "Record successfully added")
 

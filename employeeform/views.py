@@ -21,14 +21,16 @@ def form(request):
         emp_id = request.POST.get("empID")
         dob = request.POST["DOB"]
         join_date = request.POST["joinDate"]
-        dob = date(*map(int, dob.split('-')))
-        join_date = date(*map(int, join_date.split('-')))
+        if dob:
+            dob = date(*map(int, dob.split('-')))
+        if join_date:
+            join_date = date(*map(int, join_date.split('-')))
         f_name = request.POST.get("firstname", "")
         l_name = request.POST.get("lastname", "")
         gender = request.POST.get("gender", "")
         email = request.POST.get("email", "")
-        a_number = request.POST.get("a_number", "")
-        phone_number = request.POST.get("phone_number", "")
+        a_number = request.POST.get("a_number")
+        phone_number = request.POST.get("phone_number")
         blood_group = request.POST.get("blood_group", "")
         father_name = request.POST.get("father_name", "")
         mother_name = request.POST.get("mother_name", "")
@@ -39,12 +41,12 @@ def form(request):
         current_add2 = request.POST.get("currentinputAddress2", "")
         current_city = request.POST.get("inputCity", "")
         current_state = request.POST.get("inputState", "")
-        current_zip = request.POST.get("inputZip", "")
+        current_zip = request.POST.get("inputZip")
         perm_add1 = request.POST.get("perminputAddress", "")
         perm_add2 = request.POST.get("perminputAddress2", "")
         perm_city = request.POST.get("perminputCity", "")
         perm_state = request.POST.get("perminputState", "")
-        perm_zip = request.POST.get("perminputZip", "")
+        perm_zip = request.POST.get("perminputZip")
         emp_category = request.POST.get("empCategory", "")
         if emp_category == "teacher":
             teacher_first_name = request.POST.get("teacherFirstName", "")
@@ -58,8 +60,10 @@ def form(request):
         employee.lastName = l_name
         employee.partnerName = partner_name
         employee.fullName = f_name + " " + l_name
-        employee.dob = dob
-        employee.joiningDate = join_date
+        if dob:
+            employee.dob = dob
+        if join_date:
+            employee.joiningDate = join_date
         employee.marital_status = marital_status
         employee.experience = experience
         employee.currentAddress = current_add1 + " " + current_add2 + "," + \
@@ -70,9 +74,11 @@ def form(request):
             perm_zip
         employee.gender = gender
         employee.email = email
-        employee.mobile_number = phone_number
         employee.blood_group = blood_group
-        employee.aadharNumber = a_number
+        if phone_number:
+            employee.mobile_number = phone_number
+        if a_number:
+            employee.aadharNumber = a_number
         employee.father_name = father_name
         employee.mother_name = mother_name
         if emp_category == "other":
@@ -111,24 +117,27 @@ def form(request):
                     user=user, fullName=f_name + " " + l_name, emp_id=emp_id)
             user_profile.user_type = "Teacher"
             user_profile.save()
+
             # alert message when class has already a class teacher
-            try:
-                ClassRoom.objects.filter(classSection__exact=classTeacher)
-                messages.error(request, "Class already has a teacher")
-                return redirect('employeeForm')
-            except:
-                teacher.classTeacher = classTeacher
-                teacher.save()
-                classroom = ClassRoom.objects.create(
-                    classSection=classTeacher, teacher=teacher)
-                classroom.save()
+            if classTeacher:
+                try:
+                    classroom = ClassRoom.objects.filter(classSection__exact=classTeacher)
+                    if len(classroom) > 0:
+                        messages.error(request, "Class already has a teacher")
+                        return redirect('employeeForm')
+                except:
+                    teacher.classTeacher = classTeacher
+                    teacher.save()
+                    classroom = ClassRoom.objects.create(
+                        classSection=classTeacher, teacher=teacher)
+                    classroom.save()
 
         documents = EmployeeDocuments.objects.create(employee=employee)
-        documents.IdProof = request.FILES["idproof"]
-        documents.photo = request.FILES["photgraph"]
-        documents.qualificationDoc = request.FILES["qualificationDoc"]
-        documents.addressProof = request.FILES["addressProof"]
-        documents.otherDoc = request.FILES["otherDoc"]
+        documents.IdProof = request.FILES.get("idproof")
+        documents.photo = request.FILES.get("photgraph")
+        documents.qualificationDoc = request.FILES.get("qualificationDoc")
+        documents.addressProof = request.FILES.get("addressProof")
+        documents.otherDoc = request.FILES.get("otherDoc")
         documents.save()
         messages.success(request, "Record successfully added")
         return redirect('employeeForm')

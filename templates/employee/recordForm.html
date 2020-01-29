@@ -14,6 +14,12 @@ Add Employee Info
     #teacher, #othersss{
         display: none;
     }
+
+    .required::after {
+ content: "*";
+ color: red;
+}
+
 </style>
 <style>
     /* Chrome, Safari, Edge, Opera */
@@ -31,20 +37,19 @@ input[type=number] {
 <form class="container" id="myForm" method="POST" action="{% url 'employeeForm' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <div>
-        <hr>
-        <h3 class="my-2 text-info ">Employee Details</h3>
+        <h3 class="my-4 text-info ">Employee Details</h3>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="username">First Name:</label>
-                <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname">
+                <label for="username " class="required">First Name:</label>
+                <input type="text" class="form-control" id="firstname" name="firstname" required>
             </div>
             <div class="form-group col-md-3">
-                <label for="username">Last Name:</label>
-                <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="lastname">
+                <label >Last Name:</label>
+                <input type="text" class="form-control" id="lastname" name="lastname">
             </div>
             <div class="form-group col-md-3">
-                <label for="username">Employee ID:</label>
-                <input type="text" class="form-control" id="empid" aria-describedby="emailHelp" name="empid" onwheel="this.blur()">
+                <label class="required">Employee ID:</label>
+                <input type="text" class="form-control" id="empID"  name="empID" onwheel="this.blur()" required>
             </div>
             <div class="form-group col-md-3">
                 <label class="pr-1" for="exampleFormControlSelect2">Gender:</label>
@@ -57,30 +62,30 @@ input[type=number] {
         </div>
         <div class="form-row mt-2">
             <div class="form-group col-md-3">
-                <label for="username">DOB:</label>
-                <input type="date" class="form-control" id="DOB" aria-describedby="" name="DOB">
+                <label >DOB:</label>
+                <input type="date" class="form-control" id="DOB"  name="DOB">
             </div>
             <div class="form-group col-md-3">
-                <label for="username">Email:</label>
+                <label >Email:</label>
                 <input type="text" class="form-control" id="email" name="email">
             </div>
             <div class="form-group col-md-3">
-                <label for="username">Joining Date:</label>
-                <input type="date" class="form-control" id="joinDate" aria-describedby="" name="joinDate">
+                <label >Joining Date:</label>
+                <input type="date" class="form-control" id="joinDate"  name="joinDate">
             </div>
             <div class="form-group col-md-3">
-                <label for="username">Phone Number:</label>
+                <label >Phone Number:</label>
                 <input type="number" class="form-control" id="phone_number" name="phone_number" min="0" onwheel="this.blur()">
             </div>
         </div>
     </div>
     <div class="form-row mt-2">
         <div class="form-group col-md-4">
-            <label for="username">Blood Group:</label>
+            <label >Blood Group:</label>
             <input type="text" class="form-control" id="blood_group" name="blood_group">
         </div>
         <div class="form-group col-md-4">
-            <label for="username">Maritial Status:</label>
+            <label >Maritial Status:</label>
             <input type="text" class="form-control" id="marital_status" name="marital_status">
         </div>
         <div class="form-group col-md-4">
@@ -90,11 +95,11 @@ input[type=number] {
     </div>
     <div class="form-row mt-2">
         <div class="form-group col-md-4">
-            <label for="username">Father Name:</label>
+            <label >Father Name:</label>
             <input type="text" class="form-control" id="father_name" name="father_name">
         </div>
         <div class="form-group col-md-4">
-            <label for="username">Mother Name:</label>
+            <label >Mother Name:</label>
             <input type="text" class="form-control" id="mother_name" name="mother_name">
         </div>
         <div class="form-group col-md-4">
@@ -153,8 +158,8 @@ input[type=number] {
     </div>
     <div class="form-row mt-2">
         <div class="form-group col-md-4">
-            <label class="pr-1" for="exampleFormControlSelect2">Employee Category:</label>
-            <select onchange="teacherOption()" name="empCategory" class="form-control mr-2" id="empCategory">
+            <label class="required pr-1" for="exampleFormControlSelect2">Employee Category:</label>
+            <select onchange="teacherOption()" name="empCategory" class="form-control mr-2" id="empCategory" required>
                 <option selected="true" value="">Select</option>
                 <option value="teacher">Teacher</option>
                 <option value="driver">Driver</option>
@@ -183,24 +188,24 @@ input[type=number] {
         <div class="form-row mt-2 ">
             <div class="form-group col-md-3">
                 <label for="father_name">First Name:</label>
-                <input type="text" class="form-control" id="teacherFirstName" aria-describedby="emailHelp" name="teacherFirstName">
+                <input type="text" class="form-control" id="teacherFirstName"  name="teacherFirstName">
             </div>
             <div class="form-group col-md-3">
                 <label for="mother_name">Last Name:</label>
-                <input type="text" class="form-control" id="specialization" aria-describedby="emailHelp" name="teacherLastName">
+                <input type="text" class="form-control" id="specialization"  name="teacherLastName">
             </div>
         </div>
         <div class="form-row mt-3 ">
             <div class="form-group col-md-4">
-                <label for="username">Designation:</label>
+                <label >Designation:</label>
                 <input type="text" class="form-control" id="designation" name="designation">
             </div>
             <div class="form-group col-md-4">
-                <label for="username">Specialization:</label>
+                <label >Specialization:</label>
                 <input type="text" class="form-control" id="specialization" name="specialization">
             </div>
             <div class="form-group col-md-4">
-                <label for="username">Class Teacher:</label>
+                <label >Class Teacher:</label>
                 <input type="text" class="form-control" id="classTeacher" name="classTeacher">
             </div>
         </div>

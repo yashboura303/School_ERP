@@ -18,6 +18,11 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+
+}
+.required::after {
+ content: "*";
+ color: red;
 }
 
 /* Firefox */
@@ -34,15 +39,15 @@ input[type=number] {
         <h3 class="my-2 text-info ">Student Details</h3>
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="username">First Name:</label>
-                <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname">
+                <label class="required">First Name:</label>
+                <input type="text" class="form-control" id="firstname"  name="firstname" required>
             </div>
             <div class="form-group col-md-4">
-                <label for="username">Last Name:</label>
-                <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="lastname">
+                <label>Last Name:</label>
+                <input type="text" class="form-control" id="lastname"  name="lastname">
             </div>
             <div class="form-group col-md-4">
-                <label class="pr-1" for="exampleFormControlSelect2">Gender:</label>
+                <label class="pr-1">Gender:</label>
                 <select name="gender" class="form-control mr-2" id="exampleFormControlSelect2">
                     <option selected="true" value="">Select</option>
                     <option value="Male">Male</option>
@@ -52,19 +57,19 @@ input[type=number] {
         </div>
         <div class="form-row mt-2">
             <div class="form-group col-md-3">
-                <label for="username">DOB:</label>
-                <input type="date" class="form-control" id="sDOB" aria-describedby="" name="sDOB">
+                <label>DOB:</label>
+                <input type="date" class="form-control" id="sDOB"  name="sDOB">
             </div>
             <div class="form-group col-md-3">
-                <label for="username">Class Section:</label>
+                <label>Class Section:</label>
                 <input type="text" class="form-control" id="classsection" name="classsection">
             </div>
             <div class="form-group col-md-3">
-                <label for="username">Admission Number:</label>
-                <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber" onwheel="this.blur()">
+                <label class="required">Admission Number:</label>
+                <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber" onwheel="this.blur()" required>
             </div>
             <div class="form-group col-md-3">
-                <label for="username">Phone Number:</label>
+                <label>Phone Number:</label>
                 <input min="0" type="number" class="form-control" id="phonenumber" name="phonenumber"onwheel="this.blur()">
             </div>
         </div>
@@ -73,7 +78,7 @@ input[type=number] {
     </div>
     <div class="form-row mt-2">
         <div class="form-group col-md-4">
-            <label for="username">Religion:</label>
+            <label>Religion:</label>
             <input type="text" class="form-control" id="religion" name="religion">
         </div>
         <div class="form-group col-md-4">
@@ -204,28 +209,28 @@ input[type=number] {
     <div class="form-row mt-2">
         <div class="form-group col-md-3">
             <label for="fathername">Father/Gaurdian Name:</label>
-            <input type="text" class="form-control" id="fathername" aria-describedby="emailHelp" name="fathername">
+            <input type="text" class="form-control" id="fathername"  name="fathername">
         </div>
         <div class="form-group col-md-3">
             <label for="mothername">Mother Name:</label>
-            <input type="text" class="form-control" id="mothername" aria-describedby="emailHelp" name="mothername">
+            <input type="text" class="form-control" id="mothername"  name="mothername">
         </div>
         <div class="form-group col-md-3">
-            <label for="username">Father DOB:</label>
-            <input type="date" class="form-control" id="fDOB" aria-describedby="" name="fDOB">
+            <label>Father DOB:</label>
+            <input type="date" class="form-control" id="fDOB"  name="fDOB">
         </div>
         <div class="form-group col-md-3">
-            <label for="username">Mother DOB:</label>
-            <input type="date" class="form-control" id="mDOB" aria-describedby="" name="mDOB">
+            <label>Mother DOB:</label>
+            <input type="date" class="form-control" id="mDOB"  name="mDOB">
         </div>
     </div>
     <div class="form-row mt-3">
         <div class="form-group col-md-3">
-            <label for="username">Phone Number:</label>
+            <label>Phone Number:</label>
             <input min="0" type="number" class="form-control" id="phone_number" name="phone_number">
         </div>
         <div class="form-group col-md-3">
-            <label for="username">Alternate Phone Number:</label>
+            <label>Alternate Phone Number:</label>
             <input min="0" type="number" class="form-control" id="alt_phone_number" name="alt_phone_number">
         </div>
         <div class="form-group col-md-3">
@@ -236,21 +241,21 @@ input[type=number] {
     <div class="form-row mt-3">
         <div class="form-group col-md-4">
             <label for="mothername">Father/Guardian Qualification:</label>
-            <input type="text" class="form-control" id="g_qual" aria-describedby="emailHelp" name="g_qual">
+            <input type="text" class="form-control" id="g_qual"  name="g_qual">
         </div>
         <div class="form-group col-md-4">
             <label for="mothername">Fahter/Guardian Occuptation:</label>
-            <input type="text" class="form-control" id="g_occup" aria-describedby="emailHelp" name="g_occup">
+            <input type="text" class="form-control" id="g_occup"  name="g_occup">
         </div>
     </div>
     <div class="form-row mt-3">
         <div class="form-group col-md-5">
             <label for="mothername">Mother Qualification:</label>
-            <input type="text" class="form-control" id="m_qual" aria-describedby="emailHelp" name="m_qual">
+            <input type="text" class="form-control" id="m_qual"  name="m_qual">
         </div>
         <div class="form-group mb-5 col-md-5">
             <label for="mothername">Mother Occuptation:</label>
-            <input type="text" class="form-control" id="m_occup" aria-describedby="emailHelp" name="m_occup">
+            <input type="text" class="form-control" id="m_occup"  name="m_occup">
         </div>
     </div>
 
