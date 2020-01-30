@@ -279,7 +279,7 @@ def print(request, emp_id):
     c_add = CurrentAddress.objects.filter(employee=employee).first()
     if employee.empCategory != "teacher":
         return render(request, 'employee/printEmployeeData.html', {"employee": employee, "pAdd": p_add, "cAdd": c_add})
-    teacher = Teacher.objects.get(employee=employee)
+    teacher = Teacher.objects.filter(employee=employee).first()
     return render(request, 'employee/printTeacherData.html',
                   {"employee": employee, "pAdd": p_add, "cAdd": c_add, "teacher": teacher})
 
