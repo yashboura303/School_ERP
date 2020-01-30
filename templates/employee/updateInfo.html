@@ -27,11 +27,11 @@ input[type=number] {
 </style>
 <div class="container-fluid">
     <form class="container w-75" id="myForm" method="POST" action={% url 'updateEmpInfo' %}>
-
+    {% csrf_token %}
         <h3 class="my-2 text-info ">Update Employee Details</h3>
         <div class="form-group w-50">
             <label for="username" class="font-weight-bold">EmpID of Employee to Update</label>
-            <input type="number" class="form-control" id="empID" name="empID" value={{employee.empID}}>
+            <input type="number" class="form-control" id="empID" name="empID" value={{employee.empID}} required>
         </div>
         <hr>
         <div class="form-row">
@@ -67,7 +67,7 @@ input[type=number] {
             </div>
             <div class="form-group col-md-3">
                 <label for="username">Phone Number:</label>
-                <input min="0" type="number" class="form-control" id="phonenumber" name="phonenumber" value={{employee.mobileNumber}} onwheel="this.blur()">
+                <input min="0" type="number" class="form-control" id="phone_number" name="phone_number" value={{employee.mobileNumber}} onwheel="this.blur()">
             </div>
         </div>
 
@@ -76,11 +76,11 @@ input[type=number] {
 <div class="form-row mt-2">
     <div class="form-group col-md-4">
         <label for="username">Blood Group:</label>
-        <input type="text" class="form-control" id="bloodGroup" name="bloodGroup" value={{employee.bloodGroup}}>
+        <input type="text" class="form-control" id="blood_group" name="blood_group" value={{employee.bloodGroup}}>
     </div>
     <div class="form-group col-md-4">
         <label for="username">Maritial Status:</label>
-        <input type="text" class="form-control" id="maritalStatus" name="maritalStatus" value={{employee.maritalStatus}}>
+        <input type="text" class="form-control" id="marital_status" name="marital_status" value={{employee.maritalStatus}}>
     </div>
     <div class="form-group col-md-4">
         <label for="caste">Experience:</label>
@@ -90,11 +90,11 @@ input[type=number] {
 <div class="form-row mt-2">
     <div class="form-group col-md-4">
         <label for="username">Father Name:</label>
-        <input type="text" class="form-control" id="fatherName" name="fatherName" value={{employee.fatherName}}>
+        <input type="text" class="form-control" id="fatherName" name="father_name" value={{employee.fatherName}}>
     </div>
     <div class="form-group col-md-4">
         <label for="username">Mother Name:</label>
-        <input type="text" class="form-control" id="motherName" name="motherName" value={{employee.motherName}}>
+        <input type="text" class="form-control" id="motherName" name="mother_name" value={{employee.motherName}}>
     </div>
     <div class="form-group col-md-4">
         <label for="caste">Wife/Husband Name:</label>
@@ -173,7 +173,7 @@ input[type=number] {
     </div>
     <div class="form-group col-md-5">
         <label for="anumber">Aadhar Number:</label>
-        <input type="number" class="form-control" id="anumber" name="anumber" alue={{employee.aadharNumber}}>
+        <input type="number" class="form-control" id="a_number" name="a_number" alue={{employee.aadharNumber}}>
     </div>
 </div>
 
@@ -194,7 +194,7 @@ input[type=number] {
     <div class="form-row mt-3 ">
         <div class="form-group col-md-4">
             <label for="username">Designation:</label>
-            <input type="number" class="form-control" id="designation" name="designation" value={{teacher.designation}}>
+            <input type="text" class="form-control" id="designation" name="designation" value={{teacher.designation}}>
         </div>
         <div class="form-group col-md-4">
             <label for="username">Specialization:</label>
@@ -209,6 +209,10 @@ input[type=number] {
 </div>
 
 </div>
+<div class="row justify-content-around">
+        <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
+    </div>
+
 </form>
 <script>
         function teacherOption(){
@@ -235,10 +239,6 @@ input[type=number] {
 </script>
 
 
-<div class="row justify-content-around">
-        <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
-        <!-- <input type="button" class="col-4 mt-5  container  btn btn-info" onclick="printDiv('myForm')" value="Print"> -->
-    </div>
 
 
 

@@ -6,26 +6,28 @@ Update Student Info
 
 {% include "message.html" %}
 <div class="container">
-<form class="container w-75" id="myForm" method="POST" action={% url 'updateInfo' %} ></form>
+<form class="container w-75" id="myForm" method="POST" action={% url 'updateInfo' %} >
+{% csrf_token %}
 <h3 class="my-2 text-info ">Update Student Details</h3>
 
 
 <div class="form-group w-50">
     <label for="username" class="font-weight-bold">Admission Number of Student to Update</label>
-    <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber" value = {{student.admissionNumber}}>
+    <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber" value = {{student.admissionNumber}} required>
 </div>
 <hr>
 
 <!-- <p class="mt-5">(Leave Blank if no changes required)</p> -->
-<div class="form-group">
+<div class="form-row">
+<div class="form-group col-md-3">
     <label for="username">First Name</label>
     <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname" value = {{student.firstName}}>
 </div>
-<div class="form-group">
+<div class="form-group col-md-3">
     <label for="username">Last Name</label>
     <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="lastname" value = {{student.lastName}}>
 </div>
-<div class="form-group">
+<div class="form-group col-md-3">
     <label class="pr-1" for="exampleFormControlSelect2">Gender:</label>
     <select name="gender" class="form-control mr-2" id="exampleFormControlSelect2">
         <option selected="true" value="">Select</option>
@@ -33,21 +35,25 @@ Update Student Info
         <option value="Tutor">Female</option>
     </select>
 </div>
-<div class="form-group">
+</div>
+<div class="form-row">
+<div class="form-group col-md-3">
     <label for="username">DOB</label>
     <input type="date" class="form-control" id="sDOB" aria-describedby="" value = {{dob}} name="sDOB">
 </div>
-<div class="form-group">
+<div class="form-group col-md-3">
     <label for="username">Class Section</label>
     <input type="text" class="form-control" id="classsection" name="classsection"value = 
     {{student.classSection}}>
 </div>
-
-<div class="form-group">
+<div class="form-group col-md-3">
     <label for="username">Phone Number</label>
-    <input type="number" min="0" class="form-control" id="phonenumber" name="phonenumber" value = 
+    <input type="number" min="0" class="form-control" id="phonenumber" name="phone_number" value = 
     {{student.mobileNumber}}>
 </div>
+</div>
+
+
 <div class="form-group">
 <label for="inputAddress">Current Address</label>
 <input type="text" class="form-control" id="inputAddress" name="currentinputAddress" placeholder="" value = {{pAdd.Address1}}>
@@ -74,11 +80,11 @@ Update Student Info
 </div>
 </div>
 <div class="custom-control custom-checkbox my-2">
-        <input type="checkbox" class="custom-control-input" name="customCheck1" id="customCheck1"
-            onclick="FillAddress(this.form)">
-        <label class="custom-control-label font-italic font-weight-lighter" for="customCheck1"> Current Address is same
-            as Permanent Address:</label>
-    </div>
+                <input type="checkbox" class="custom-control-input" name="customCheck1" id="customCheck1"
+                    onclick="FillAddress(this.form)">
+                <label class="custom-control-label font-italic font-weight-lighter" for="customCheck1"> Current Address is same
+                    as Permanent Address:</label>
+            </div>
 
 
 
@@ -104,35 +110,41 @@ Update Student Info
     <input type="text" class="form-control" id="perminputZip" name="perminputZip" value = {{cAdd.zipCode}}>
 </div>
 </div>
-<div class="form-group">
+<div class="form-row mt-2">
+<div class="form-group col-md-3">
 <label for="username">Religion</label>
 <input type="text" class="form-control" id="religion" name="religion" value = {{student.religion}}>
 </div>
-<div class="form-group">
+<div class="form-group col-md-3">
 <label for="caste">Caste</label>
 <input type="text" class="form-control" id="caste" name="caste" value = {{student.caste}}>
 </div>
-<div class="form-group">
+<div class="form-group col-md-3">
 <label for="tcnumber">Transfer Certificate Number</label>
 <input type="number" class="form-control" id="tcnumber" name="tcnumber" value = {{student.tcNumber}}>
 </div>
-<div class="form-group">
+</div>
+<div class="form-row mt-2">
+<div class="form-group col-md-3">
 <label for="anumber">Aadhar Number</label>
 <input type="number" class="form-control" id="anumber" name="anumber" value = {{student.aadharNumber}}>
 </div>
-<div class="form-group">
+<div class="form-group col-md-3">
 <label for="feeCategory">Fee Waiver Category</label>
 <input type="text" class="form-control" id="feeCategory" name="feeCategory" value = {{student.feeWaiverCategory}}>
 </div>
-<div class="form-group">
+<div class="form-group col-md-3">
 <label for="siblingid">Sibling ID</label>
 <input type="number" class="form-control" id="siblingid" name="siblingid" value = {{student.siblingID}}>
 </div>
-<div class="form-group mb-5">
+<div class="form-group mb-5 col-md-3">
 <label for="prevschoolname">Previous School Name</label>
-<input type="text" class="form-control" id="prevschoolname" name="prevschoolname" value = {{student.prevSchoolName}}>
+<input type="text" class="form-control" id="prevschoolname" name="prevschool_name" value = {{student.prevSchoolName}}>
 </div>
 </div>
+<div class="row justify-content-around">
+        <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
+    </div>
 </form>
 
 <script>
@@ -141,16 +153,13 @@ Update Student Info
             if (f.customCheck1.checked == true) {
                 f.perminputAddress.value = f.currentinputAddress.value;
                 f.perminputAddress2.value = f.currentinputAddress2.value;
-                f.perminputCity.value = f.inputCity.value
-                f.perminputState.value = f.inputState.value
-                f.perminputZip.value = f.inputZip.value
+                f.perminputCity.value = f.inputCity.value;
+                f.perminputState.value = f.inputState.value;
+                f.perminputZip.value = f.inputZip.value;
             }
         }
 </script>
-<div class="row justify-content-around">
-        <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
-        <!-- <input type="button" class="col-4 mt-5  container  btn btn-info" onclick="printDiv('myForm')" value="Print"> -->
-    </div>
+
 
 
 

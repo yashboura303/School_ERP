@@ -174,83 +174,78 @@ def update(request):
     """
     if request.method == "POST":
         # Student Details
+        add_number = request.POST.get("addmissionnumber")
+        student_info = StudentInfo.objects.get(
+            admissionNumber=int(add_number))
+        permanent, created = PermanentAddress.objects.get_or_create(
+            student=student_info)
+        current, created = CurrentAddress.objects.get_or_create(student=student_info)
+        sDOB = request.POST.get("sDOB")
+        sDOB = date(*map(int, sDOB.split('-')))
+        f_name = request.POST.get("firstname", student_info.firstName)
+        l_name = request.POST.get("lastname", student_info.lastName)
+        gender = request.POST.get("gender", student_info.gender)
+        sDOB = request.POST.get("sDOB", student_info.dob)
+        classSection = request.POST.get(
+            "classection", student_info.classSection)
+        phone_number = request.POST.get(
+            "phone_number", student_info.mobileNumber)
+        current_add1 = request.POST.get(
+            "currentinputAddress", current.Address1)
+        current_add2 = request.POST.get(
+            "currentinputAddress2", current.Address2)
+        current_city = request.POST.get("inputCity", current.city)
+        current_state = request.POST.get("inputState", current.state)
+        current_zip = request.POST.get("inputZip", current.zipCode)
+        perm_add1 = request.POST.get(
+            "perminputAddress", permanent.Address1)
+        perm_add2 = request.POST.get(
+            "perminputAddress2", permanent.Address2)
+        perm_city = request.POST.get("perminputCity", permanent.city)
+        perm_state = request.POST.get("perminputState", permanent.state)
+        perm_zip = request.POST.get("perminputZip", permanent.zipCode)
+        religion = request.POST.get("religion", student_info.religion)
+        caste = request.POST.get("caste", student_info.caste)
+        tc_number = request.POST.get("tcnumber", student_info.tcNumber)
+        a_number = request.POST.get("anumber", student_info.aadharNumber)
+        fee_category = request.POST.get(
+            "feeCategory", student_info.feeWaiverCategory)
+        sibling_id = request.POST.get("siblingid", student_info.siblingID)
+        prevschool_name = request.POST.get(
+            "prevschool_name", student_info.prevSchoolName)
 
-        if not request.POST.get("addmissionnumber"):
-            messages.info(request, 'Enter addmission Number!')
-            return redirect('updateInfo')
-        else:
-            add_number = request.POST.get("addmissionnumber")
-            student_info = StudentInfo.objects.get(
-                admissionNumber=int(add_number))
-            permanent = PermanentAddress.objects.get(
-                admissionNumber=student_info)
-            current = CurrentAddress.objects.get(admissionNumber=student_info)
-            sDOB = request.POST.get["sDOB"]
-            sDOB = date(*map(int, sDOB.split('-')))
-            attributes = request.POST.get("attributes", False)
-            f_name = request.POST.get("firstname", student_info.firstName)
-            l_name = request.POST.get("lastname", student_info.lastName)
-            gender = request.POST.get("gender", student_info.gender)
-            sDOB = request.POST.get("sDOB", student_info.dob)
-            classSection = request.POST.get(
-                "classection", student_info.classSection)
-            phone_number = request.POST.get(
-                "phone_number", student_info.mobileNumber)
-            current_add1 = request.POST.get(
-                "currentinputAddress", current.Address1)
-            current_add2 = request.POST.get(
-                "currentinputAddress2", current.Address2)
-            current_city = request.POST.get("inputCity", current.city)
-            current_state = request.POST.get("inputState", current.state)
-            current_zip = request.POST.get("inputZip", current.zipCode)
-            perm_add1 = request.POST.get(
-                "perminputAddress", permanent.Address1)
-            perm_add2 = request.POST.get(
-                "perminputAddress2", permanent.Address2)
-            perm_city = request.POST.get("perminputCity", permanent.city)
-            perm_state = request.POST.get("perminputState", permanent.state)
-            perm_zip = request.POST.get("perminputZip", permanent.zipCode)
-            religion = request.POST.get("religion", student_info.religion)
-            caste = request.POST.get("caste", student_info.caste)
-            tc_number = request.POST.get("tcnumber", student_info.tcNumber)
-            a_number = request.POST.get("anumber", student_info.aadharNumber)
-            fee_category = request.POST.get(
-                "feeCategory", student_info.feeWaiverCategory)
-            sibling_id = request.POST.get("siblingid", student_info.siblingID)
-            prevschool_name = request.POST.get(
-                "prevschool_name", student_info.prevSchool_name)
+        # store current and perm address
+        permanent.Address1 = perm_add1
+        permanent.Address2 = perm_add2
+        permanent.city = perm_city
+        permanent.zipCode = perm_zip
+        permanent.state = perm_state
+        permanent.save()
 
-            # store current and perm address
-            permanent.Address1 = perm_add1
-            permanent.Address2 = perm_add2
-            permanent.city = perm_city
-            permanent.zipCode = perm_zip
-            permanent.state = perm_state
+        current.Address1 = current_add1
+        current.Address2 = current_add2
+        current.city = current_city
+        current.zipCode = current_zip
+        current.state = current_state
+        current.save()
 
-            current.Address1 = current_add1
-            current.Address2 = current_add2
-            current.city = current_city
-            current.zipCode = current_zip
-            current.state = current_state
-
-            student_info.firstName = f_name
-            student_info.lastName = l_name
-            student_info.attributes = attributes
-            student_info.dob = sDOB
-            student_info.classSection = classSection
-            student_info.permanentAddress = perm_add1 + perm_add2
-            student_info.gender = gender
-            student_info.mobileNumber = phone_number
-            student_info.religion = religion
-            student_info.caste = caste
-            student_info.tcNumber = tc_number
-            student_info.aadharNumber = a_number
-            student_info.feeWaiverCategory = fee_category
-            student_info.siblingID = sibling_id
-            student_info.prevSchoolName = prevschool_name
-            student_info.save()
-            messages.info(request, 'Updated the details')
-            return redirect('updateInfo')
+        student_info.firstName = f_name
+        student_info.lastName = l_name
+        student_info.dob = sDOB
+        student_info.classSection = classSection
+        student_info.permanentAddress = perm_add1 + perm_add2
+        student_info.gender = gender
+        student_info.mobileNumber = phone_number
+        student_info.religion = religion
+        student_info.caste = caste
+        student_info.tcNumber = tc_number
+        student_info.aadharNumber = a_number
+        student_info.feeWaiverCategory = fee_category
+        student_info.siblingID = sibling_id
+        student_info.prevSchoolName = prevschool_name
+        student_info.save()
+        messages.success(request, 'Updated the details')
+        return redirect('updateInfo')
     return render(request, 'form/updateInfo.html')
 
 
@@ -262,8 +257,8 @@ def update_with_data(request, admission_number):
     """
     student_info = StudentInfo.objects.get(admissionNumber=(admission_number
                                                             ))
-    p_add = PermanentAddress.objects.get(student=student_info)
-    c_add = CurrentAddress.objects.get(student=student_info)
+    p_add = PermanentAddress.objects.filter(student=student_info).first()
+    c_add = CurrentAddress.objects.filter(student=student_info).first()
     DOB_to_String = str(student_info.dob)
     return render(request, 'form/updateInfo.html',
                   {"student": student_info, "pAdd": p_add, "cAdd": c_add, "dob": DOB_to_String})

@@ -151,17 +151,13 @@ def update(request):
     input: form values
     """
     if request.method == "POST":
-        # Student Details
-        if not request.POST.get("addmissionnumber"):
-            messages.info(request, 'Enter addmission Number!')
-            return redirect('updateInfo.html')
+        # Employee Details
         emp_id = request.POST.get("empID")
         employee = Employee.objects.get(empID=int(emp_id))
-        teacher = Teacher.objects.get(employee=employee)
-        current = CurrentAddress.objects.get(employee=employee)
-        permanent = PermanentAddress.objects.get(employee=employee)
-        dob = request.POST["DOB"]
-        join_date = request.POST["joinDate"]
+        current , created= CurrentAddress.objects.get_or_create(employee=employee)
+        permanent, created= PermanentAddress.objects.get_or_create(employee=employee)
+        dob = request.POST.get("DOB")
+        join_date = request.POST.get("joinDate")
         dob = date(*map(int, dob.split('-')))
         join_date = date(*map(int, join_date.split('-')))
         f_Name = request.POST.get("firstname", employee.firstName)
@@ -170,8 +166,8 @@ def update(request):
         email = request.POST.get("email", employee.email)
         a_number = request.POST.get("a_number", employee.aadharNumber)
         phone_number = request.POST.get(
-            "phone_number", employee.mobileNumber)
-        blood_group = request.POST.get("blood_group", employee.blood_group)
+            "phone_number", employee.mobile_number)
+        blood_group = request.POST.get("blood_group", employee.bloodGroup)
         father_name = request.POST.get("father_name", employee.father_name)
         mother_name = request.POST.get("mother_name", employee.mother_name)
         experience = request.POST.get("experience", employee.experience)
@@ -192,7 +188,8 @@ def update(request):
         permState = request.POST.get("perminputState", permanent.state)
         permZip = request.POST.get("perminputZip", permanent.zipCode)
         emp_category = request.POST.get("empCategory", employee.empCategory)
-        if emp_category == "Teacher":
+        if emp_category == "teacher":
+            teacher, created = Teacher.objects.get_or_create(employee=employee)
             teacher_first_name = request.POST.get(
                 "teacherFirstName", teacher.firstName)
             teacher_last_name = request.POST.get(
@@ -226,8 +223,22 @@ def update(request):
         employee.empCategory = emp_category
         employee.save()
 
+        current.Address1 = currentAdd1
+        current.Address2 = currentAdd2
+        current.zipCode = currentZip
+        current.state = currentState
+        current.city = currentCity
+        current.save()
+
+        permanent.Address1 = permAdd1
+        permanent.Address2 = permAdd2
+        permanent.zipCode = permZip
+        permanent.state = permState
+        permanent.city = permCity
+        permanent.save()
+
         if emp_category == "teacher":
-            teacher = Teacher.objects.create(employee=employee)
+            teacher, created = Teacher.objects.get_or_create(employee=employee)
             teacher.firstName = teacher_first_name
             teacher.lastName = teacher_last_name
             teacher.fullName = teacher_first_name + " " + teacher_last_name
@@ -247,9 +258,9 @@ def update_with_data(request, emp_id):
     input: empID of employee and form values
     """
     employee = Employee.objects.get(empID=emp_id)
-    p_add = PermanentAddress.objects.get(employee=employee)
-    teacher = Teacher.objects.get(employee=employee)
-    c_add = CurrentAddress.objects.get(employee=employee)
+    p_add = PermanentAddress.objects.filter(employee=employee).first()
+    teacher = Teacher.objects.filter(employee=employee).first()
+    c_add = CurrentAddress.objects.filter(employee=employee).first()
     dob_to_string = str(employee.dob)
     join_date_to_string = str(employee.joiningDate)
     return render(request, 'employee/updateInfo.html',
@@ -264,8 +275,8 @@ def print(request, emp_id):
     output: prints pdf with employee details
     """
     employee = Employee.objects.get(empID=emp_id)
-    p_add = PermanentAddress.objects.get(employee=employee)
-    c_add = CurrentAddress.objects.get(employee=employee)
+    p_add = PermanentAddress.objects.filter(employee=employee).first()
+    c_add = CurrentAddress.objects.filter(employee=employee).first()
     if employee.empCategory != "teacher":
         return render(request, 'employee/printEmployeeData.html', {"employee": employee, "pAdd": p_add, "cAdd": c_add})
     teacher = Teacher.objects.get(employee=employee)
