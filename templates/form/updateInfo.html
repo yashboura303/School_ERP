@@ -13,7 +13,7 @@ Update Student Info
 
 <div class="form-group w-50">
     <label for="username" class="font-weight-bold">Admission Number of Student to Update</label>
-    <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber" value = {{student.admissionNumber}} required>
+    <input type="number" min="0" class="form-control" id="addmissionnumber" name="addmissionnumber" value = {{student.admissionNumber}} required>
 </div>
 <hr>
 
@@ -21,11 +21,11 @@ Update Student Info
 <div class="form-row">
 <div class="form-group col-md-3">
     <label for="username">First Name</label>
-    <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname" value = {{student.firstName}}>
+    <input type="text" class="form-control" id="firstname"  name="firstname" value = {{student.firstName}}>
 </div>
 <div class="form-group col-md-3">
     <label for="username">Last Name</label>
-    <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="lastname" value = {{student.lastName}}>
+    <input type="text" class="form-control" id="lastname"  name="lastname" value = {{student.lastName}}>
 </div>
 <div class="form-group col-md-3">
     <label class="pr-1" for="exampleFormControlSelect2">Gender:</label>
@@ -48,8 +48,8 @@ Update Student Info
 </div>
 <div class="form-group col-md-3">
     <label for="username">Phone Number</label>
-    <input type="number" min="0" class="form-control" id="phonenumber" name="phone_number" value = 
-    {{student.mobileNumber}}>
+    <input type="text" min="0" class="form-control" id="phonenumber" name="phone_number" value = 
+    {{student.mobileNumber}} maxlength="10" pattern="\d{10}">
 </div>
 </div>
 
@@ -121,13 +121,13 @@ Update Student Info
 </div>
 <div class="form-group col-md-3">
 <label for="tcnumber">Transfer Certificate Number</label>
-<input type="number" class="form-control" id="tcnumber" name="tcnumber" value = {{student.tcNumber}}>
+<input type="number" class="form-control" id="tcnumber" min="0" name="tcnumber" onwheel="this.blur()" value = {{student.tcNumber}}>
 </div>
 </div>
 <div class="form-row mt-2">
 <div class="form-group col-md-3">
 <label for="anumber">Aadhar Number</label>
-<input type="number" class="form-control" id="anumber" name="anumber" value = {{student.aadharNumber}}>
+<input type="number" class="form-control" id="anumber" min="0" name="anumber" onwheel="this.blur()" value = {{student.aadharNumber}}>
 </div>
 <div class="form-group col-md-3">
 <label for="feeCategory">Fee Waiver Category</label>
@@ -135,11 +135,11 @@ Update Student Info
 </div>
 <div class="form-group col-md-3">
 <label for="siblingid">Sibling ID</label>
-<input type="number" class="form-control" id="siblingid" name="siblingid" value = {{student.siblingID}}>
+<input type="number" class="form-control" id="siblingid" min="0" name="siblingid" onwheel="this.blur()" value = {{student.siblingID}}>
 </div>
 <div class="form-group mb-5 col-md-3">
 <label for="prevschoolname">Previous School Name</label>
-<input type="text" class="form-control" id="prevschoolname" name="prevschool_name" value = {{student.prevSchoolName}}>
+<input type="text" class="form-control" id="prevschoolname" min="0" name="prevschool_name" value = {{student.prevSchoolName}}>
 </div>
 </div>
 <div class="row justify-content-around">

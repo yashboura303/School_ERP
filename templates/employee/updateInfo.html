@@ -31,7 +31,7 @@ input[type=number] {
         <h3 class="my-2 text-info ">Update Employee Details</h3>
         <div class="form-group w-50">
             <label for="username" class="font-weight-bold">EmpID of Employee to Update</label>
-            <input type="number" class="form-control" id="empID" name="empID" value={{employee.empID}} required>
+            <input type="number" min="0"class="form-control" id="empID" name="empID" value={{employee.empID}} required>
         </div>
         <hr>
         <div class="form-row">
@@ -59,7 +59,7 @@ input[type=number] {
             </div>
             <div class="form-group col-md-3">
                 <label for="username">Email:</label>
-                <input type="text" class="form-control" id="email" name="email" value={{employee.email}}>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" value={{employee.email}}>
             </div>
             <div class="form-group col-md-3">
                 <label for="username">Joining Date:</label>
@@ -173,7 +173,7 @@ input[type=number] {
     </div>
     <div class="form-group col-md-5">
         <label for="anumber">Aadhar Number:</label>
-        <input type="number" class="form-control" id="a_number" name="a_number" alue={{employee.aadharNumber}}>
+        <input type="number" class="form-control" id="a_number" name="a_number" onwheel="this.blur()" value={{employee.aadharNumber}}>
     </div>
 </div>
 

@@ -69,8 +69,8 @@ input[type=number] {
                 <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber" onwheel="this.blur()" required>
             </div>
             <div class="form-group col-md-3">
-                <label>Phone Number:</label>
-                <input min="0" type="number" class="form-control" id="phonenumber" name="phonenumber"onwheel="this.blur()">
+                <label class="required">Phone Number:</label>
+                <input min="0" type="text" maxlength="10" pattern="\d{10}" class="form-control" id="phonenumber" name="phonenumber" onwheel="this.blur()" required>
             </div>
         </div>
 
@@ -227,15 +227,15 @@ input[type=number] {
     <div class="form-row mt-3">
         <div class="form-group col-md-3">
             <label>Phone Number:</label>
-            <input min="0" type="number" class="form-control" id="phone_number" name="phone_number">
+            <input min="0" type="text" class="form-control"  maxlength="10" pattern="\d{10}" id="phone_number" name="phone_number">
         </div>
         <div class="form-group col-md-3">
             <label>Alternate Phone Number:</label>
-            <input min="0" type="number" class="form-control" id="alt_phone_number" name="alt_phone_number">
+            <input min="0" type="text" class="form-control"  maxlength="10" pattern="\d{10}" id="alt_phone_number" name="alt_phone_number">
         </div>
         <div class="form-group col-md-3">
             <label for="prevschoolname">E-Mail:</label>
-            <input type="pemail" class="form-control" id="pemail" name="pemail">
+            <input type="email" class="form-control" aria-describedby="emailHelp" id="pemail" name="pemail">
         </div>
     </div>
     <div class="form-row mt-3">

@@ -67,15 +67,15 @@ input[type=number] {
             </div>
             <div class="form-group col-md-3">
                 <label >Email:</label>
-                <input type="text" class="form-control" id="email" name="email">
+                <input type="email" class="form-control" aria-describedby="emailHelp" id="email" name="email">
             </div>
             <div class="form-group col-md-3">
                 <label >Joining Date:</label>
                 <input type="date" class="form-control" id="joinDate"  name="joinDate">
             </div>
             <div class="form-group col-md-3">
-                <label >Phone Number:</label>
-                <input type="number" class="form-control" id="phone_number" name="phone_number" min="0" onwheel="this.blur()">
+                <label class="required" >Phone Number:</label>
+                <input type="text" class="form-control" maxlength="10" pattern="\d{10}" id="phone_number" name="phone_number" min="0" onwheel="this.blur()" required>
             </div>
         </div>
     </div>
