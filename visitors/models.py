@@ -8,7 +8,7 @@ def user_directory_path(instance, filename):
 class Visitor(models.Model):
 	name = models.CharField(max_length=30)
 	mobile_no = models.BigIntegerField()
-	date_time = models.DateTimeField(default=datetime.now())
+	date_time = models.DateTimeField()
 	contact_to = models.CharField(max_length=30)
 	address = models.CharField(max_length=50)
 	purpose = models.TextField(max_length=30)

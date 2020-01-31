@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Visitor
 from django.contrib import messages
 from datetime import date
+from datetime import datetime
 # Create your views here.
 def home(request):
 	if request.method == "POST":
@@ -12,7 +13,7 @@ def home(request):
 		purpose = request.POST.get("purpose")
 		photos = request.FILES.get("photos")
 		document = request.FILES.get("document")
-		Visitor.objects.create(name=name, mobile_no=mobile_no, address=address, purpose=purpose, photo=photos, document=document,contact_to=contact_to)
+		Visitor.objects.create(name=name, mobile_no=mobile_no, address=address, purpose=purpose, photo=photos, document=document,contact_to=contact_to, date_time=datetime.now())
 		messages.success(request, "Visitor detail added!")
 		redirect("visitorForm")
 	return render(request, 'visitors/home.html')

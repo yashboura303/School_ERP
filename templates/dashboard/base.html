@@ -237,6 +237,19 @@
                         {% if user.userprofile.user_type == "Admin" %}
                         <li class="sidebar-dropdown">
                             <a href="#">
+                            <i class="fas fa-building"></i>
+                                <span>Class-Rooms</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'addClass' %}">Add ClassRoom</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
                                 <i class="far fa-credit-card"></i>
                                 <span>Fees</span>
                             </a>
@@ -440,6 +453,12 @@
     });
     $("#show-sidebar").click(function() {
         $(".page-wrapper").addClass("toggled");
+    });
+     $(document).ready(function() {
+        // show the alert
+        setTimeout(function() {
+            $(".alert").alert('close');
+        }, 3000);
     });
     </script>
 </body>
