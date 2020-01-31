@@ -1,0 +1,54 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Class
+{% endblock %}
+{% block content %}
+
+<div class="conatiner p-5">
+    {% include "message.html" %}
+    <h3 class="">Add Details</h3>
+    <hr class="my-2">
+    <p class="lead">
+        <div class="conatiner w-50">
+            <form action="{% url 'addTimeTableDetail' %} " method="GET">
+                <div class="form-group">
+                    <label class="pr-1" for="">Teacher:</label>
+                    <select name="teacher_empID" class="form-control mr-2" id="class_name">
+                        <option selected="true" disabled="disabled" value="a">Select</option>
+                        {% for teacher in teachers %}
+                        <option value='{{ teacher.employee.empID }}'>{{ teacher.fullName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Class Section :</label>
+                    <select name="class_room" class="form-control mr-2" id="class_name">
+                        <option selected="true" disabled="disabled" value="a">Select</option>
+                        {% for class_room in class_rooms %}
+                        <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Subjects :</label>
+                    <input type="text" class="form-control" name="subjects" >
+                </div>
+                <div class="row justify-content-left">
+                    <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </p>
+</div>
+{% endblock %}
+<script>
+$(document).ready(function() {
+    // show the alert
+    setTimeout(function() {
+        $(".alert").alert('close');
+    }, 2000);
+});
+</script>
+</body>
+
+</html>

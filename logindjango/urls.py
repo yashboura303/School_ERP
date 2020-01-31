@@ -30,4 +30,5 @@ urlpatterns = [
     path('visitor/', include('visitors.urls')),
     path('leave/', include('leave.urls')),
     path('gallery/', include('gallery.urls')),
+    path('timetable/', include('timetable.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

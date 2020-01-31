@@ -22,7 +22,10 @@ class ClassRoom(models.Model):
     teacher = models.OneToOneField(Teacher, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return f"Class:{self.classSection}| Teacher: {self.teacher.fullName}"
+        if self.teacher:
+            return f"Class:{self.classSection}| Teacher: {self.teacher.fullName}"
+        else:
+            return f"Class:{self.classSection}"
 
 
 def user_directory_path(instance, filename):

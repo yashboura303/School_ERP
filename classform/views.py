@@ -18,15 +18,13 @@ def addclass(request):
         print(request.POST)
         class_section = request.POST.get("classSection")
         teacher_empID = request.POST.get("teacher")
-        _teacher = Teacher.objects.get(employee__empID=teacher_empID)
-        if _teacher:
-          try:
-            classroom = ClassRoom.objects.create(teacher=_teacher, classSection=class_section)
-          except:
-            messages.error(request, "Class already alloted!")
-            return redirect('addClass')
-          classroom.save()
-          messages.success(request, "Class alloted!")
-          return redirect('addClass')
+        if teacher_empID:
+          _teacher = Teacher.objects.get(employee__empID=teacher_empID)
+          classroom = ClassRoom.objects.create(teacher=_teacher, classSection=class_section)
+        else:
+          classroom = ClassRoom.objects.create(classSection=class_section)
+        classroom.save()
+        messages.success(request, "Class alloted!")
+        return redirect('addClass')
 
     return render(request, 'classform/addclass.html', {"teachers":teachers})
