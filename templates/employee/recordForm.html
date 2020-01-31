@@ -206,7 +206,13 @@ input[type=number] {
             </div>
             <div class="form-group col-md-4">
                 <label >Class Teacher:</label>
-                <input type="text" class="form-control" id="classTeacher" name="classTeacher">
+                <select name="classTeacher" class="form-control mr-2" id="class_name">
+                            <option selected="true" disabled="disabled" value="a">Select</option>
+                            {% for class_room in class_rooms %}
+                            <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+                            {% endfor %}
+                    </select>
+                <!-- <input type="text" class="form-control" id="classTeacher" name="classTeacher"> -->
             </div>
         </div>
     </div>

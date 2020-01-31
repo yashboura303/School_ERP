@@ -16,3 +16,7 @@ def add_detail(request):
 	        employee__empID=teacher_empID), class_room=ClassRoom.objects.get(classSection=class_room), subjects=subjects)
 	    messages.success(request, "Added detail!")
     return render(request, 'timetable/addDetail.html', {"class_rooms": ClassRoom.objects.all(), "teachers": Teacher.objects.all()})
+
+def view_details(request):
+	class_room_subject_teachers = ClassRoomSubjectTeacher.objects.all()
+	return render(request, 'timetable/detailsList.html',{"class_room_subject_teachers":class_room_subject_teachers})

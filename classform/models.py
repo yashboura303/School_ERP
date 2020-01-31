@@ -20,6 +20,7 @@ class ClassRoom(models.Model):
     """
     classSection = models.CharField(max_length=50)
     teacher = models.OneToOneField(Teacher, on_delete=models.CASCADE, blank=True, null=True)
+    class_teacher_alloted = models.BooleanField(default=False)
 
     def __str__(self):
         if self.teacher:
