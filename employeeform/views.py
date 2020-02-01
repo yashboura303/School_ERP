@@ -49,13 +49,14 @@ def form(request):
         perm_zip = request.POST.get("perminputZip")
         emp_category = request.POST.get("empCategory", "")
         if emp_category == "teacher":
-            teacher_first_name = request.POST.get("teacherFirstName", "")
-            teacher_last_name = request.POST.get("teacherLastName", "")
             specialization = request.POST.get("specialization", "")
             designation = request.POST.get("designation", "")
             classTeacher = request.POST.get("classTeacher", "")
-
-        employee = Employee.objects.create(empID=emp_id)
+        try:
+            employee = Employee.objects.create(empID=emp_id)
+        except:
+            messages.error(request, "Employee ID already assigned")
+            redirect('employeeForm')
         employee.firstName = f_name
         employee.lastName = l_name
         employee.partnerName = partner_name
@@ -104,9 +105,6 @@ def form(request):
 
         if emp_category == "teacher":
             teacher = Teacher.objects.create(employee=employee)
-            teacher.firstName = teacher_first_name
-            teacher.lastName = teacher_last_name
-            teacher.fullName = teacher_first_name + " " + teacher_last_name
             teacher.specialization = specialization
             teacher.designation = designation
             teacher.save()
@@ -121,7 +119,6 @@ def form(request):
             # alert message when class has already a class teacher
             if classTeacher:
                 classroom = ClassRoom.objects.get(classSection=classTeacher)
-                classroom.teacher = teacher
                 classroom.class_teacher_alloted = True
                 classroom.save()
                 teacher.classTeacher = classTeacher

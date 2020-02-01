@@ -16,7 +16,7 @@ TimeTable Details
                     <select name="teacher_empID" class="form-control mr-2" id="class_name">
                         <option selected="true" disabled="disabled" value="a">Select</option>
                         {% for teacher in teachers %}
-                        <option value='{{ teacher.employee.empID }}'>{{ teacher.fullName }}</option>
+                        <option value='{{ teacher.employee.empID }}'>{{ teacher.employee.fullName }}</option>
                         {% endfor %}
                     </select>
                 </div>

@@ -19,8 +19,10 @@ class ClassRoom(models.Model):
     Table for Class Room details with Class-Section and Class Teacher Assigned
     """
     classSection = models.CharField(max_length=50)
-    teacher = models.OneToOneField(Teacher, on_delete=models.CASCADE, blank=True, null=True)
+    _class = models.CharField(max_length=50, blank=True)
+    _section = models.CharField(max_length=50, blank =True)
     class_teacher_alloted = models.BooleanField(default=False)
+    room_no = models.CharField(max_length=50, blank =True)
 
     def __str__(self):
         if self.teacher:

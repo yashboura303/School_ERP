@@ -65,9 +65,6 @@ class Teacher(models.Model):
     """ Teacher Table"""
     employee = models.OneToOneField(
         Employee, primary_key=True, on_delete=models.CASCADE, blank=True)
-    firstName = models.CharField(max_length=20, blank=True)
-    lastName = models.CharField(max_length=20, blank=True)
-    fullName = models.CharField(max_length=50, blank=True)
     specialization = models.CharField(max_length=50, blank=True)
     designation = models.CharField(max_length=50, blank=True)
     classTeacher = models.CharField(max_length=50, blank=True)

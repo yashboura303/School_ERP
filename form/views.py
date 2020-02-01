@@ -52,8 +52,11 @@ def form(request):
         stoppage_name = request.POST.get("stoppage_name", "")
         shift = request.POST.get("shift", "")
 
-        student_info = StudentInfo.objects.create(admissionNumber=add_number)
-
+        try:
+            student_info = StudentInfo.objects.create(admissionNumber=add_number)
+        except:
+            messages.error(request, "Admission Number already assigned")
+            redirect('recordForm')
         if class_section:
         # class Section check
             try:

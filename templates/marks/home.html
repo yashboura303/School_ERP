@@ -5,6 +5,11 @@ Marks Section
 {% block content %}
 
 {% include "message.html" %}
+<style>
+    #additional-subject-div{
+        display: none;
+    }
+</style>
     <div class="container-fluid mt-3 border-bottom border-dark pb-2">
         <div class="container w-75">
             <h3 class="">Add Exam</h3>
@@ -96,7 +101,12 @@ Marks Section
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
-    <div class="container w-75">
+    <div class="custom-control custom-checkbox my-4">
+        <input type="checkbox" class="custom-control-input" name="customCheck1" id="customCheck1"
+            onclick="displayAdditionalSubject()">
+        <label class="custom-control-label " for="customCheck1"> Add Additional Subject</label>
+    </div>
+    <div class="container w-75" id="additional-subject-div">
         <h3 class="text-center">Additional Subject</h3>
         <hr>
         <form action="" id="additional_subject">
@@ -229,6 +239,19 @@ Marks Section
 
         });
     });
+
+      function displayAdditionalSubject() {
+        console.log(999)
+        div = document.getElementById("additional-subject-div")
+        if (document.getElementById("customCheck1").checked == true) {
+            div.style.display = "block";
+        }
+        else{
+            div.style.display = "none";
+
+        }
+    }
+
     </script>
 </body>
 
