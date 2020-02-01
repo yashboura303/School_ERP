@@ -3,7 +3,11 @@
 TimeTable Details
 {% endblock %}
 {% block content %}
-
+<style>
+    #display-none{
+        display: none;
+    }
+</style>
 <div class="conatiner p-5">
     {% include "message.html" %}
     <h3 class="">Add Details</h3>
@@ -33,6 +37,7 @@ TimeTable Details
                 <div class="form-group" id="subject-div">
                     <label for="">Subject :</label>
                     <button type="button" onclick="addSubject()" class="btn btn-outline-secondary btn-sm">Add Subject</button>
+                    <button type="button" onclick="delSubject()" class="btn btn-outline-danger btn-sm" id="display-none">Delete Subject</button>
                     <input type="text" class="form-control w-25 mt-1 " name="subject" >
                 </div>
                 <div class="row justify-content-left">
@@ -43,11 +48,28 @@ TimeTable Details
     </p>
 </div>
 <script>
-    let count = 1;
+    let count = 0;
     addSubject = () => {
         div = document.getElementById("subject-div");
-        div.innerHTML += `<input type='text' class='form-control my-2 w-25' name='subject${count}' >`;
+        btn = document.getElementById("display-none");
+        btn.style.display = "inline-block"
+        div.innerHTML += `<input type='text' class='form-control my-2 w-25' name='subject${count}' id='subject${count}'>`;
         count+=1;
+ }
+ delSubject = () =>{
+    if (count > 0){
+        input = document.getElementById(`subject${count-1}`);
+        input.outerHTML = "";
+        count-=1;
+        if (count===0){
+            btn = document.getElementById("display-none");
+        btn.style.display = "none"
+        }
+    }
+    else{
+        btn = document.getElementById("display-none");
+        btn.style.display = "none"
+    }
  }
 </script>
 {% endblock %}
