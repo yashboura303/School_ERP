@@ -29,9 +29,11 @@ TimeTable Details
                         {% endfor %}
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="">Subjects :</label>
-                    <input type="text" class="form-control" name="subjects" >
+                
+                <div class="form-group" id="subject-div">
+                    <label for="">Subject :</label>
+                    <button type="button" onclick="addSubject()" class="btn btn-outline-secondary btn-sm">Add Subject</button>
+                    <input type="text" class="form-control w-25 mt-1 " name="subject" >
                 </div>
                 <div class="row justify-content-left">
                     <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
@@ -40,15 +42,12 @@ TimeTable Details
         </div>
     </p>
 </div>
-{% endblock %}
 <script>
-$(document).ready(function() {
-    // show the alert
-    setTimeout(function() {
-        $(".alert").alert('close');
-    }, 2000);
-});
+    let count = 1;
+    addSubject = () => {
+        div = document.getElementById("subject-div");
+        div.innerHTML += `<input type='text' class='form-control my-2 w-25' name='subject${count}' >`;
+        count+=1;
+ }
 </script>
-</body>
-
-</html>
+{% endblock %}

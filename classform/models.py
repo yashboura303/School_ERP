@@ -25,10 +25,7 @@ class ClassRoom(models.Model):
     room_no = models.CharField(max_length=50, blank =True)
 
     def __str__(self):
-        if self.teacher:
-            return f"Class:{self.classSection}| Teacher: {self.teacher.fullName}"
-        else:
-            return f"Class:{self.classSection}"
+        return f"Class:{self.classSection}"
 
 
 def user_directory_path(instance, filename):

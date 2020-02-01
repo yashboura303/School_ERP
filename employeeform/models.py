@@ -70,7 +70,7 @@ class Teacher(models.Model):
     classTeacher = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
-        return f"Name:{self.fullName}| Class:{self.classTeacher}| Emp.ID: {self.employee.empID}"
+        return f"Name:{self.employee.fullName}| Class:{self.classTeacher}| Emp.ID: {self.employee.empID}"
 
 
 def user_directory_path(instance, filename):
