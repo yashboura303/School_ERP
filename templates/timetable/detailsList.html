@@ -30,11 +30,29 @@ TimeTable Details List
             </tr>
         </thead>
         <tbody>
-            {% for class_room_subject_teacher in class_room_subject_teachers %}
+            <!-- {% for class_room_subject_teacher in class_room_subject_teachers %}
             <tr>
-                <th scope="row">{{ class_room_subject_teacher.teacher.fullName}}</th>
+                <th scope="row">{{ class_room_subject_teacher.teacher.employee.fullName}}</th>
                 <td>{{ class_room_subject_teacher.class_room.classSection }}</td>
                 <td>{{ class_room_subject_teacher.subjects }}</td>
+            </tr>
+            {% endfor %} -->
+            {% regroup class_room_subject_teachers by teacher as myList %}
+            {% for a in myList %}
+            <tr>
+                <th scope="row">{{ a.grouper.employee.fullName}}</th>
+                <td>
+                {% for class_room in a.list %}
+                {% if forloop.first %}
+                    {{ class_room.class_room.classSection}}
+                {% endif %}
+                {% endfor %}
+               </td>
+                <td>
+                    {% for subject in a.list %}
+                {{ subject.subjects }}
+                {% endfor %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

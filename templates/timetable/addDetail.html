@@ -52,8 +52,13 @@ TimeTable Details
     addSubject = () => {
         div = document.getElementById("subject-div");
         btn = document.getElementById("display-none");
-        btn.style.display = "inline-block"
-        div.innerHTML += `<input type='text' class='form-control my-2 w-25' name='subject${count}' id='subject${count}'>`;
+        btn.style.display = "inline-block";
+        input = document.createElement("input");
+        input.type = "text";
+        input.name = `subject${count}`
+        input.id = `subject${count}`
+        input.className = `form-control my-2 w-25`
+        div.appendChild(input)
         count+=1;
  }
  delSubject = () =>{
