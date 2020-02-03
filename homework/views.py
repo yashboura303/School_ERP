@@ -22,15 +22,18 @@ def homework_home(request):
         employee = Employee.objects.get(empID=emp_id)
         teacher = Teacher.objects.get(employee=employee)
         class_section=teacher.classTeacher
+        qs1 = ClassRoom.objects.filter(classroomsubjectteacher__teacher=teacher)
+        qs2 = ClassRoom.objects.filter(classSection=class_section)
+        class_rooms = qs1.union(qs2)
         context = {
-        "class_rooms": ClassRoom.objects.filter(classSection=class_section),
-        "subjects": subjects
+        "class_rooms": class_rooms,
+        "subjects":subjects
         }
     else:
         context = {
-        "class_rooms": ClassRoom.objects.all(),
-        "subjects": subjects
-    }
+            "class_rooms": ClassRoom.objects.all(),
+        "subjects":subjects
+        }
     if request.method == "POST":
         class_section = request.POST.get("class_room")
         subject = request.POST.get("subject")
@@ -96,8 +99,11 @@ def syllabus(request):
         employee = Employee.objects.get(empID=emp_id)
         teacher = Teacher.objects.get(employee=employee)
         class_section=teacher.classTeacher
+        qs1 = ClassRoom.objects.filter(classroomsubjectteacher__teacher=teacher)
+        qs2 = ClassRoom.objects.filter(classSection=class_section)
+        class_rooms = qs1.union(qs2)
         context = {
-        "class_rooms": ClassRoom.objects.filter(classSection=class_section)
+        "class_rooms": class_rooms
         }
     else:
         context = {

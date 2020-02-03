@@ -4,6 +4,7 @@ from classform.models import ClassRoom, ClassRoomStudent
 from .models import ClassNotice, StudentNotice
 from accounts.models import UserProfile
 from employeeform.models import Employee, Teacher
+from timetable.models import ClassRoomSubjectTeacher
 # Create your views here.
 
 
@@ -14,8 +15,11 @@ def notice_home(request):
         employee = Employee.objects.get(empID=emp_id)
         teacher = Teacher.objects.get(employee=employee)
         class_section=teacher.classTeacher
+        qs1 = ClassRoom.objects.filter(classroomsubjectteacher__teacher=teacher)
+        qs2 = ClassRoom.objects.filter(classSection=class_section)
+        class_rooms = qs1.union(qs2)
         context = {
-        "class_rooms": ClassRoom.objects.filter(classSection=class_section)
+        "class_rooms": class_rooms
         }
     else:
         context = {
