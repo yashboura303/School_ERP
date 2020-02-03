@@ -12,6 +12,7 @@ from .models import ExamType, Exam, ExamMapping, Marks, AdditionalSubjectMapping
 from employeeform.models import Teacher, Employee
 from classform.models import ClassRoom, ClassRoomStudent, ReportCard
 from attendence.models import StudentAttendence, TeacherAttendence
+from timetable.models import ClassRoomSubjectTeacher
 from django.http import HttpResponse
 from django.contrib import messages
 from django.http import JsonResponse
@@ -29,7 +30,8 @@ def home(request):
 
         "class_rooms": ClassRoom.objects.all(),
         "exam_types": ExamType.objects.all(),
-        "exam_names": Exam.objects.all()
+        "exam_names": Exam.objects.all(),
+        "subjects": ClassRoomSubjectTeacher.objects.all().values('subject').distinct()
     }
     return render(request, 'marks/home.html', context)
 

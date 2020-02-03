@@ -96,7 +96,12 @@ Marks Section
             </div>
             <div class="form-group">
                 <label for="">Subject</label>
-                <input type="text" class="form-control" name="" id="class_subject" aria-describedby="helpId" placeholder="">
+                <select name="class_subject" class="form-control mr-2" id="class_room">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for subject in subjects %}
+                    <option value='{{ subject.subject }}'>{{ subject.subject }}</option>
+                    {% endfor %}
+                </select>            
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

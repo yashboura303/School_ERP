@@ -5,4 +5,4 @@ from employeeform.models import Teacher
 class ClassRoomSubjectTeacher(models.Model):
 	teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 	class_room = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
-	subjects = models.CharField(max_length=150)
+	subject = models.CharField(max_length=150)
