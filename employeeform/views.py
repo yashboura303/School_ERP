@@ -110,10 +110,11 @@ def form(request):
             teacher.save()
 
             #create id and password for teacher 
-            user = User.objects.create_user(emp_id, email, emp_id)
+            user = User.objects.create_user(emp_id, email, phone_number)
             user_profile = UserProfile.objects.create(
                     user=user, fullName=f_name + " " + l_name, emp_id=emp_id)
             user_profile.user_type = "Teacher"
+            user_profile.password = phone_number
             user_profile.save()
 
             # alert message when class has already a class teacher
@@ -300,3 +301,10 @@ def search(request):
                 request, 'Cant find employee with entered detail')
             return redirect('empSearchPage')
     return render(request, 'employee/emplSearchPage.html')
+
+
+def get_teachers_credentials(request):  
+    user_profile = UserProfile.objects.filter(user_type="Teacher")
+    teachers = Teacher.objects.all()
+    myList = zip(user_profile, teachers)
+    return render(request, 'employee/credentials.html', {"myList":myList})

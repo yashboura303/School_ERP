@@ -89,10 +89,11 @@ def form(request):
         student_info.save()
 
         #create id and password for student 
-        user = User.objects.create_user(username=add_number, password=add_number)
+        user = User.objects.create_user(username=add_number, password=phone_number)
         user_profile = UserProfile.objects.create(
                 user=user, fullName=f_name + " " + l_name, addmission_number=add_number)
         user_profile.user_type = "Student"
+        user_profile.password = phone_number
         user_profile.save()
 
 
@@ -384,3 +385,10 @@ def get_students_list(request):
     class_section=teacher.classTeacher
     students = ClassRoomStudent.objects.filter(classRoom__classSection=class_section)
     return render(request, "form/studentList.html",{"class_room_students":students})
+
+
+def get_student_credentials(request):  
+    user_profile = UserProfile.objects.filter(user_type="Student")
+    students = ClassRoomStudent.objects.all()
+    myList = zip(user_profile, students)
+    return render(request, 'form/credentials.html', {"myList":myList})

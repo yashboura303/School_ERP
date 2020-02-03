@@ -6,7 +6,6 @@ Add Class
 {% include "message.html" %}
 <div class="conatiner p-5">
     <h3 class="">Add Class</h3>
-    <p class="lead">mention class section and teacher to be alloted, leave teacher empty if just want to add class</p>
     <hr class="my-2">
     <p class="lead">
         <div class="conatiner w-50">
@@ -14,32 +13,12 @@ Add Class
                 {% csrf_token %}
                 <div class="form-group">
                     <label class="pr-1" for="">Class:</label>
-                    <select id="month" class="form-control" name="class">
-                        <option disabled="disabled" selected="true">Select</option>
-                        <option value='I'>I</option>
-                        <option value='II'>II</option>
-                        <option value='III'>III</option>
-                        <option value='IV'>IV</option>
-                        <option value='V'>V</option>
-                        <option value='VI'>VI</option>
-                        <option value='VII'>VII</option>
-                        <option value='VIII'>VIII</option>
-                        <option value='IX'>IX</option>
-                        <option value='X'>X</option>
-                        <option value='XI'>XI</option>
-                        <option value='XII'>XII</option>
-                    </select>
+                    <input type="text" class="form-control" name="class">
                 </div>
                 <div class="form-group">
                     <label for="">Class Section</label>
-                    <label class="pr-1" for="">Class:</label>
-                    <select id="month" class="form-control" name="section">
-                        <option disabled="disabled" selected="true">Select</option>
-                        <option value='A'>A</option>
-                        <option value='B'>B</option>
-                        <option value='C'>C</option>
-                        <option value='D'>D</option>
-                    </select> </div>
+                    <input type="text" class="form-control" name="section">
+                </div>
                     <div class="form-group">
                     <label class="pr-1" for="">Room No:</label>
                     <input type="text" class="form-control" name="room_no">

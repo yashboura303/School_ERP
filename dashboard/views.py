@@ -72,6 +72,7 @@ def profile(request):
                     if password1 == password2:
                         request.user.set_password(password1)
                         request.user.save()
+                        profile.password = password1
                         profile.save()
                         messages.info(request, 'Login with your new password')
                         return redirect('userProfile')

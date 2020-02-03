@@ -13,6 +13,7 @@ class UserProfile(models.Model):
 	image = models.ImageField(default='default.jpg',upload_to ='profile_pics')
 	emp_id = models.BigIntegerField(default=0)
 	addmission_number = models.BigIntegerField(default=0)
+	password = models.CharField(max_length=100,default="")
 
 	def __str__(self):
 		return f"{self.user}"
