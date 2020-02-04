@@ -29,6 +29,9 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance:textfield;
 }
+#display-none{
+    display: none;
+}
 </style>
 
 <form class="container" id="myForm" method="POST" action={% url 'recordForm' %} enctype="multipart/form-data">
@@ -160,8 +163,10 @@ input[type=number] {
             <label for="prevschoolname">Previous School Name:</label>
             <input type="text" class="form-control" id="prevschoolname" name="prevschoolname">
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col" id="sibling-div">
             <label for="siblingid">Sibling ID:</label>
+            <button type="button" onclick="addSibling()" class="btn btn-outline-secondary btn-sm">Add Sibling</button>
+                    <button type="button" onclick="delSibling()" class="btn btn-outline-danger btn-sm" id="display-none">Delete Sibiling</button>
             <input type="number" class="form-control" id="siblingid" min="0" name="siblingid">
         </div>
         
@@ -307,6 +312,34 @@ input[type=number] {
 
 </form>
 <script>
+    let count = 0;
+    addSibling = () => {
+        div = document.getElementById("sibling-div");
+        btn = document.getElementById("display-none");
+        btn.style.display = "inline-block";
+        input = document.createElement("input");
+        input.type = "text";
+        input.name = `siblingid${count}`;
+        input.id = `siblingid${count}`;
+        input.className = `form-control my-2`;
+        div.appendChild(input);
+        count+=1;
+ }
+ delSibling = () =>{
+    if (count > 0){
+        input = document.getElementById(`siblingid${count-1}`);
+        input.outerHTML = "";
+        count-=1;
+        if (count===0){
+            btn = document.getElementById("display-none");
+        btn.style.display = "none"
+        }
+    }
+    else{
+        btn = document.getElementById("display-none");
+        btn.style.display = "none"
+    }
+ }
     function FillAddress(f) {
         console.log(999)
         if (f.customCheck1.checked == true) {

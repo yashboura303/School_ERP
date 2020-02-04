@@ -47,16 +47,19 @@ def form(request):
         anumber = request.POST.get("anumber", "")
         feeCategory = request.POST.get("feeCategory", "")
         siblingid = request.POST.get("siblingid", "")
+        siblingid0 = request.POST.get("siblingid0", "")
+        siblingid1 = request.POST.get("siblingid1", "")
+        siblingid2 = request.POST.get("siblingid2", "")
         prevschool_name = request.POST.get("prevschool_name", "")
         route_code = request.POST.get("route_code", "")
         stoppage_name = request.POST.get("stoppage_name", "")
         shift = request.POST.get("shift", "")
 
-        try:
-            student_info = StudentInfo.objects.create(admissionNumber=add_number)
-        except:
-            messages.error(request, "Admission Number already assigned")
-            redirect('recordForm')
+        # try:
+        student_info = StudentInfo.objects.create(admissionNumber=add_number)
+        # except:
+        #     messages.error(request, "Admission Number already assigned")
+        #     return render(request, 'form/recordForm.html',{"routes":Routes.objects.all()})
         if class_section:
         # class Section check
             try:
@@ -85,6 +88,12 @@ def form(request):
         student_info.feeWaiverCategory = feeCategory
         if siblingid:
             student_info.siblingID = siblingid
+        if siblingid0:
+            student_info.siblingID0 = siblingid0
+        if siblingid1:
+            student_info.siblingID1 = siblingid1
+        if siblingid2:
+            student_info.siblingID2 = siblingid2
         student_info.prevSchoolName = prevschool_name
         student_info.save()
 

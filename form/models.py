@@ -23,6 +23,9 @@ class StudentInfo(models.Model):
     aadharNumber = models.BigIntegerField(null=True,blank=True)
     feeWaiverCategory = models.CharField(max_length=20,blank=True)
     siblingID = models.BigIntegerField(null=True,blank=True)
+    siblingID0 = models.BigIntegerField(null=True,blank=True)
+    siblingID1 = models.BigIntegerField(null=True,blank=True)
+    siblingID2 = models.BigIntegerField(null=True,blank=True)
     prevSchoolName = models.CharField(max_length=20,blank=True)
 
     def __str__(self):
