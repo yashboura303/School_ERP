@@ -74,7 +74,7 @@ def student_attendence(request):
                     s = StudentAttendence.objects.create(student=classroomstudent, date=_date, status=request.POST[str(
                         classroomstudent.student.admissionNumber)])
                     s.save()
-
+        messages.success(request, "Marked attendence")
     return render(request, 'attendence/student.html', {'class_rooms': classrooms})
 
 
