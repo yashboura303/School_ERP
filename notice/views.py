@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from classform.models import ClassRoom, ClassRoomStudent
 from .models import ClassNotice, StudentNotice
@@ -90,7 +90,7 @@ def check_class_notice(request):
 
 def download_class_notice(request, pk):
     notice = ClassNotice.objects.get(id=pk)
-    filename = notcie.notice_document.split('/')[-1]
+    filename = notice.notice_document.split('/')[-1]
     response = HttpResponse(object_name.file, content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
