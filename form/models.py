@@ -27,6 +27,7 @@ class StudentInfo(models.Model):
     siblingID1 = models.BigIntegerField(null=True,blank=True)
     siblingID2 = models.BigIntegerField(null=True,blank=True)
     prevSchoolName = models.CharField(max_length=20,blank=True)
+    deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Name:{self.fullName}| Add.No: {self.admissionNumber}| Class:{self.classSection}"

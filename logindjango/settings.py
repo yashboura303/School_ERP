@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'transport.apps.TransportConfig',
     'gallery.apps.GalleryConfig',
     'timetable.apps.TimetableConfig',
+    'deletedetails.apps.DeletedetailsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

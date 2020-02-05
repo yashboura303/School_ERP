@@ -11,6 +11,7 @@ from employeeform.models import Employee, Teacher
 from accounts.models import UserProfile
 from .models import StudentInfo, PermanentAddress, CurrentAddress, ParentInfo, Documents, StudentRoute
 from openpyxl import load_workbook
+from django.db.models import Q
 
 
 # Create your views here.
@@ -300,7 +301,7 @@ def search(request):
     """
     if request.method == "GET":
 
-        students = StudentInfo.objects.all()
+        students = StudentInfo.objects.filter(deleted=False)
         # parentInfo = ParentInfo.objects.all()
         if "f_name" in request.GET:
             f_name = request.GET["f_name"]
@@ -315,14 +316,12 @@ def search(request):
             add_no = request.GET["addNumber"]
             students = students.filter(admissionNumber__icontains=(add_no))
             if students:
-                # permAdd = PermanentAddress.objects.filter(admissionNumber = student)
-                # currentAdd = CurrentAddress.objects.get(admissionNumber = student)
-                return render(request, 'form/searchPage.html', {"students": students,"values":request.GET})
+                return render(request, 'form/searchPage.html', {"students": students,"values":request.GET,"class_rooms":ClassRoom.objects.all()})
             else:
                 messages.error(
                     request, 'Cant find student with entered detail')
                 return redirect('recordForm')
-    return render(request, 'form/searchPage.html')
+    return render(request, 'form/searchPage.html',{"class_rooms":ClassRoom.objects.all()})
 
 def upload_excel_data(request):
     if request.method == "POST":
@@ -392,7 +391,7 @@ def get_students_list(request):
     employee = Employee.objects.get(empID=emp_id)
     teacher = Teacher.objects.get(employee=employee)
     class_section=teacher.classTeacher
-    students = ClassRoomStudent.objects.filter(classRoom__classSection=class_section)
+    students = ClassRoomStudent.objects.filter(Q(classRoom__classSection=class_section) | Q(deleted=False))
     return render(request, "form/studentList.html",{"class_room_students":students})
 
 

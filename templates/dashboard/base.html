@@ -300,6 +300,28 @@
                         </li>
                         <li class="sidebar-dropdown">
                             <a href="#">
+                                <i class="fas fa-trash-alt"></i>
+                                <span>Delete</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'listStudents' %}">Delete Student Details</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'deletedStudentList' %}">Get Deleted Students Data</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'listEmployees' %}">Delete Employee Details</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'deletedEmployeeList' %}">Get Deleted Employees Data</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
                                 <i class="fas fa-bus"></i>
                                 <span>Transport</span>
                             </a>

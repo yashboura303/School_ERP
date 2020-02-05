@@ -31,4 +31,5 @@ urlpatterns = [
     path('leave/', include('leave.urls')),
     path('gallery/', include('gallery.urls')),
     path('timetable/', include('timetable.urls')),
+    path('deletedetails/', include('deletedetails.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

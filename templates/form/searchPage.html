@@ -16,8 +16,12 @@ Search Student
                 aria-label="Search" value="{{values.fname}}">
             <input class="form-control mr-sm-2" type="search" name="addNumber" placeholder="Admission Number"
                 aria-label="Search" value="{{values.addNumber}}">
-            <input class="form-control mr-sm-2" type="search" name="classSection" placeholder="Class Section"
-                aria-label="Search" value="{{values.classSection}}">
+                <select name="classSection" class="form-control mr-2" id="class_room">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for class_room in class_rooms %}
+                    <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+                    {% endfor %}
+                </select>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>

@@ -284,7 +284,7 @@ def search(request):
     output: list of employee matching search query"""
     if request.method == "GET":
 
-        employee = Employee.objects.all()
+        employee = Employee.objects.filter(deleted=False)
 
         if "name" in request.GET:
             name = request.GET["name"]
