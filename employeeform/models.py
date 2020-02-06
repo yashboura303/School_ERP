@@ -26,7 +26,6 @@ class Employee(models.Model):
     experience = models.CharField(max_length=20, blank=True)
     aadharNumber = models.BigIntegerField(default=0)
     empCategory = models.CharField(max_length=20, blank=True)
-    deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Name:{self.fullName}| Cateogry:{self.empCategory}| Emp.ID: {self.empID}"

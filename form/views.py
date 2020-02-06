@@ -11,7 +11,6 @@ from employeeform.models import Employee, Teacher
 from accounts.models import UserProfile
 from .models import StudentInfo, PermanentAddress, CurrentAddress, ParentInfo, Documents, StudentRoute
 from openpyxl import load_workbook
-from django.db.models import Q
 
 
 # Create your views here.
@@ -301,7 +300,7 @@ def search(request):
     """
     if request.method == "GET":
 
-        students = StudentInfo.objects.filter(deleted=False)
+        students = StudentInfo.objects.all()
         # parentInfo = ParentInfo.objects.all()
         if "f_name" in request.GET:
             f_name = request.GET["f_name"]
@@ -391,7 +390,7 @@ def get_students_list(request):
     employee = Employee.objects.get(empID=emp_id)
     teacher = Teacher.objects.get(employee=employee)
     class_section=teacher.classTeacher
-    students = ClassRoomStudent.objects.filter(Q(classRoom__classSection=class_section) | Q(deleted=False))
+    students = ClassRoomStudent.objects.filter(classRoom__classSection=class_section)
     return render(request, "form/studentList.html",{"class_room_students":students})
 
 
