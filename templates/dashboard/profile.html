@@ -4,6 +4,20 @@
 
 {% include "message.html" %}
     <div class="container pt-3 mt-3 w-75">
+        {% if user.userprofile.user_type == "Student" %}
+        {% if sibling1 %}
+        <h4 class="text-left">Check Siblings Dashboard</h4>
+        <ul>
+            <li><a href="{% switchAccount {{sibling1.admissionNumber}} %}" class="text-left text-dark">{{sibling1.fullName}}</a></li>
+        {% endif %}
+        {% if sibling2 %}
+            <li><a href="" class="text-left text-dark">{{sibling2.fullName}}</a></li>
+        {% endif %}
+        {% if sibling3 %}
+            <li><a href="" class="text-left text-dark">{{sibling3.fullName}}</a></li>
+        {% endif %}
+        </ul>
+        {% endif %}
         <form method="post" action="{% url 'userProfile' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <h2 class="text-center mb-2">Update Profile</h2>
@@ -57,5 +71,6 @@
             {% endif %}
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
+        
     </div>
     {% endblock content %}

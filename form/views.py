@@ -56,17 +56,19 @@ def form(request):
         shift = request.POST.get("shift", "")
 
         try:
-            student_info = StudentInfo.objects.create(admissionNumber=add_number)
+            student_info = StudentInfo.objects.create(
+                admissionNumber=add_number)
         except:
             messages.error(request, "Admission Number already assigned")
-            return render(request, 'form/recordForm.html',{"routes":Routes.objects.all()})
+            return render(request, 'form/recordForm.html', {"routes": Routes.objects.all()})
         if class_section:
-        # class Section check
+            # class Section check
             try:
                 class_room = ClassRoom.objects.get(classSection=class_section)
                 student_info.classSection = class_section
                 student_info.save()
-                ClassRoomStudent.objects.create(classRoom=class_room, student=student_info)
+                ClassRoomStudent.objects.create(
+                    classRoom=class_room, student=student_info)
             except:
                 messages.error(request, "Class Doesn't Exist")
                 return redirect('recordForm')
@@ -97,14 +99,13 @@ def form(request):
         student_info.prevSchoolName = prevschool_name
         student_info.save()
 
-        #create id and password for student 
-        user = User.objects.create_user(username=add_number, password=phone_number)
+        # create id and password for student
+        print("Phone nUmber", phone_number)
+        user = User.objects.create_user(
+            username=add_number, password=phone_number)
+        print("Phone nUmber", phone_number)
         user_profile = UserProfile.objects.create(
-                user=user, fullName=f_name + " " + l_name, addmission_number=add_number)
-        user_profile.user_type = "Student"
-        user_profile.password = phone_number
-        user_profile.save()
-
+            user=user, fullName=f_name + " " + l_name, addmission_number=add_number, user_type="Student", password=phone_number)
 
         permanent = PermanentAddress.objects.create(student=student_info)
         permanent.Address = perm_add1 + perm_add2
@@ -135,9 +136,9 @@ def form(request):
         m_occup = request.POST.get("m_occup")
         g_occup = request.POST.get("g_occup")
         if m_dob:
-            mDOB = date(*map(int, mDOB.split('-')))
+            mDOB = date(*map(int, m_dob.split('-')))
         if f_dob:
-            fDOB = date(*map(int, fDOB.split('-')))
+            fDOB = date(*map(int, f_dob.split('-')))
 
         parent_info = ParentInfo.objects.create(student=student_info)
         parent_info.fatherName = father_name
@@ -157,9 +158,8 @@ def form(request):
         parent_info.motherQual = m_occup
         parent_info.save()
 
+        # Route details
 
-        #Route details
-        
         if route_code:
             route = StudentRoute.objects.create(student=student_info)
             route.route_stoppage = stoppage_name
@@ -177,7 +177,7 @@ def form(request):
         documents.save()
         messages.success(request, "Record successfully added")
 
-    return render(request, 'form/recordForm.html',{"routes":Routes.objects.all()})
+    return render(request, 'form/recordForm.html', {"routes": Routes.objects.all()})
 
 
 def update(request):
@@ -192,7 +192,8 @@ def update(request):
             admissionNumber=int(add_number))
         permanent, created = PermanentAddress.objects.get_or_create(
             student=student_info)
-        current, created = CurrentAddress.objects.get_or_create(student=student_info)
+        current, created = CurrentAddress.objects.get_or_create(
+            student=student_info)
         sDOB = request.POST.get("sDOB")
         sDOB = date(*map(int, sDOB.split('-')))
         f_name = request.POST.get("firstname", student_info.firstName)
@@ -315,12 +316,13 @@ def search(request):
             add_no = request.GET["addNumber"]
             students = students.filter(admissionNumber__icontains=(add_no))
             if students:
-                return render(request, 'form/searchPage.html', {"students": students,"values":request.GET,"class_rooms":ClassRoom.objects.all()})
+                return render(request, 'form/searchPage.html', {"students": students, "values": request.GET, "class_rooms": ClassRoom.objects.all()})
             else:
                 messages.error(
                     request, 'Cant find student with entered detail')
                 return redirect('recordForm')
-    return render(request, 'form/searchPage.html',{"class_rooms":ClassRoom.objects.all()})
+    return render(request, 'form/searchPage.html', {"class_rooms": ClassRoom.objects.all()})
+
 
 def upload_excel_data(request):
     if request.method == "POST":
@@ -333,7 +335,7 @@ def upload_excel_data(request):
             student_info = StudentInfo.objects.create(admissionNumber=sheet[f"A{i}"].value)
             student_info.firstName = sheet[f"B{i}"].value
             student_info.lastName = sheet[f"C{i}"].value
-            student_info.fullName = sheet[f"B{i}"].value + " " + sheet[f"C{i}"] .value 
+            student_info.fullName = sheet[f"B{i}"].value + " " + sheet[f"C{i}"] .value
             # student_info.attributes = sheet[f"E{i}"]
             student_info.dob = sheet[f"D{i}"].value
             # student_info.permanentAddress = sheet[f"G{i}"]
@@ -356,7 +358,7 @@ def upload_excel_data(request):
             parent_info.altMobileNumber = sheet[f"S{i}"].value
             # parent_info.gaurdianName = sheet[f"N{i}"]
             parent_info.gaurdianQual = sheet[f"T{i}"].value
-            parent_info.guardianOccup =sheet[f"U{i}"].value
+            parent_info.guardianOccup = sheet[f"U{i}"].value
             parent_info.email = sheet[f"V{i}"].value
             parent_info.motherOccup = sheet[f"W{i}"].value
             parent_info.motherQual = sheet[f"X{i}"].value
@@ -365,7 +367,7 @@ def upload_excel_data(request):
             permanent = PermanentAddress.objects.create(student=student_info)
             permanent.Address1 = permanent_sheet[f"B{i}"].value
             permanent.Address2 = permanent_sheet[f"C{i}"].value
-            permanent.Address = permanent_sheet[f"B{i}"].value + ', '+ permanent_sheet[f"C{i}"].value
+            permanent.Address = permanent_sheet[f"B{i}"].value + ', ' + permanent_sheet[f"C{i}"].value
             permanent.zipCode = permanent_sheet[f"D{i}"].value
             permanent.state = permanent_sheet[f"E{i}"].value
             permanent.city = permanent_sheet[f"F{i}"].value
@@ -374,12 +376,12 @@ def upload_excel_data(request):
             current = CurrentAddress.objects.create(student=student_info)
             current.Address1 = current_sheet[f"B{i}"].value
             current.Address2 = current_sheet[f"C{i}"].value
-            current.Address = current_sheet[f"B{i}"].value + ', '+ current_sheet[f"C{i}"].value
+            current.Address = current_sheet[f"B{i}"].value + ', ' + current_sheet[f"C{i}"].value
             current.zipCode = current_sheet[f"D{i}"].value
             current.city = current_sheet[f"E{i}"].value
             current.state = current_sheet[f"F{i}"].value
             current.save()
-            i+=1
+            i += 1
         messages.success(request, 'Data Uploaded Successfully')
     return render(request, 'form/uploadExcelData.html')
 
@@ -389,13 +391,14 @@ def get_students_list(request):
     emp_id = teacher_profile.emp_id
     employee = Employee.objects.get(empID=emp_id)
     teacher = Teacher.objects.get(employee=employee)
-    class_section=teacher.classTeacher
-    students = ClassRoomStudent.objects.filter(classRoom__classSection=class_section)
-    return render(request, "form/studentList.html",{"class_room_students":students})
+    class_section = teacher.classTeacher
+    students = ClassRoomStudent.objects.filter(
+        classRoom__classSection=class_section)
+    return render(request, "form/studentList.html", {"class_room_students": students})
 
 
-def get_student_credentials(request):  
+def get_student_credentials(request):
     user_profile = UserProfile.objects.filter(user_type="Student")
-    students = ClassRoomStudent.objects.all()
+    students = StudentInfo.objects.all()
     myList = zip(user_profile, students)
-    return render(request, 'form/credentials.html', {"myList":myList})
+    return render(request, 'form/credentials.html', {"myList": myList})
