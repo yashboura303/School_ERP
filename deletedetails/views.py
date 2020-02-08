@@ -7,6 +7,9 @@ from accounts.models import UserProfile
 from employeeform.models import Employee, Teacher, CurrentAddress as empCurrentAddress, PermanentAddress as empPermanentAddress
 # Create your views here.
 def show_students_list(request):
+    """
+    Show student list with partial delete and permanent delete option
+    """
     if request.method == "GET":
         students = StudentInfo.objects.all()
         if "name" in request.GET:
@@ -27,6 +30,9 @@ def show_students_list(request):
     return render(request, 'deletedetails/studentsDelete.html', {"class_rooms":ClassRoom.objects.all()})
 
 def delete_student(request, pk):
+    """
+    Partially delete the stduent delete i.e. delete data from StudentInfo and save it to deletedStudentInfo
+    """
     student = StudentInfo.objects.get(admissionNumber=pk)
     deleted_student = DeletedStudentInfo.objects.create(firstName=student.firstName, lastName=student.firstName, fullName=student.fullName,gender=student.gender,dob=student.dob,classSection=student.classSection,admissionNumber=student.admissionNumber,mobileNumber=student.mobileNumber,religion=student.religion, caste=student.caste,tcNumber=student.tcNumber,aadharNumber=student.aadharNumber,feeWaiverCategory=student.feeWaiverCategory,prevSchoolName=student.prevSchoolName)
 
@@ -53,6 +59,9 @@ def delete_student(request, pk):
     return render(request, 'deletedetails/studentsDelete.html', {"class_rooms":ClassRoom.objects.all()})
 
 def delete_student_permanently(request, pk):
+    """
+    Permanently delete the student info from database
+    """
     student = StudentInfo.objects.get(admissionNumber=pk)
     current_address = CurrentAddress.objects.get(student=student)
     permanent_address = PermanentAddress.objects.get(student=student)
@@ -73,10 +82,16 @@ def delete_student_permanently(request, pk):
     return render(request, 'deletedetails/studentsDelete.html', {"class_rooms":ClassRoom.objects.all()})
 
 def get_deleted_students_list(request):
+    """
+    Get the list of partially deleted students
+    """
     students = DeletedStudentInfo.objects.all()
     return render(request, 'deletedetails/deletedDetailList.html',{"students":students})
 
 def show_employees_list(request):
+    """
+    Show employees list with partial delete and permanent delete option
+    """
     if request.method == "GET":
         employee = Employee.objects.all()
         if "name" in request.GET:
@@ -93,6 +108,9 @@ def show_employees_list(request):
     return render(request, 'deletedetails/employeesDelete.html')
 
 def delete_employee(request, pk):
+    """
+    Partially delete the demployee info i.e Delete data from Employee and save it to deletedEmployee
+    """
     employee = Employee.objects.get(empID=pk)
     deleted_employee = DeletedEmployee.objects.create(empID=employee.empID, firstName=employee.firstName, lastName=employee.lastName, fullName=employee.fullName, father_name=employee.father_name, mother_name=employee.mother_name, partnerName=employee.partnerName, gender=employee.gender, email=employee.email, dob=employee.dob, joiningDate=employee.joiningDate, bloodGroup=employee.bloodGroup, mobile_number=employee.mobile_number, marital_status=employee.marital_status, experience=employee.experience, aadharNumber=employee.aadharNumber, empCategory=employee.empCategory )
 
@@ -134,5 +152,8 @@ def delete_employee_permanently(request, pk):
 
 
 def get_deleted_employees_list(request):
+    """
+    Get the list of deleted employees
+    """
     employees = DeletedEmployee.objects.all()
     return render(request, 'deletedetails/deletedEmployeesList.html',{"employees":employees})

@@ -15,6 +15,10 @@ plt.style.use("fivethirtyeight")
 
 
 def homework_home(request):
+    """
+    Upload homework for the students
+    Input: Subject, Homework File, Hoework Details
+    """
     subjects = (ExamMapping.objects.all().values('subject').distinct())
     user_profile = UserProfile.objects.get(user=request.user)
     if user_profile.user_type == "Teacher":
@@ -46,6 +50,9 @@ def homework_home(request):
 
 
 def check_homework(request):
+    """
+    Get the graph of number of subjects for which the homework is provided for a particular class
+    """
     context = {
         "class_rooms": ClassRoom.objects.all(),
     }
@@ -93,6 +100,10 @@ def check_homework(request):
 
 
 def syllabus(request):
+    """
+    Teacher uploads the syllabus for the students
+    Input: Syllabus File, Description
+    """
     user_profile = UserProfile.objects.get(user=request.user)
     if user_profile.user_type == "Teacher":
         emp_id = user_profile.emp_id
@@ -119,6 +130,9 @@ def syllabus(request):
 
 
 def check_class_homework(request):
+    """
+    Student can view the homeworks uploaded by the teacher
+    """
     user_profile = UserProfile.objects.get(user=request.user)
     if user_profile.user_type == "Student":
         addmission_number = user_profile.addmission_number
@@ -131,6 +145,9 @@ def check_class_homework(request):
             return render(request, 'homework/studentClassHomework.html')
 
 def check_class_syllabus(request):
+    """
+        Student can view the syllabus uploaded by the teacher
+"""
     user_profile = UserProfile.objects.get(user=request.user)
     if user_profile.user_type == "Student":
         addmission_number = user_profile.addmission_number

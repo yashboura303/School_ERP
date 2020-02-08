@@ -9,6 +9,10 @@ from timetable.models import ClassRoomSubjectTeacher
 
 
 def notice_home(request):
+    """
+    Teacher uploads the notice for a particular class
+    Input: Notice File, Notice Text
+    """
     user_profile = UserProfile.objects.get(user=request.user)
     if user_profile.user_type == "Teacher":
         emp_id = user_profile.emp_id
@@ -35,6 +39,9 @@ def notice_home(request):
 
 
 def search_student(request):
+    """
+    Search Students to send notice
+    """
     students = ClassRoomStudent.objects.all()
     if request.method == "GET":
         print(request.GET)
@@ -55,6 +62,9 @@ def search_student(request):
 
 
 def notice__student(request, pk):
+    """
+    Upload notice for a particular student
+    """
     student = ClassRoomStudent.objects.get(student__admissionNumber=(pk))
     if request.method == "POST":
         notice = request.POST.get("notice")
@@ -65,6 +75,9 @@ def notice__student(request, pk):
 
 
 def check_notice_student(request):
+    """
+    Student can check the personal notice 
+    """
     user_profile = UserProfile.objects.get(user=request.user)
     if user_profile.user_type == "Student":
         addmission_number = user_profile.addmission_number
@@ -76,6 +89,9 @@ def check_notice_student(request):
             return render(request, 'notice/checkStudentNotice.html')
 
 def check_class_notice(request):
+    """
+    Student can check the class notice
+    """
     user_profile = UserProfile.objects.get(user=request.user)
     if user_profile.user_type == "Student":
         addmission_number = user_profile.addmission_number
@@ -89,6 +105,9 @@ def check_class_notice(request):
 
 
 def download_class_notice(request, pk):
+    """
+    Download the notice
+    """
     notice = ClassNotice.objects.get(id=pk)
     filename = notice.notice_document.split('/')[-1]
     response = HttpResponse(object_name.file, content_type='text/plain')
