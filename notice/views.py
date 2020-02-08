@@ -35,6 +35,7 @@ def notice_home(request):
         document = request.FILES.get("noticeFile")
         ClassNotice.objects.create(classRoom=ClassRoom.objects.get(
             classSection=class_section), notice=notice, notice_document=document)
+        messages.success(request, "Notice Submitted")
     return render(request, 'notice/noticeHome.html', context)
 
 
@@ -71,6 +72,7 @@ def notice__student(request, pk):
         document = request.FILES.get("noticeFile")
         StudentNotice.objects.create(
             student=student, notice=notice, notice_document=document)
+        messages.success(request, "Notice Sent!")
     return render(request, 'notice/noticeStudent.html', {"student": student})
 
 

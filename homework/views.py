@@ -45,7 +45,7 @@ def homework_home(request):
         document = request.FILES.get("homeworkFile")
         HomeWork.objects.create(classRoom=ClassRoom.objects.get(classSection=class_section), subject=subject, description=description,
                                 date_published=datetime.today(), document=document)
-
+        messages.success(request, "Homework Submitted")
     return render(request, 'homework/addHomework.html', context)
 
 
@@ -126,6 +126,7 @@ def syllabus(request):
         document = request.FILES.get("syllabus_file")
         Syllabus.objects.create(classRoom=ClassRoom.objects.get(classSection=class_section), description=description,
                                 date_published=datetime.today(), document=document)
+        messages.success(request, "Syllabus Submitted")
     return render(request, 'homework/syllabus.html', context)
 
 

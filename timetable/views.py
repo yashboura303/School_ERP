@@ -34,7 +34,7 @@ def add_detail(request):
             subjects = request.GET.get("subject5")
             ClassRoomSubjectTeacher.objects.create(teacher=Teacher.objects.get(
                 employee__empID=teacher_empID), class_room=ClassRoom.objects.get(classSection=class_room), subjects=subjects)
-        messages.success(request, "Added detail!")
+        messages.success(request, "Successfully Added detail!")
     return render(request, 'timetable/addDetail.html', {"class_rooms": ClassRoom.objects.all(), "teachers": Teacher.objects.all()})
 
 

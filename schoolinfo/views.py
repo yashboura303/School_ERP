@@ -22,5 +22,5 @@ def home(request):
 
         SchoolInfo.objects.create(schoolName=schoolName, schoolID=schoolID, email=email, principalName=principalName,
                                   city=city, zipCode=zipCode, logo=logo, img=img, longitude=longitude, latitude=latitude, contactNumber=contactNumber, webSiteURL=webSiteURL, addresss=addresss, state=state)
-
+        messages.success(request, "Added SchoolInfo")
     return render(request, 'schoolinfo/addSchoolInfo.html')

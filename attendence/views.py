@@ -163,7 +163,7 @@ def teacher_attendence(request):
                     if str(teacher.employee.empID) == "present":
                         s.total_no_of_days_present += 1
                     s.save()
-
+            messages.success(request, "Marked attendence")
     return render(request, 'attendence/teacher.html')
 
 

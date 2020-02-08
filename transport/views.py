@@ -40,6 +40,7 @@ def vehicle_register(request):
         fitness_service_date = date(*map(int, fitness_service_date.split('-')))
         Vehicle.objects.create(vehicle_no=vehicle_number, device_id=device_id, service_id=service_id, no_of_seat=no_of_seat, maximum_allowed=maximum_allowed, vehicle_type=vehicle_type, contact_person=contact_person,
                                insurance_company=insurance_company, permit_valid_date=permit_valid_date, insurance_date=insurance_date, pollution_cert_exp_date=pollution_cert_exp_date, fitness_service_date=fitness_service_date, service_date=service_date)
+        messages.success(request, "Regsitered Vehicle")
     return render(request, 'transport/vehicleRegister.html')
 
 
@@ -66,6 +67,7 @@ def driver_register(request):
         employee = Employee.objects.get(empID=emp_id)
         Driver.objects.create(employee=employee, vehicle=vehicle, driver_name=name, dob=dob, license_no=licenseNo, mobile_no=mobileNumber,
                               batch_no=batchNumber, contact_address=caddress, permanent_address=paddress, driverID=driverID, driverPic=pic, driverLicense=driver_license)
+        messages.success(request, "Successfully registered Driver")
     return render(request, 'transport/driverRegister.html', {"vehicles": vehicles})
 
 
@@ -86,6 +88,7 @@ def route_register(request):
         stoppage_id = str(route_code) + stoppage_id
         Routes.objects.create(vehicle=vehicle, route_code=route_code, start_place=start_place, end_place=end_place, shift_time=shift,
                               stoppage_names=stoppage_name, stoppage_id=stoppage_id, remarks=remarks, route_distance=route_distance, longitude=longitude, lattitude=lattitude)
+        messages.success(request, "Successfully registered Route")
     return render(request, 'transport/routeRegister.html', {"vehicles": Vehicle.objects.all()})
 
 

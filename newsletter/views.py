@@ -8,4 +8,5 @@ def home(request):
         description = request.GET.get("description")
         if description:
             Newsletter.objects.create(description=description)
+    messages.success(request, "Added Newsletter")
     return render(request, 'newsletter/addNewsletter.html')

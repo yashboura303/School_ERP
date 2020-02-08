@@ -7,5 +7,5 @@ def add_thought(request):
         thought = request.GET.get("thought")
         if thought:
         	Thoughts.objects.create(thought=thought, timestamp = datetime.datetime.today())
-
+        	messages.success(request, "Added Thought")
     return render(request, 'dailythought/addThought.html')

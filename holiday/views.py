@@ -11,5 +11,6 @@ def add_holiday(request):
             end_date = date(*map(int, end_date.split('-')))
             title = request.GET.get("title")
             Holiday.objects.create(title=title, startDate= start_date, endDate=end_date)
+            messages.success(request, "Added Holiday")
             redirect('addHoliday')
     return render(request, 'holiday/addHoliday.html')
