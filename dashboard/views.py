@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from dailythought.models import Thoughts
 from newsletter.models import Newsletter
 from gallery.models import Photo
@@ -15,6 +15,7 @@ from accounts.models import UserProfile
 def home(request):
     """
     Main view page of dashboard. 
+    Load thoughts, gallery and newsletter
 
     """
     if request.user.is_authenticated:
@@ -47,18 +48,24 @@ def home(request):
 
 
 def profile(request):
+    """
+    Load profile for the current user. 
+    Change password for the account
+    Load siblings profile.
+    """
     sibling1=False
     sibling2=False
     sibling3=False
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
-        student = StudentInfo.objects.get(admissionNumber=profile.addmission_number)
-        if student.siblingID:
-            sibling1 = StudentInfo.objects.get(admissionNumber=student.siblingID)
-        if student.siblingID0:
-            sibling2 = StudentInfo.objects.get(admissionNumber=student.siblingID0)
-        if student.siblingID1:
-            sibling3 = StudentInfo.objects.get(admissionNumber=student.siblingID1)
+        if profile.addmission_number:
+            student = StudentInfo.objects.get(admissionNumber=profile.addmission_number)
+            if student.siblingID:
+                sibling1 = StudentInfo.objects.get(admissionNumber=student.siblingID)
+            if student.siblingID0:
+                sibling2 = StudentInfo.objects.get(admissionNumber=student.siblingID0)
+            if student.siblingID1:
+                sibling3 = StudentInfo.objects.get(admissionNumber=student.siblingID1)
         if request.method == "POST":
             username = request.POST.get('username')
             name = request.POST.get('first_name')
@@ -104,6 +111,9 @@ def profile(request):
         return render(request, 'accounts/login.html')
 
 def redirect_to_dashboard(request, pk):
+    """
+    Redirect to the clicked Sibling's Dashboard 
+    """
     user_profile = UserProfile.objects.get(addmission_number=pk)
     password = user_profile.password
     auth.logout(request)

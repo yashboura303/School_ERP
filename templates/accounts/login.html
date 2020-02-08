@@ -1,40 +1,125 @@
 <!doctype html>
 <html lang="en">
-  <head>
+{% load static %}
+
+<head>
     <title>Login</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<style>
+    html {
+        min-height: 100vh;
+    }
+
+    .background-img {
+        position: fixed;
+        top:0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        display: block;
+        /*background: #1D74A0;
+        background: linear-gradient(to bottom right, rgb(64, 71, 68), #5FBEE6);*/
+        background-image: url(' /static/dashboard/img/background.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        filter: blur(3px);
+
+    }
+
+    .modal-dialog {
+        z-index: 9999;
+        margin-top: 6.3em;
+    }
+
+    .modal-content {
+        padding: 1.2em;
+        background-color: #1A313A;
+    }
+
+    .btn-link {
+        color: white;
+    }
+
+    .modal-heading h2 {
+        color: #ffffff;
+    }
+
+    .modal-content {
+        border-radius: 10px;
+    }
+
+    i {
+        color: #5FBEE6;
+    }
+
+    form input:hover {
+        background-color: #EDE9E3;
+    }
+
+    form input:focus {
+        background-color: white;
+        width: 300px;
+        color: #53e3a6;
+    }
+</style>
+
+<body>
+    
     {% include 'message.html' %}
-
-    <div class="container-fluid">
-        <form method="post" action="{% url 'login' %}">
-        	{% csrf_token %}
-
-            <div class="form-group">
-                <label for="username">User Name</label>
-                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" name="username">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" name="password">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <div class="background-img">
     </div>
+        <div class="modal-dialog">
+            <div class="modal-content" >
+                <div class="modal-heading">
+                    <h2 class="text-center mt-2">Login to ERP</h2>
+                </div>
+                <hr />
+                <div class="modal-body">
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="input-group">
+                                <i class="fas fa-user mx-2 my-auto"></i>
+                                <input type="text" class="form-control" name="username" placeholder="Username" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <i class="fas fa-key mx-2 my-auto"></i>
+                                <input type="password" class="form-control" name="password" placeholder="Password" />
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-success">Login</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</body>
+
 </html>
-
-	
-
