@@ -25,7 +25,7 @@
 <img src="./readme-images/mark-attendence.png" width="800">
 &nbsp;
 
-## Chcek Employees/Student Details
+## Check Employees/Student Details
 <img src="./readme-images/employees-list.png" width="800">
 &nbsp;
 
