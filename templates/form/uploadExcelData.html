@@ -1,0 +1,23 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Bulk Add
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+
+<div class="container">
+    
+<h2 class="text-center">Upload Excel File Upload Students Data</h2>
+<form action="{% url 'uploadExcelData' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group col-md-3">
+                <label for="">Upload Excell:</label>
+                <input type="file" class="form-control" id="" name="excel">
+            </div>
+        <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
+</form>
+</div>
+
+{% endblock %}
+

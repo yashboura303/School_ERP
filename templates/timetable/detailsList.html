@@ -1,0 +1,64 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+TimeTable Details List
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<div class="container-fluid">
+    <h2 class="text-center my-3 ">TimeTable Details List</h2>
+    <table class="mb-5 table table-secondary table-striped">
+
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Teacher</th>
+                <th scope="col">Class</th>
+                <th scope="col">Subjects</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- {% for class_room_subject_teacher in class_room_subject_teachers %}
+            <tr>
+                <th scope="row">{{ class_room_subject_teacher.teacher.employee.fullName}}</th>
+                <td>{{ class_room_subject_teacher.class_room.classSection }}</td>
+                <td>{{ class_room_subject_teacher.subjects }}</td>
+            </tr>
+            {% endfor %} -->
+            {% regroup class_room_subject_teachers by teacher as myList %}
+            {% for a in myList %}
+            <tr>
+                <th scope="row">{{ a.grouper.employee.fullName}}</th>
+                <td>
+                {% for class_room in a.list %}
+                {% if forloop.first %}
+                    {{ class_room.class_room.classSection}}
+                {% endif %}
+                {% endfor %}
+               </td>
+                <td>
+                    {% for subject in a.list %}
+                {{ subject.subjects }}
+                {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock content %}

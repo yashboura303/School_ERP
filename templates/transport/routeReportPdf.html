@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Route List</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        #route-table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 110%;
+        }
+
+        #route-table td {
+            border: 1px solid rgb(59, 59, 59);
+            padding: 1px;
+            word-wrap: break-word;
+        }
+
+        #route-table td p {
+            margin: 1px 4px;
+            font-size: 0.9rem;
+        }
+
+        #route-table td {
+            width: 100%;
+            white-space: nowrap;
+        }
+
+        #route-table th {
+            border: 1px solid rgb(59, 59, 59);
+        }
+
+        #route-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #route-table tr:hover {
+            background-color: #ddd;
+        }
+
+        #route-table th {
+            padding: 1px 4px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .main-h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="main-h2">Route Report</h2>
+
+
+        <table id="route-table">
+            <tr>
+                <th >Sr. No</th>
+                <th >Route No</th>
+                <th >Route</th>
+                <th >Name</th>
+                <th >Mobile</th>
+                <th >Drop Place</th>
+            </tr>
+            {% for route, student_route in my_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ route.route_code }}</td>
+                <td>{{ route.start_place}} - {{ route.end_place }}</td>
+                <td>{{ student_route.student.fullName }}</td>
+                <td>{{ student_route.student.mobileNumber }}</td>
+                <td>{{ student_route.route_stoppage }}</td>
+
+            </tr>
+            {% endfor %}
+
+        </table>
+
+    </div>
+</body>
+
+</html>

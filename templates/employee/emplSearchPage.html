@@ -1,15 +1,14 @@
-{% extends 'base.html' %}
-
-{% block title %}Form{% endblock %}
-
+{% extends "dashboard/base.html" %}
+{% block title %}
+Search Employee 
+{% endblock %}
 {% block content %}
 
-{% include './navBar.html' %}
-{% include 'message.html' %}
+{% include "message.html" %}
 
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h2 class="display-5">Search employee</h2>
+        <h2 class="display-5">Search Employee To Print or Edit Details</h2>
         <form class="form-inline my-2 my-lg-0" action="{% url 'empSearchPage'%}" method="GET">
             <input class="form-control mr-sm-2" type="search" name="name" placeholder="Name" aria-label="Search"
                 value="{{values.name}}">
@@ -29,7 +28,7 @@
 <table class="mb-5 table table-secondary table-striped">
 
     <thead>
-        <a class="badge badge-pill badge-Warning d-inline py-2 mx-1" href="{% url 'updateEmpData' employee.empID %}"> <svg
+        <a class="badge badge-pill badge-warning d-inline py-2 mx-1" href="{% url 'updateEmpData' employee.empID %}"> <svg
                 xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24">
                 <path
                     d="M18.363 8.464l1.433 1.431-12.67 12.669-7.125 1.436 1.439-7.127 12.665-12.668 1.431 1.431-12.255 12.224-.726 3.584 3.584-.723 12.224-12.257zm-.056-8.464l-2.815 2.817 5.691 5.692 2.817-2.821-5.693-5.688zm-12.318 18.718l11.313-11.316-.705-.707-11.313 11.314.705.709z" />
@@ -51,10 +50,11 @@
             <th scope="row">{{ employee.fullName}}</th>
             <th scope="row">{{ employee.empID}}</th>
             <td>{{ employee.gender }}</td>
-            <td>{{ employee.mobileNumber }}</td>
+            <td>{{ employee.mobile_number }}</td>
             <td>{{ employee.empCategory }}</td>
             <td>{{ employee.dob }}</td>
-            <td>{{ employee.admissionNumber }}</td>
+            <td>{{ employee.joiningDate }}</td>
+            
         </tr>
     </tbody>
     

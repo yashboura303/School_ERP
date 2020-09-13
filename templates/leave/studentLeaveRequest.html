@@ -1,0 +1,31 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Newsletter
+{% endblock %}
+{% block content %}
+{% include "message.html" %}
+<div class="container-fluid">
+    <h2 class="text-center my-4">Approve Leaves </h2>
+    {% if leaves %}
+    {% for leave in leaves %}
+    <div class="container border border-dark mb-3 p-0 bg-dark pb-1 text-white">
+        <div class="row justify-content-around bg-secondary m-0 py-1">
+            <p class="col"><strong>Name</strong>-{{leave.student.fullName}}</p>
+            <p class="col"><strong>Roll No</strong>-{{leave.student.classroomstudent.roll_number}}</p>
+            <p class="col"><strong>Date</strong>-{{leave.date_from}}-{{leave.date_to}}</p>
+            <p class="col"><strong>Subject</strong>-{{leave.subject}}</p>
+        </div>
+        <p class="px-3 my-2"><strong>Description</strong>-{{leave.description}}</p>
+        <hr>
+        <div class="row justify-content-center">
+            <a href="{% url 'approveLeave' leave.id %}" class="col-1 btn btn-info mr-2">Approve</a>
+            <a href="{% url 'rejectLeave' leave.id %}" class="col-1 btn btn-danger">Reject</a>
+        </div>
+        
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4 class="text-center">There are no leaves requests.</h4>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+TimeTable Details
+{% endblock %}
+{% block content %}
+<style>
+    #display-none{
+        display: none;
+    }
+</style>
+<div class="conatiner p-5">
+    {% include "message.html" %}
+    <h3 class="">Add Details</h3>
+    <hr class="my-2">
+    <p class="lead">
+        <div class="conatiner w-50">
+            <form action="{% url 'addTimeTableDetail' %} " method="GET">
+                <div class="form-group">
+                    <label class="pr-1" for="">Teacher:</label>
+                    <select name="teacher_empID" class="form-control mr-2" id="class_name">
+                        <option selected="true" disabled="disabled" value="a">Select</option>
+                        {% for teacher in teachers %}
+                        <option value='{{ teacher.employee.empID }}'>{{ teacher.employee.fullName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Class Section :</label>
+                    <select name="class_room" class="form-control mr-2" id="class_name">
+                        <option selected="true" disabled="disabled" value="a">Select</option>
+                        {% for class_room in class_rooms %}
+                        <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group" id="subject-div">
+                    <label for="">Subject :</label>
+                    <button type="button" onclick="addSubject()" class="btn btn-outline-secondary btn-sm">Add Subject</button>
+                    <button type="button" onclick="delSubject()" class="btn btn-outline-danger btn-sm" id="display-none">Delete Subject</button>
+                    <input type="text" class="form-control w-25 mt-1 " name="subject" >
+                </div>
+                <div class="row justify-content-left">
+                    <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </p>
+</div>
+<script>
+    let count = 0;
+    addSubject = () => {
+        div = document.getElementById("subject-div");
+        btn = document.getElementById("display-none");
+        btn.style.display = "inline-block";
+        input = document.createElement("input");
+        input.type = "text";
+        input.name = `subject${count}`
+        input.id = `subject${count}`
+        input.className = `form-control my-2 w-25`
+        div.appendChild(input)
+        count+=1;
+ }
+ delSubject = () =>{
+    if (count > 0){
+        input = document.getElementById(`subject${count-1}`);
+        input.outerHTML = "";
+        count-=1;
+        if (count===0){
+            btn = document.getElementById("display-none");
+        btn.style.display = "none"
+        }
+    }
+    else{
+        btn = document.getElementById("display-none");
+        btn.style.display = "none"
+    }
+ }
+</script>
+{% endblock %}

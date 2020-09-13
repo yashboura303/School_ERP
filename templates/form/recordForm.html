@@ -1,8 +1,10 @@
-{% extends './base.html' %}
-
-{% block title %}Form{% endblock %}
-
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Student Info
+{% endblock %}
 {% block content %}
+
+{% include "message.html" %}
 
 
 <style type="text/css" media="print">
@@ -10,28 +12,27 @@
         display: none;
     }
 </style>
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 
-{% include './navBar.html' %}
-{% include 'message.html' %}
+}
+.required::after {
+ content: "*";
+ color: red;
+}
 
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h2 class="display-5">Search Students</h2>
-        <form class="form-inline my-2 my-lg-0" action="{% url 'searchPage'%}" method="GET">
-            <input class="form-control mr-sm-2" type="search" name="name" placeholder="Name" aria-label="Search"
-                value="{{values.name}}">
-            <input class="form-control mr-sm-2" type="search" name="fname" placeholder="Father's Name"
-                aria-label="Search" value="{{values.fname}}">
-            <input class="form-control mr-sm-2" type="search" name="addNumber" placeholder="Admission Number"
-                aria-label="Search" value="{{values.addNumber}}">
-            <input class="form-control mr-sm-2" type="search" name="classection" placeholder="Class Section"
-                aria-label="Search" value="{{values.classSection}}">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
-</div>
-
-
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
+}
+#display-none{
+    display: none;
+}
+</style>
 
 <form class="container" id="myForm" method="POST" action={% url 'recordForm' %} enctype="multipart/form-data">
     {% csrf_token %}
@@ -41,15 +42,15 @@
         <h3 class="my-2 text-info ">Student Details</h3>
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="username">First Name:</label>
-                <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname">
+                <label class="required">First Name:</label>
+                <input type="text" class="form-control" id="firstname"  name="firstname" required>
             </div>
             <div class="form-group col-md-4">
-                <label for="username">Last Name:</label>
-                <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="lastname">
+                <label>Last Name:</label>
+                <input type="text" class="form-control" id="lastname"  name="lastname">
             </div>
             <div class="form-group col-md-4">
-                <label class="pr-1" for="exampleFormControlSelect2">Gender:</label>
+                <label class="pr-1">Gender:</label>
                 <select name="gender" class="form-control mr-2" id="exampleFormControlSelect2">
                     <option selected="true" value="">Select</option>
                     <option value="Male">Male</option>
@@ -59,20 +60,20 @@
         </div>
         <div class="form-row mt-2">
             <div class="form-group col-md-3">
-                <label for="username">DOB:</label>
-                <input type="date" class="form-control" id="sDOB" aria-describedby="" name="sDOB">
+                <label>DOB:</label>
+                <input type="date" class="form-control" id="sDOB"  name="sDOB">
             </div>
             <div class="form-group col-md-3">
-                <label for="username">Class Section:</label>
+                <label>Class Section:</label>
                 <input type="text" class="form-control" id="classsection" name="classsection">
             </div>
             <div class="form-group col-md-3">
-                <label for="username">Admission Number:</label>
-                <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber">
+                <label class="required">Admission Number:</label>
+                <input type="number" class="form-control" id="addmissionnumber" name="addmissionnumber" onwheel="this.blur()" required>
             </div>
             <div class="form-group col-md-3">
-                <label for="username">Phone Number:</label>
-                <input type="number" class="form-control" id="phonenumber" name="phonenumber">
+                <label class="required">Phone Number:</label>
+                <input min="0" type="text" maxlength="10" pattern="\d{10}" class="form-control" id="phone_number" name="phonenumber" onwheel="this.blur()" required>
             </div>
         </div>
 
@@ -80,7 +81,7 @@
     </div>
     <div class="form-row mt-2">
         <div class="form-group col-md-4">
-            <label for="username">Religion:</label>
+            <label>Religion:</label>
             <input type="text" class="form-control" id="religion" name="religion">
         </div>
         <div class="form-group col-md-4">
@@ -107,7 +108,7 @@
             <input type="text" class="form-control" id="inputState" name="inputState">
         </div>
         <div class="form-group col-md-2">
-            <label for="inputZip">Zip:</label>
+            <label for="inputZip">Pin Code:</label>
             <input type="text" class="form-control" id="inputZip" name="inputZip">
         </div>
     </div>
@@ -139,7 +140,7 @@
             <input type="text" class="form-control" id="perminputState" name="perminputState">
         </div>
         <div class="form-group col-md-2">
-            <label for="inputZip">Zip:</label>
+            <label for="inputZip">Pin Code:</label>
             <input type="text" class="form-control" id="perminputZip" name="perminputZip">
         </div>
     </div>
@@ -159,16 +160,40 @@
             <input type="text" class="form-control" id="feeCategory" name="feeCategory">
         </div>
         <div class="form-group col-md-4">
-            <label for="siblingid">Sibling ID:</label>
-            <input type="number" class="form-control" id="siblingid" name="siblingid">
-        </div>
-        <div class="form-group col-md-4">
             <label for="prevschoolname">Previous School Name:</label>
             <input type="text" class="form-control" id="prevschoolname" name="prevschoolname">
         </div>
-    </div>
+        <div class="form-group col" id="sibling-div">
+            <label for="siblingid">Sibling ID:</label>
+            <button type="button" onclick="addSibling()" class="btn btn-outline-secondary btn-sm">Add Sibling</button>
+                    <button type="button" onclick="delSibling()" class="btn btn-outline-danger btn-sm" id="display-none">Delete Sibiling</button>
+            <input type="number" class="form-control" id="siblingid" min="0" name="siblingid">
+        </div>
+        
     </div>
 
+    <div class="form-row mt-2">
+        <div class="form-group col-md-3">
+            <label class="pr-1" >Route Code:</label>
+            <select name="route_code" class="form-control mr-2">
+                <option selected="true" disabled="disabled" value="a">Select</option>
+                {% for route in routes %}
+                <option value='{{ route.stoppage_id }}'>{{ route.route_code }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="">Stoppage Name:</label>
+            <input type="text" class="form-control" name="stoppage_name">
+        </div>
+        <div class="form-group col-md-4">
+            <label class="pr-1" for="">Shift:</label>
+            <select name="shift" class="form-control mr-2" id="">
+                <option selected="true" value="">Select</option>
+                <option value="Morning">Morning</option>
+                <option value="Afternoon">Afternoon</option>
+            </select>
+        </div>
     </div>
 
 
@@ -189,58 +214,54 @@
     <h3 class="my-4 text-info border-top border-dark pt-4">Parent/Gaurdian Details </h3>
     <div class="form-row mt-2">
         <div class="form-group col-md-3">
-            <label for="fathername">Father Name:</label>
-            <input type="text" class="form-control" id="fathername" aria-describedby="emailHelp" name="fathername">
+            <label for="fathername">Father/Gaurdian Name:</label>
+            <input type="text" class="form-control" id="fathername"  name="fathername">
         </div>
         <div class="form-group col-md-3">
             <label for="mothername">Mother Name:</label>
-            <input type="text" class="form-control" id="mothername" aria-describedby="emailHelp" name="mothername">
+            <input type="text" class="form-control" id="mothername"  name="mothername">
         </div>
         <div class="form-group col-md-3">
-            <label for="username">Father DOB:</label>
-            <input type="date" class="form-control" id="fDOB" aria-describedby="" name="fDOB">
+            <label>Father DOB:</label>
+            <input type="date" class="form-control" id="fDOB"  name="fDOB">
         </div>
         <div class="form-group col-md-3">
-            <label for="username">Mother DOB:</label>
-            <input type="date" class="form-control" id="mDOB" aria-describedby="" name="mDOB">
+            <label>Mother DOB:</label>
+            <input type="date" class="form-control" id="mDOB"  name="mDOB">
         </div>
     </div>
     <div class="form-row mt-3">
         <div class="form-group col-md-3">
-            <label for="username">Phone Number:</label>
-            <input type="number" class="form-control" id="phone_number" name="phone_number">
+            <label>Phone Number:</label>
+            <input min="0" type="text" class="form-control"  maxlength="10" pattern="\d{10}" id="phone_number" name="phone_number">
         </div>
         <div class="form-group col-md-3">
-            <label for="username">Alternate Phone Number:</label>
-            <input type="number" class="form-control" id="alt_phone_number" name="alt_phone_number">
+            <label>Alternate Phone Number:</label>
+            <input min="0" type="text" class="form-control"  maxlength="10" pattern="\d{10}" id="alt_phone_number" name="alt_phone_number">
         </div>
         <div class="form-group col-md-3">
             <label for="prevschoolname">E-Mail:</label>
-            <input type="pemail" class="form-control" id="pemail" name="pemail">
+            <input type="email" class="form-control" aria-describedby="emailHelp" id="pemail" name="pemail">
         </div>
     </div>
     <div class="form-row mt-3">
         <div class="form-group col-md-4">
-            <label for="mothername">Guardian Name:</label>
-            <input type="text" class="form-control" id="gname" aria-describedby="" name="gname">
+            <label for="mothername">Father/Guardian Qualification:</label>
+            <input type="text" class="form-control" id="g_qual"  name="g_qual">
         </div>
         <div class="form-group col-md-4">
-            <label for="mothername">Guardian Qualification:</label>
-            <input type="text" class="form-control" id="g_qual" aria-describedby="emailHelp" name="g_qual">
-        </div>
-        <div class="form-group col-md-4">
-            <label for="mothername">Guardian Occuptation:</label>
-            <input type="text" class="form-control" id="g_occup" aria-describedby="emailHelp" name="g_occup">
+            <label for="mothername">Fahter/Guardian Occuptation:</label>
+            <input type="text" class="form-control" id="g_occup"  name="g_occup">
         </div>
     </div>
     <div class="form-row mt-3">
         <div class="form-group col-md-5">
             <label for="mothername">Mother Qualification:</label>
-            <input type="text" class="form-control" id="m_qual" aria-describedby="emailHelp" name="m_qual">
+            <input type="text" class="form-control" id="m_qual"  name="m_qual">
         </div>
         <div class="form-group mb-5 col-md-5">
             <label for="mothername">Mother Occuptation:</label>
-            <input type="text" class="form-control" id="m_occup" aria-describedby="emailHelp" name="m_occup">
+            <input type="text" class="form-control" id="m_occup"  name="m_occup">
         </div>
     </div>
 
@@ -286,11 +307,39 @@
 
     <div class="row justify-content-around">
         <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
-        <input type="button" class="col-4 mt-5  container  btn btn-info" onclick="printDiv('myForm')" value="Print">
+        <a href="{% url 'searchPage' %}" class="btn btn-primary col-4 mt-5"> Print </a>
     </div>
 
 </form>
 <script>
+    let count = 0;
+    addSibling = () => {
+        div = document.getElementById("sibling-div");
+        btn = document.getElementById("display-none");
+        btn.style.display = "inline-block";
+        input = document.createElement("input");
+        input.type = "text";
+        input.name = `siblingid${count}`;
+        input.id = `siblingid${count}`;
+        input.className = `form-control my-2`;
+        div.appendChild(input);
+        count+=1;
+ }
+ delSibling = () =>{
+    if (count > 0){
+        input = document.getElementById(`siblingid${count-1}`);
+        input.outerHTML = "";
+        count-=1;
+        if (count===0){
+            btn = document.getElementById("display-none");
+        btn.style.display = "none"
+        }
+    }
+    else{
+        btn = document.getElementById("display-none");
+        btn.style.display = "none"
+    }
+ }
     function FillAddress(f) {
         console.log(999)
         if (f.customCheck1.checked == true) {

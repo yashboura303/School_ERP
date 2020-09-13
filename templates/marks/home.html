@@ -1,0 +1,266 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Marks Section
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<style>
+    #additional-subject-div{
+        display: none;
+    }
+</style>
+    <div class="container-fluid mt-3 border-bottom border-dark pb-2">
+        <div class="container w-75">
+            <h3 class="">Add Exam</h3>
+            <hr>
+            <form action="" id="add_exam_form" class="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="">Exam Name</label>
+                    <input type="text" class="form-control" name="" id="exam_name" aria-describedby="helpId" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="">Description</label>
+                    <input type="text" class="form-control" name="" id="description" aria-describedby="helpId" placeholder="">
+                </div>
+                <button type="submit" class="btn btn-primary mb-4">Submit</button>
+            </form>
+        </div>
+        <div class="container w-75">
+            <h3>Exam Type</h3>
+            <hr>
+            <form action="" id="exam_type_form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="">Exam Type </label>
+                    <input type="text" class="form-control" name="" id="exam_type"  >
+                </div>
+                <div class="form-group">
+                    <label for="">Min Marks</label>
+                    <input type="number" class="form-control" name="" id="min_marks"  >
+                </div>
+                <div class="form-group">
+                    <label for="">Max Marks</label>
+                    <input type="number" class="form-control" name="" id="max_marks"  >
+                </div>
+                <div class="form-group">
+                    <label for="">Priority</label>
+                    <input type="number" class="form-control" name="" id="priority"  >
+                </div>
+                <div class="form-group">
+                    <label class="pr-1" for="">Exam Name:</label>
+                    <select name="class_room" class="form-control mr-2" id="exam_name">
+                        <option selected="true" disabled="disabled" value="a">Select</option>
+                        {% for exam_name in exam_names %}
+                        <option value='{{ exam_name.examName }}'>{{ exam_name.examName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="container-fluid m-3 border-bottom">
+        <div class="container w-75">
+        <h3 class="text-center">Exam Mapping</h3>
+        <hr>
+        <form action="" id="exam_mapping">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="pr-1" for="">Class/Section:</label>
+                <select name="class_room" class="form-control mr-2" id="class_room">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for class_room in class_rooms %}
+                    <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+           <div class="form-group">
+                    <label class="pr-1" for="">Exam Name:</label>
+                    <select name="class_room" class="form-control mr-2" id="exam_name">
+                        <option selected="true" disabled="disabled" value="a">Select</option>
+                        {% for exam_name in exam_names %}
+                        <option value='{{ exam_name.examName }}'>{{ exam_name.examName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            <div class="form-group">
+                <label class="pr-1" for="">Exam Type:</label>
+                <select name="class_room" class="form-control mr-2" id="exam_type">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for exam_type in exam_types %}
+                    <option value='{{ exam_type.examType }}'>{{ exam_type.examType }}-{{exam_type.examName}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Subject</label>
+                <select name="class_subject" class="form-control mr-2" id="class_room">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for subject in subjects %}
+                    <option value='{{ subject.subject }}'>{{ subject.subject }}</option>
+                    {% endfor %}
+                </select>            
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div class="custom-control custom-checkbox my-4">
+        <input type="checkbox" class="custom-control-input" name="customCheck1" id="customCheck1"
+            onclick="displayAdditionalSubject()">
+        <label class="custom-control-label " for="customCheck1"> Add Additional Subject</label>
+    </div>
+    <div class="container w-75" id="additional-subject-div">
+        <h3 class="text-center">Additional Subject</h3>
+        <hr>
+        <form action="" id="additional_subject">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="">Admission No.</label>
+                <input type="text" class="form-control" name="" id="add_number" aria-describedby="helpId" placeholder="">
+            </div>
+           <div class="form-group">
+                    <label class="pr-1" for="">Exam Name:</label>
+                    <select name="class_room" class="form-control mr-2" id="additional_subject_exam_name">
+                        <option selected="true" disabled="disabled" value="a">Select</option>
+                        {% for exam_name in exam_names %}
+                        <option value='{{ exam_name.examName }}'>{{ exam_name.examName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            <div class="form-group">
+                <label class="pr-1" for="">Exam Type:</label>
+                <select name="class_room" class="form-control mr-2" id="additional_subject_exam_type">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for exam_type in exam_types %}
+                    <option value='{{ exam_type.examType }}'>{{ exam_type.examType }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Subject</label>
+                <input type="text" class="form-control" name="" id="subject" aria-describedby="helpId" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="">Marks</label>
+                <input type="number" class="form-control" name="" id="marks" aria-describedby="helpId" placeholder="">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+    $(document).on('submit', '#add_exam_form', function(e) {
+
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'addExamForm' %}',
+            data: {
+                exam_name: $('#exam_name').val(),
+                description: $('#description').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+
+            },
+            success: function(e) {
+                alert("Exam added!");
+            },
+            error: function() {
+                alert("Fail");
+            }
+
+        });
+    });
+    $(document).on('submit', '#exam_type_form', function(e) {
+
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'addExamType' %}',
+            data: {
+                exam_type: $('#exam_type').val(),
+                min_marks: $('#min_marks').val(),
+                max_marks: $('#max_marks').val(),
+                priority: $('#priority').val(),
+                exam_name: $('#exam_name').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+
+            },
+            success: function(e) {
+                alert("Exam Type added!");
+            },
+            error: function() {
+                alert("Fail");
+            }
+
+        });
+    });
+    $(document).on('submit', '#exam_mapping', function(e) {
+
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'examMapping' %}',
+            data: {
+                exam_type: $('#exam_type').val(),
+                class_room: $('#class_room').val(),
+                class_subject: $('#class_subject').val(),
+                exam_name: $('#exam_name').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+
+            },
+            success: function(e) {
+                alert("Subject added!");
+            },
+            error: function() {
+                alert("Fail");
+            }
+
+        });
+    });
+     $(document).on('submit', '#additional_subject', function(e) {
+
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'additionalMapping' %}',
+            data: {
+                exam_type: $('#additional_subject_exam_type').val(),
+                add_number: $('#add_number').val(),
+                marks: $('#marks').val(),
+                subject:$('#subject').val(),
+                exam_name: $('#additional_subject_exam_name').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+
+            },
+            success: function(e) {
+                alert("Additional Subject added!");
+            },
+            error: function() {
+                alert("Fail");
+            }
+
+        });
+    });
+
+      function displayAdditionalSubject() {
+        console.log(999)
+        div = document.getElementById("additional-subject-div")
+        if (document.getElementById("customCheck1").checked == true) {
+            div.style.display = "block";
+        }
+        else{
+            div.style.display = "none";
+
+        }
+    }
+
+    </script>
+</body>
+
+</html>
+
+
+{% endblock %}

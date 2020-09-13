@@ -1,0 +1,51 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Student Info
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h2 class="display-5 mb-2">Search student to sending notice</h2>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'searchStudent'%}" method="GET">
+            <input class="form-control mr-sm-2" type="search" name="name" placeholder="Name" aria-label="Search"
+                value="{{values.name}}">
+            <input class="form-control mr-sm-2" type="search" name="addNumber" placeholder="Admission Number"
+                aria-label="Search" value="{{values.addNumber}}">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+
+
+{% for student in students %}
+
+<div class="container-fluid">
+<table class="mb-5 table table-secondary table-striped">
+
+    <thead>
+        <a class="badge badge-pill badge-Warning d-inline py-2 mx-1" 
+        href="{% url 'noticeStudent' student.student.admissionNumber %}
+        "> <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M24 17.98h-13l-7 5.02v-5.02h-4v-16.981h24v16.981zm-22-14.981v12.981h4v3.125l4.357-3.125h11.643v-12.981h-20zm10 8.501c.69 0 1.25.56 1.25 1.25s-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25.56-1.25 1.25-1.25zm1-6.5v5h-2v-5h2z"/></svg>
+            Send Notice</a>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Mobile Number</th>
+            <th scope="col">Class Section</th>
+            <th scope="col">Admission Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">{{ student.student.fullName}}</th>
+            <td>{{ student.student.mobileNumber }}</td>
+            <td>{{ student.classRoom.classSection }}</td>
+            <td>{{ student.student.admissionNumber }}</td>
+        </tr>
+    </tbody>
+    
+</table>
+</div>
+{% endfor %}
+{% endblock content %}

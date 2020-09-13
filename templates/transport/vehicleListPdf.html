@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Vehicle List</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        #vehicle-table {
+          font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 110%;
+        }
+        
+        #vehicle-table td{
+          border: 1px solid rgb(59, 59, 59);
+          padding: 1px;
+          word-wrap: break-word;
+        }
+        #vehicle-table td p{
+            margin: 1px 4px;
+            font-size: 0.9rem;
+          }
+          #vehicle-table td {
+            width:100%;
+            white-space:nowrap;
+        }
+        #vehicle-table th{
+            border: 1px solid rgb(59, 59, 59);
+        }
+        #vehicle-table tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #vehicle-table tr:hover {background-color: #ddd;}
+        
+        #vehicle-table th {
+          padding: 1px 4px;
+          text-align: center;
+          background-color: #4CAF50;
+          color: white;
+        }
+        .main-h2{
+            text-align: center;
+        }
+        </style>
+  </head>
+  <body>
+    <div class="container">
+        <h2 class="main-h2">Vehicle List</h2>
+    
+    
+        <table id="vehicle-table">
+                <tr>
+                    <th >Vehicle No</th>
+                    <th >Device ID</th>
+                    <th >Service ID</th>
+                    <th >No of Seats</th>
+                    <th >Maximum Allowed</th>
+                    <th >Vehcile Type</th>
+                    <th >Insurance Company</th>
+                    <th >Contact Person</th>
+                    <th >Insurance Date</th>
+                    <th >Permit Valid Date</th>
+                    <th >Pollution Valid Date</th>
+                    <th >Service Date</th>
+                    <th >Fitness Service Date</th>
+                </tr>
+                {% for vehicle in vehicles %}
+                <tr>
+                    <td><p>{{ vehicle.vehicle_no}}</p></td>
+                    <td><p>{{ vehicle.device_id }}</p></td>
+                    <td><p>{{ vehicle.service_id }}</p></td>
+                    <td><p>{{ vehicle.no_of_seat }}</p></td>
+                    <td><p>{{ vehicle.maximum_allowed }}</p></td>
+                    <td><p>{{ vehicle.vehicle_type }}</p></td>
+                    <td><p>{{ vehicle.insurance_company }}</p></td>
+                    <td><p>{{ vehicle.contact_person }}</p></td>
+                    <td><p>{{ vehicle.insurance_date|date:" d M Y" }}</p></td>
+                    <td><p>{{ vehicle.permit_valid_date |date:" d M Y"}}</p></td>
+                    <td><p>{{ vehicle.pollution_cert_exp_date|date:" d M Y" }}</p></td>
+                    <td><p>{{ vehicle.service_date|date:" d M Y" }}</p></td>
+                    <td><p>{{ vehicle.fitness_service_date|date:" d M Y" }}</p></td>
+                </tr>
+                {% endfor %}
+    
+        </table>
+    
+    </div>
+  </body>
+</html>
+
+
+

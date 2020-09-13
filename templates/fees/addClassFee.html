@@ -1,0 +1,36 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Marks
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<div class="container">
+        <h3 class="text-center mt-2">Class/Section Fee Collection</h3>
+        <form action="">
+            <div class="form-group">
+              <label for="">Fees</label>
+              <input type="number" class="form-control" name="fees" id="" aria-describedby="helpId" placeholder="">
+            </div>
+            <div class="form-group w-50">
+                <label class="pr-1" for="">Class/Section:</label>
+                <select name="class_room" class="form-control mr-2" id="class_room">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for class_room in class_rooms %}
+                    <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group w-50">
+                <label class="pr-1" for="">Fee Category:</label>
+                <select name="category" class="form-control mr-2" id="class_room">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for c in category %}
+                    <option value='{{ c.submission_type }}'>{{ c.submission_type  }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+              <button type="submit" class="btn btn-primary d-block">Submit</button>
+        </form>
+    </div>
+    {% endblock content %}

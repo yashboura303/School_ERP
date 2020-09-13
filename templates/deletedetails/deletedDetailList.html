@@ -1,0 +1,54 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Deleted Student List
+{% endblock %}
+{% block content %}
+{% include "message.html" %}
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.table-img {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+}
+</style>
+<div class="container-fluid">
+    <h2 class="text-center mt-3 ">Deleted Student List</h2>
+    <table class="mt-5 table table-secondary table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Mobile Number</th>
+                <th scope="col">DOB</th>
+                <th scope="col">Father Name</th>
+                <th scope="col">Mother Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+            <th scope="row">{{ student.fullName}}</th>
+            <td>{{ student.gender }}</td>
+            <td>{{ student.mobileNumber }}</td>
+            <td>{{ student.dob }}</td>
+            <td>{{ student.parent.fatherName }}</td>
+            <td>{{ student.parent.motherName }}</td>
+        </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

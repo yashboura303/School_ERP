@@ -1,0 +1,36 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Report Card
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+
+
+<div class="container-fluid">
+    <h3 class="text-center my-3">Generate Report Card for Student</h3>
+
+<form method="POST" action="{% url 'reportCard' %}" id="" class="" enctype="multipart/form-data" data-ajax="false">
+    {% csrf_token %}
+    <div class="form-group w-50">
+        <label for="">Admission Number</label>
+        <input type="text" class="form-control" name="add_number" id="" required>
+    </div>
+    <div class="form-group w-50">
+            <label class="pr-1" for="">Class/Section:</label>
+            <select name="class_room" class="form-control mr-2" id="class_room">
+                <option selected="true" disabled="disabled" value="a">Select</option>
+                {% for class_room in class_rooms %}
+                <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    <div class="form-group col-md-4">
+        <label for="excel">Sample Excell:</label>
+        <input type="file" class="form-control-file no-print " id="excel"
+            name="excel">
+    </div>
+    <button type="submit " class="btn btn-primary mt-3">Submit</button>
+</form>
+</div>
+{% endblock %}

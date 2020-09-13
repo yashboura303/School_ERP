@@ -1,0 +1,53 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Deleted Employee List
+{% endblock %}
+{% block content %}
+{% include "message.html" %}
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.table-img {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+}
+</style>
+<div class="container-fluid">
+    <h2 class="text-center mt-3 ">Deleted Employee List</h2>
+    <table class="mt-5 table table-secondary table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Mobile Number</th>
+                <th scope="col">Category</th>
+                <th scope="col">DOB</th>
+                <th scope="col">Date of Joining</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+            <tr>
+                <th scope="row">{{ employee.fullName}}</th>
+                <td>{{ employee.gender }}</td>
+                <td>{{ employee.mobile_number }}</td>
+                <td>{{ employee.empCategory }}</td>
+                <td>{{ employee.dob }}</td>
+                <td>{{ employee.joiningDate }}</td>
+        </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

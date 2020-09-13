@@ -1,0 +1,67 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Visitors
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<div class="container-fluid">
+    <h2 class="text-center mt-3 ">Visitors</h2>
+    <form method="POST" action={% url "visitorForm" %} enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="username"> Name:</label>
+                <input type="text" class="form-control"   name="name">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="username">Mobile Number:</label>
+                <input type="text" class="form-control"   name="mobile_no">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="username">Address:</label>
+                <input type="text" class="form-control"   name="address">
+            </div>
+        </div>
+        <div class="form-row mt-2">
+            <div class="form-group col-md-4">
+                <label for="username">Contact To:</label>
+                <input type="text" class="form-control"   name="contact_to">
+            </div>
+        </div>
+
+    <div class="form-row mt-2">
+            <div class="form-group col-md-4">
+                <label for="username">Purpose:</label>
+                <input type="textarea" class="form-control"   name="purpose">
+            </div>
+        </div>
+    <div class="form-row mt-2">
+            <div class="form-group col-md-4">
+                <label for="username">Upload Photo:</label>
+                <input type="file" class="form-control"   name="photo">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="username">Upload Document:</label>
+                <input type="file" class="form-control"   name="document">
+            </div>
+        </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
+
+{% endblock content %}

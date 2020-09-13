@@ -1,0 +1,25 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Check Syllabus
+{% endblock %}
+{% block content %}
+{% include "message.html" %}
+<div class="container-fluid">
+    <h2 class="text-center my-4">Check Your Syllabus </h2>
+    {% if syllabuss %}
+    {% for syllabus in syllabuss %}
+    <div class="container border border-dark mb-3 p-0 bg-dark pb-1 text-white">
+        <div class="row justify-content-around bg-secondary m-0 py-1">
+            <p class="col"><strong>Date-Published</strong>-{{syllabus.date_published}}</p>
+        </div>    
+        <p class="px-3 my-2"><strong>Description</strong>-{{syllabus.description}}</p>    
+        {% if syllabus.document %}
+        <a href="{{ syllabus.document.url }}" class="my-2 btn btn-info ml-2" download="notice">Download Syllabus File</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4 class="text-center">There is no syllabus for your class.</h4>
+    {% endif %}
+</div>
+{% endblock %}

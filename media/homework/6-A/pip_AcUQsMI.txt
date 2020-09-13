@@ -1,0 +1,3 @@
+sudo /opt/lampp/manager-linux-x64.run
+    sudo /etc/init.d/apache2 stop
+/usr/bin/python3.6 -m pip install -U pep8 --user

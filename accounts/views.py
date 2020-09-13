@@ -19,15 +19,12 @@ def login(request):
             username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             user_profile = UserProfile.objects.get(user=user)
-            if user_profile.user_type == "Admin":
-                auth.login(request, user)
-                return redirect('dashboard')
-            else:
-                return redirect('home')
+            auth.login(request, user)
+            return redirect('dashboard')
         else:
             messages.error(request, 'Invalid credentials')
             return redirect('login')
-    return render(request, 'login.html')
+    return render(request, 'accounts/login.html')
 
 
 def signup(request):
@@ -41,8 +38,7 @@ def signup(request):
                 user = User.objects.get(username=request.POST['username'])
                 if user:
                     messages.error(request, 'Username already exists!')
-                    return render(request, 'signup.html')
-
+                    return render(request, 'accounts/signup.html')
             except User.DoesNotExist:
                 user = User.objects.create_user(
                     request.POST['username'], password=request.POST['password1'],
@@ -50,18 +46,25 @@ def signup(request):
                 auth.login(request, user)
                 user_profile = UserProfile.objects.create(
                     user=request.user)
+                user_profile.fullName = request.POST['name']
                 user_profile.mobile_no = request.POST["phonenumber"]
                 user_profile.user_type = request.POST["usertype"]
+                print(request.FILES)
+                user_profile.image = request.FILES['profile_picture']
                 user_profile.save()
-                return redirect('home')
+                return redirect('dashboard')
         else:
             messages.error(request, 'Passwords should match')
-            return render(request, 'signup.html')
-    return render(request, 'signup.html')
+            return render(request, 'accounts/signup.html')
+    return render(request, 'accounts/signup.html')
 
 
 def logout(request):
-    "logout user"
-    if request.method == 'POST':
+    """
+    logout user
+    """
+    if request.method == "POST":
         auth.logout(request)
-        return redirect('home')
+        return render(request, 'accounts/login.html')
+    auth.logout(request)
+    return render(request, 'accounts/login.html')

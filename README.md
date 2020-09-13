@@ -1,44 +1,62 @@
 # SchoolERP
 
-# Clone the project to your PC
 
+## Clone the project to your system
+```console
 git clone -b v0.1 git@gitlab.com:nikhil.khandelwal/schoolerp.git
+```
+## Change into project directory
 
-# Change into project directory
+```console
+cd schoolerp
+```
 
-cd <project_name>
+## Install System Requirements
 
-# Create virtual environment
+Run the shell script to install all the system requirements
 
-mkvirtualenv <project_name>
+```console
+sh startup.sh
+``` 
 
-source <project_name>/bin/activate
+## Create virtual environment
 
-# Install requirements
+```python
+python3 -m venv schoolerp-venv
+source schoolerp-venv/bin/activate
+```
 
-pip install -r requirements.txt
+## Install requirements
 
-# Create database 
+```python
+pip3 install -r requirements.txt
+```
 
-For mysql change engine in settings.py/DATABASES
+## Create database 
 
-'django.db.backends.mysql'
+<!-- For mysql change engine in settings.py/DATABASES
+
+	'django.db.backends.mysql'
 
 For postgresql change engine in settings.py/DATABASES
 
-'django.db.backends.postgresql_psycopg2'
+	'django.db.backends.postgresql_psycopg2'
 
 Change the user and password according to your database servers
 
-Create new database and set 'NAME' : <database_name>
+	Create new database and set 'NAME' : <database_name> -->
+```console
+sudo -u postgres psql -f ./setup.sql
+```
 
+## Makemigrations and migrate
+	
+```python
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
 
-# Makemigrations and migrate
-python manage.py makemigrations
-
-python manage.py migrate
-
-# Start the development server
-
-python manage.py runserver
-
+## Start the development server
+```python
+python3 manage.py runserver
+```

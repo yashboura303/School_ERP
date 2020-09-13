@@ -3,8 +3,10 @@
 """
 from datetime import date
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.contrib import messages
 from classform.models import ClassRoom
+from accounts.models import UserProfile
 from .models import Employee, Teacher, EmployeeDocuments, PermanentAddress, CurrentAddress
 
 
@@ -13,21 +15,22 @@ def form(request):
     """
     add new employee info to employee and teacher table and set media path of documents
     input: form values
-
     """
     if request.method == "POST":
         # Student Details
         emp_id = request.POST.get("empID")
         dob = request.POST["DOB"]
         join_date = request.POST["joinDate"]
-        dob = date(*map(int, dob.split('-')))
-        join_date = date(*map(int, join_date.split('-')))
+        if dob:
+            dob = date(*map(int, dob.split('-')))
+        if join_date:
+            join_date = date(*map(int, join_date.split('-')))
         f_name = request.POST.get("firstname", "")
         l_name = request.POST.get("lastname", "")
         gender = request.POST.get("gender", "")
         email = request.POST.get("email", "")
-        a_number = request.POST.get("a_number", "")
-        phone_number = request.POST.get("phone_number", "")
+        a_number = request.POST.get("a_number")
+        phone_number = request.POST.get("phone_number")
         blood_group = request.POST.get("blood_group", "")
         father_name = request.POST.get("father_name", "")
         mother_name = request.POST.get("mother_name", "")
@@ -38,27 +41,30 @@ def form(request):
         current_add2 = request.POST.get("currentinputAddress2", "")
         current_city = request.POST.get("inputCity", "")
         current_state = request.POST.get("inputState", "")
-        current_zip = request.POST.get("inputZip", "")
+        current_zip = request.POST.get("inputZip")
         perm_add1 = request.POST.get("perminputAddress", "")
         perm_add2 = request.POST.get("perminputAddress2", "")
         perm_city = request.POST.get("perminputCity", "")
         perm_state = request.POST.get("perminputState", "")
-        perm_zip = request.POST.get("perminputZip", "")
+        perm_zip = request.POST.get("perminputZip")
         emp_category = request.POST.get("empCategory", "")
         if emp_category == "teacher":
-            teacher_first_name = request.POST.get("teacherFirstName", "")
-            teacher_last_name = request.POST.get("teacherLastName", "")
             specialization = request.POST.get("specialization", "")
             designation = request.POST.get("designation", "")
             classTeacher = request.POST.get("classTeacher", "")
-
-        employee = Employee.objects.create(empID=emp_id)
+        try:
+            employee = Employee.objects.create(empID=emp_id)
+        except:
+            messages.error(request, "Employee ID already assigned")
+            redirect('employeeForm')
         employee.firstName = f_name
         employee.lastName = l_name
         employee.partnerName = partner_name
         employee.fullName = f_name + " " + l_name
-        employee.dob = dob
-        employee.joiningDate = join_date
+        if dob:
+            employee.dob = dob
+        if join_date:
+            employee.joiningDate = join_date
         employee.marital_status = marital_status
         employee.experience = experience
         employee.currentAddress = current_add1 + " " + current_add2 + "," + \
@@ -69,11 +75,15 @@ def form(request):
             perm_zip
         employee.gender = gender
         employee.email = email
-        employee.mobile_number = phone_number
         employee.blood_group = blood_group
-        employee.aadharNumber = a_number
+        if phone_number:
+            employee.mobile_number = phone_number
+        if a_number:
+            employee.aadharNumber = a_number
         employee.father_name = father_name
         employee.mother_name = mother_name
+        if emp_category == "other":
+            employee.empCategory = request.POST.get("other", "")
         employee.empCategory = emp_category
         employee.save()
 
@@ -95,35 +105,37 @@ def form(request):
 
         if emp_category == "teacher":
             teacher = Teacher.objects.create(employee=employee)
-            teacher.firstName = teacher_first_name
-            teacher.lastName = teacher_last_name
-            teacher.fullName = teacher_first_name + " " + teacher_last_name
             teacher.specialization = specialization
             teacher.designation = designation
             teacher.save()
+
+            #create id and password for teacher 
+            user = User.objects.create_user(emp_id, email, phone_number)
+            user_profile = UserProfile.objects.create(
+                    user=user, fullName=f_name + " " + l_name, emp_id=emp_id)
+            user_profile.user_type = "Teacher"
+            user_profile.password = phone_number
+            user_profile.save()
+
             # alert message when class has already a class teacher
-            try:
-                ClassRoom.objects.filter(classSection__exact=classTeacher)
-                messages.error(request, "Class already has a teacher")
-                return redirect('employeeForm')
-            except:
+            if classTeacher:
+                classroom = ClassRoom.objects.get(classSection=classTeacher)
+                classroom.class_teacher_alloted = True
+                classroom.save()
                 teacher.classTeacher = classTeacher
                 teacher.save()
-                classroom = ClassRoom.objects.create(
-                    classSection=classTeacher, teacher=teacher)
-                classroom.save()
 
         documents = EmployeeDocuments.objects.create(employee=employee)
-        documents.IdProof = request.FILES["idproof"]
-        documents.photo = request.FILES["photgraph"]
-        documents.qualificationDoc = request.FILES["qualificationDoc"]
-        documents.addressProof = request.FILES["addressProof"]
-        documents.otherDoc = request.FILES["otherDoc"]
+        documents.IdProof = request.FILES.get("idproof")
+        documents.photo = request.FILES.get("photgraph")
+        documents.qualificationDoc = request.FILES.get("qualificationDoc")
+        documents.addressProof = request.FILES.get("addressProof")
+        documents.otherDoc = request.FILES.get("otherDoc")
         documents.save()
         messages.success(request, "Record successfully added")
         return redirect('employeeForm')
-
-    return render(request, 'employee/recordForm.html')
+    class_rooms = ClassRoom.objects.filter(class_teacher_alloted=False)
+    return render(request, 'employee/recordForm.html',{"class_rooms":class_rooms})
 
 
 def update(request):  
@@ -132,17 +144,13 @@ def update(request):
     input: form values
     """
     if request.method == "POST":
-        # Student Details
-        if not request.POST.get("addmissionnumber"):
-            messages.info(request, 'Enter addmission Number!')
-            return redirect('updateInfo.html')
+        # Employee Details
         emp_id = request.POST.get("empID")
         employee = Employee.objects.get(empID=int(emp_id))
-        teacher = Teacher.objects.get(employee=employee)
-        current = CurrentAddress.objects.get(employee=employee)
-        permanent = PermanentAddress.objects.get(employee=employee)
-        dob = request.POST["DOB"]
-        join_date = request.POST["joinDate"]
+        current , created= CurrentAddress.objects.get_or_create(employee=employee)
+        permanent, created= PermanentAddress.objects.get_or_create(employee=employee)
+        dob = request.POST.get("DOB")
+        join_date = request.POST.get("joinDate")
         dob = date(*map(int, dob.split('-')))
         join_date = date(*map(int, join_date.split('-')))
         f_Name = request.POST.get("firstname", employee.firstName)
@@ -151,8 +159,8 @@ def update(request):
         email = request.POST.get("email", employee.email)
         a_number = request.POST.get("a_number", employee.aadharNumber)
         phone_number = request.POST.get(
-            "phone_number", employee.mobileNumber)
-        blood_group = request.POST.get("blood_group", employee.blood_group)
+            "phone_number", employee.mobile_number)
+        blood_group = request.POST.get("blood_group", employee.bloodGroup)
         father_name = request.POST.get("father_name", employee.father_name)
         mother_name = request.POST.get("mother_name", employee.mother_name)
         experience = request.POST.get("experience", employee.experience)
@@ -173,7 +181,8 @@ def update(request):
         permState = request.POST.get("perminputState", permanent.state)
         permZip = request.POST.get("perminputZip", permanent.zipCode)
         emp_category = request.POST.get("empCategory", employee.empCategory)
-        if emp_category == "Teacher":
+        if emp_category == "teacher":
+            teacher, created = Teacher.objects.get_or_create(employee=employee)
             teacher_first_name = request.POST.get(
                 "teacherFirstName", teacher.firstName)
             teacher_last_name = request.POST.get(
@@ -207,8 +216,22 @@ def update(request):
         employee.empCategory = emp_category
         employee.save()
 
+        current.Address1 = currentAdd1
+        current.Address2 = currentAdd2
+        current.zipCode = currentZip
+        current.state = currentState
+        current.city = currentCity
+        current.save()
+
+        permanent.Address1 = permAdd1
+        permanent.Address2 = permAdd2
+        permanent.zipCode = permZip
+        permanent.state = permState
+        permanent.city = permCity
+        permanent.save()
+
         if emp_category == "teacher":
-            teacher = Teacher.objects.create(employee=employee)
+            teacher, created = Teacher.objects.get_or_create(employee=employee)
             teacher.firstName = teacher_first_name
             teacher.lastName = teacher_last_name
             teacher.fullName = teacher_first_name + " " + teacher_last_name
@@ -227,10 +250,10 @@ def update_with_data(request, emp_id):
     update form with actual data already filled in for required employee
     input: empID of employee and form values
     """
-    employee = Employee.objects.get(empID=(emp_id))
-    p_add = PermanentAddress.objects.get(employee=employee)
-    teacher = Teacher.objects.get(employee=employee)
-    c_add = CurrentAddress.objects.get(employee=employee)
+    employee = Employee.objects.get(empID=emp_id)
+    p_add = PermanentAddress.objects.filter(employee=employee).first()
+    teacher = Teacher.objects.filter(employee=employee).first()
+    c_add = CurrentAddress.objects.filter(employee=employee).first()
     dob_to_string = str(employee.dob)
     join_date_to_string = str(employee.joiningDate)
     return render(request, 'employee/updateInfo.html',
@@ -245,11 +268,11 @@ def print(request, emp_id):
     output: prints pdf with employee details
     """
     employee = Employee.objects.get(empID=emp_id)
-    p_add = PermanentAddress.objects.get(employee=employee)
-    c_add = CurrentAddress.objects.get(employee=employee)
+    p_add = PermanentAddress.objects.filter(employee=employee).first()
+    c_add = CurrentAddress.objects.filter(employee=employee).first()
     if employee.empCategory != "teacher":
         return render(request, 'employee/printEmployeeData.html', {"employee": employee, "pAdd": p_add, "cAdd": c_add})
-    teacher = Teacher.objects.get(employee=employee)
+    teacher = Teacher.objects.filter(employee=employee).first()
     return render(request, 'employee/printTeacherData.html',
                   {"employee": employee, "pAdd": p_add, "cAdd": c_add, "teacher": teacher})
 
@@ -273,8 +296,15 @@ def search(request):
             emp_id = request.GET["empID"]
             employee = employee.filter(empID__icontains=emp_id)
             if employee:
-                return render(request, 'employee/emplSearchPage.html', {"employees": employee})
+                return render(request, 'employee/emplSearchPage.html', {"employees": employee, "values":request.GET})
             messages.error(
                 request, 'Cant find employee with entered detail')
             return redirect('empSearchPage')
     return render(request, 'employee/emplSearchPage.html')
+
+
+def get_teachers_credentials(request):  
+    user_profile = UserProfile.objects.filter(user_type="Teacher")
+    teachers = Teacher.objects.all()
+    myList = zip(user_profile, teachers)
+    return render(request, 'employee/credentials.html', {"myList":myList})

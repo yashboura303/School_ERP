@@ -1,0 +1,27 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Holiday
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+    <div class="container">
+        <h3 class="text-center m-3">Add Holiday </h3>
+        <form action="{% url 'addHoliday' %}" method="get">
+            <div class="form-group">
+              <label for="">Holiday Title</label>
+              <input type="text" class="form-control" name="title" id="" aria-describedby="helpId" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="">Start Date</label>
+                <input type="date" class="form-control" name="start_date" id="" aria-describedby="helpId" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="">End Date</label>
+                <input type="date" class="form-control" name="end_date" id="" aria-describedby="helpId" placeholder="">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+{% endblock %}

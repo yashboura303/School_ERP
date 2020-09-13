@@ -1,0 +1,88 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Route Register
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<div class="container-fluid mx-auto px-auto m-3">
+    <h3 class="text-center pb-2">Route</h3>
+    <form action="{% url 'addRoute' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label class="pr-1" >Vehicle:</label>
+                <select name="vehicle" class="form-control mr-2">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for vehicle in vehicles %}
+                    <option value='{{ vehicle.vehicle_no }}'>{{vehicle.vehicle_no}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label >Route Code:</label>
+                <input type="number" min="0" class="form-control"  name="route_code">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Start Place:</label>
+                <input type="text" class="form-control"  name="start_place">
+            </div>
+            <div class="form-group col-md-3">
+                <label >End Place:</label>
+                <input type="text" class="form-control"  name="end_place">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label >Route Distance:</label>
+                <input type="number" min="0" class="form-control"  name="route_distance">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Remarks:</label>
+                <input type="text" class="form-control"  name="remarks">
+            </div>
+            <div class="form-group col-md-3">
+                <label class="pr-1" >Shift Time:</label>
+                <select name="shift" class="form-control mr-2">
+                    <option selected="true" disabled="disabled" >Select</option>
+                    <option selected="true"  value="Morning">Morning</option>
+                    <option selected="true" value="Afternoon">Afternoon</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label >Stoppage Name:</label>
+                <input type="text" class="form-control" name="stoppage_name">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label >Stoppage ID:</label>
+                <input type="text" min="0" class="form-control"  name="stoppage_id">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Longitude:</label>
+                <input type="text" class="form-control" name="longitude">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Lattitude:</label>
+                <input type="text" class="form-control"  name="lattitude">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{% endblock content %}

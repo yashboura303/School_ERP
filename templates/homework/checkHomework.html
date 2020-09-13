@@ -1,0 +1,20 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-auto m-3">
+    <h3 class="text-center">Select class for homework status</h3>
+<form action="{% url 'checkHomework' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group w-50">
+        <label class="pr-1" for="">Class/Section:</label>
+        <select name="class_room" class="form-control mr-2" id="class_room">
+            <option selected="true" disabled="disabled" value="a">Select</option>
+            {% for class_room in class_rooms %}
+            <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+{% endblock content %}

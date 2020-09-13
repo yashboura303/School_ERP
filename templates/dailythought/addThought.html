@@ -1,0 +1,20 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Thought
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+      <div class="container mt-4">
+
+          <form action="{% url 'addThought'  %}" method="GET">
+              <div class="form-group">
+                  <label for=""> <strong>Add Thought</strong></label>
+                  <textarea class="form-control" name="thought" id="" rows="3"></textarea>
+                </div>
+                  
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            
+        </div>
+{% endblock %}

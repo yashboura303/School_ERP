@@ -1,0 +1,86 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Vehcile List
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<div class="container">
+    <h2 class="text-center mt-3 ">Mark Attendence By Route</h2>
+
+    <form class="" method="POST" action="{% url 'routeAttendence' %}">
+        {% csrf_token %}
+        <div class="form-group w-50">
+            <label class="pr-1" for="">Routes:</label>
+            <select name="route_code" class="form-control mr-2">
+                <option selected="true" disabled="disabled" value="a">Select</option>
+                {% for route in routes %}
+                <option value='{{ route.route_code }}'>{{ route.route_code }}-{{route.shift_time}} Shift</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% if student_routes %}
+<div class="container-fluid">
+    <form method="POST" action="{% url 'markAttendence' %}">
+        {% csrf_token %}
+        <div class="form-group col-md-3 mt-3 mx-auto">
+            <label for="username" class="font-weight-bold">Select Date:</label>
+            <input type="date" class="form-control" id="date_" aria-describedby="" name="date" required>
+        </div>
+        <table class="mb-5 table table-secondary table-striped">
+
+            <thead class="table-dark">
+                <tr class="">
+                    <th scope="col">Admission No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone No</th>
+                    <th scope="col">Drop Place</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student_route in student_routes %}
+                <tr>
+                    <th scope="row">{{ student_route.student.admissionNumber}}</th>
+                    <td>{{ student_route.student.fullName }}</td>
+                    <td>{{ student_route.student.mobileNumber }}</td>
+                    <td>{{ student_route.route_stoppage }}</td>
+                    <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name={{student_route.student.admissionNumber}}
+                                id="" value="present">
+                            <label class="form-check-label">Present</label>
+                            <input class="form-check-input ml-2 " type="radio"
+                                name={{student_route.student.admissionNumber}} id="" value="absent">
+                            <label class="form-check-label">Absent</label>
+
+                        </div>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+        <button type="submit" class="btn btn-primary my-2">Update Attendence</button>
+    </form>
+</div>
+{% endif %}
+
+{% endblock content %}

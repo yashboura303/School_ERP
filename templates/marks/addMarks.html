@@ -1,0 +1,90 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Add Marks
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+
+    <div class="container mt-3">
+        <h2 class="text-center">Add Marks</h2>
+        <form method="GET" action="{% url 'addMarks' %}">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label class="pr-1" for="">Class Name:</label>
+                    <select name="class_name" class="form-control mr-2" id="">
+                        <option selected="true" disabled="disabled">Select</option>
+                        {% for class_room in class_rooms %}
+                        <option value='{{ class_room.classSection }}'
+
+                         >{{ class_room.classSection }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Type of Exam</label>
+                    <select name="exam_type" class="form-control mr-2" id="">
+                        <option selected="true" disabled="disabled">Select</option>
+                        {% for exam_type in exam_types %}
+                        <option value='{{ exam_type.examType }}' 
+                          >{{ exam_type.examType}} - {{exam_type.examName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Name of Exam</label>
+                    <select name="exam_name" class="form-control mr-2" id="">
+                        <option selected="true" disabled="disabled">Select</option>
+                        {% for exam_name in exam_names %}
+                        <option value='{{ exam_name.examName }}' 
+                          >{{ exam_name.examName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for=""> Subject</label>
+                    <input type="text" class="form-control" id="" value="{{values.subject}}" placeholder="" name="subject" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-success ">Submit</button>
+        </form>
+    </div>
+    {% if students %}
+    <div class="container-fluid mt-5">
+        <table class="mb-5 table table-secondary table-striped">
+            <form method="POST" action="{% url 'addMarks' %}">
+                {% csrf_token %}
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Roll Number</th>
+                        <th scope="col">Admission Number</th>
+                        <th scope="col">Class Section</th>
+                        <th scope="col">Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <th scope="row">{{ student.student.fullName}}</th>
+                        <td>{{ student.roll_number }}</td>
+                        <td>{{ student.student.admissionNumber }}</td>
+                        <td>{{ student.classRoom.classSection }}</td>
+                        <td>
+                            <div class="form-row ">
+                                <div class="form-group col-md-3">
+                                    <input type="number" class="form-control" id="" placeholder="" name={{student.student.admissionNumber}} required>
+                                </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+        <button type="submit" class="btn btn-success">Add Marks</button>
+        </form>
+    </div>
+    {% endif %}
+
+
+
+{% endblock %}

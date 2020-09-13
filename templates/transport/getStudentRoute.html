@@ -1,0 +1,41 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Driver Register
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+    .row{
+        font-size: 1.2rem;
+    }
+</style>
+<div class="container-fluid mx-auto px-auto m-3">
+    <h2 class="text-center pb-2 my-3">Your Transport Route Detail</h2>
+    <div class="container w-75 bg-secondary border border-dark p-4">
+        <div class="row justify-content-around mt-2">
+            <p><strong>Route Code: </strong>{{route.route_code}}</p>
+            <p><strong>Shift Time: </strong>{{student_route.shift}}</p>
+            <p><strong>Stoppage At: </strong>{{student_route.route_stoppage}}</p>
+        </div>
+        <div class="row justify-content-around mt-2">
+            <p><strong>Vehicle No: </strong>{{route.vehicle.vehicle_no}}</p>
+            <p><strong>Vehicle: </strong>{{route.vehicle.vehicle_type}}</p>
+            <p><strong>Driver Name: </strong>{{driver.driver_name}}</p>
+        </div>
+    </div>
+ 
+</div>
+
+{% endblock content %}

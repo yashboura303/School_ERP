@@ -1,0 +1,23 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Check Notice
+{% endblock %}
+{% block content %}
+{% include "message.html" %}
+<div class="container-fluid">
+    <h2 class="text-center my-4">Check Notice </h2>
+    {% if notices %}
+    {% for notice in notices %}
+    <div class="container border border-dark mb-3 p-0 bg-dark pb-1 text-white">
+        <p class="px-3 my-2"><strong>Notice</strong>-{{notice.notice}}</p>
+        {% if notice.notice_document %}
+
+        <a href="{{ notice.notice_document.url }}" class="my-2 btn btn-info ml-2" download="notice">Download Notice File</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4 class="text-center">There is no notice for your class.</h4>
+    {% endif %}
+</div>
+{% endblock %}

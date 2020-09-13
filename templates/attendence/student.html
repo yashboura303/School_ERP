@@ -1,12 +1,13 @@
-{% extends './base.html' %}
-
-{% block title %}Attendence | Student{% endblock %}
-{% block name %}Student{% endblock %}
-{% block url %}{% url 'piechartStudent' %}{% endblock %}
-
+{% extends "dashboard/base.html" %}
+{% block title %}
+Student Attendence
+{% endblock %}
 {% block content %}
-{% include 'message.html' %}
+
+{% include "message.html" %}
+
 <div class="container">
+    <h2 class="text-center mt-2">Mark Attendence</h2>
     <form class="row" method="GET" action="{% url 'attendenceStudent' %}">
         {% csrf_token %}
         <div class="form-group col-5">
@@ -15,24 +16,29 @@
             <small id="helpId" class="form-text text-muted">Marks Attendence By Addmisson Number</small>
         </div>
         <div class="form-group col-5">
-            <label for=""> Class Name</label>
-            <input type="text" class="form-control" name="class_name" id="" aria-describedby="helpId" placeholder="">
-            <small id="helpId" class="form-text text-muted">Marks Attendence class wise</small>
+            <label class="pr-1" for="">Class/Section:</label>
+            <select name="class_room" class="form-control mr-2" id="class_name">
+                <option selected="true" disabled="disabled" value="a">Select</option>
+                {% for class_room in class_rooms %}
+                <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+                {% endfor %}
+            </select>
         </div>
         <button type="submit" class="btn btn-primary my-auto">Submit</button>
     </form>
 </div>
+{% if students %}
 <div class="container-fluid">
     <form method="POST" action="{% url 'attendenceStudent' %}">
         {% csrf_token %}
         <div class="form-group col-md-3 mt-3 mx-auto">
             <label for="username" class="font-weight-bold">Select Date:</label>
-            <input type="date" class="form-control" id="date_" aria-describedby="" name="date">
+            <input type="date" class="form-control" id="date_" aria-describedby="" name="date" required>
         </div>
         <table class="mb-5 table table-secondary table-striped">
 
-            <thead>
-                <tr>
+            <thead class="table-dark">
+                <tr class="">
                     <th scope="col">Name</th>
                     <th scope="col">Roll Number</th>
                     <th scope="col">Admission Number</th>
@@ -70,6 +76,7 @@
         <button type="submit" class="btn btn-primary my-2">Update Attendence</button>
     </form>
 </div>
+{% endif %}
 <script>
     _date = document.getElementById('date_')
     _date.addEventListener("input", checkDate);

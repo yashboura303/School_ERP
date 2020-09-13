@@ -1,0 +1,88 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Driver Register
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<div class="container-fluid mx-auto px-auto m-3">
+    <h3 class="text-center pb-2">Driver</h3>
+    <form action="{% url 'addDriver' %}" method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label class="pr-1" >Vehicle:</label>
+                <select name="vehicle" class="form-control mr-2">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for vehicle in vehicles %}
+                    <option value='{{ vehicle.id }}'>{{ vehicle.id }}- {{vehicle.vehicle_no}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label >Name:</label>
+                <input type="text" min="0" class="form-control"  name="name">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Date Of Birth:</label>
+                <input type="date" class="form-control"  name="dob">
+            </div>
+            <div class="form-group col-md-3">
+                <label >License No:</label>
+                <input type="number" min="0" class="form-control"  name="licenseNo">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label >Mobile Number:</label>
+                <input type="number" min="0" class="form-control"  name="mobileNumber">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Current Address:</label>
+                <input type="text" class="form-control"  name="caddress">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Permanent Address:</label>
+                <input type="text" class="form-control" name="paddress">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Batch Number:</label>
+                <input type="text" class="form-control" name="batchNumber">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label >Employee ID:</label>
+                <input type="number" min="0" class="form-control"  name="empID">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Driver Pic:</label>
+                <input type="file" class="form-control" name="pic">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Driver License:</label>
+                <input type="file" class="form-control"  name="driverLicense">
+            </div>
+            <div class="form-group col-md-3">
+                <label >Driver ID:</label>
+                <input type="file" class="form-control"  name="driverID">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{% endblock content %}

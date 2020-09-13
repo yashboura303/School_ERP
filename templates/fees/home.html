@@ -1,0 +1,151 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Fee Section
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+
+<style>
+    #select_mode{
+        display: none;
+    }
+</style>
+<div class="container ">
+    <div class="container w-75">
+        <h3 class="text-center">Set Fee Category</h3>
+        <form action="{% url 'addFeeCategory' %}" method="GET">
+        <div class="form-group">
+          <label for="">Description</label>
+          <input type="text" class="form-control" name="description" id="" aria-describedby="helpId" placeholder="">
+        </div>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="check" id="" value="once"> Once
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input"  type="checkbox" name="check"onclick="myFunction()" id="my_check" value="recurring"> Recurring
+            </label>
+        </div>
+        <div class="form-group mt-3 w-75" id="select_mode">
+          <label for="">Select Mode</label>
+          <select class="form-control" name="mode" id="">
+            <option>Monthly</option>
+            <option>Yearly</option>
+            <option>Quaterly</option>
+          </select>
+        </div>
+    
+    <button type="submit" class="btn btn-primary d-block">Submit</button>
+
+</form>
+</div>
+    <div class="container w-75">
+        <h3 class="text-center mt-2">Fee Collection</h3>
+        <form action="{% url 'feesHome' %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+            <div class="form-group">
+              <label for="">Register Number</label>
+              <input type="number" class="form-control"  name="register_number" id="" aria-describedby="helpId" placeholder=""min="0">
+            </div>
+            <div class="form-group">
+                <label for="">Student Admission Number</label>
+                <input type="number" class="form-control" name="add_number" id="" aria-describedby="helpId" placeholder=""min="0">
+              </div>
+            <div class="form-group w-50">
+                <label class="pr-1" for="">Class/Section:</label>
+                <select name="class_room" class="form-control mr-2" id="class_room">
+                    <option selected="true" disabled="disabled" value="a">Select</option>
+                    {% for class_room in class_rooms %}
+                    <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="">Amount</label>
+              <input type="number" class="form-control"  name="amount" id="" aria-describedby="helpId" placeholder=""min="0">
+            </div>
+              <div class="form-group">
+                <label for="">Payment Method</label>
+                <input type="text" class="form-control" name="payment_method" id="" aria-describedby="helpId" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="">Months Paid For</label>
+                <input type="text" class="form-control" name="months" id="" aria-describedby="helpId" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="">Remarks</label>
+                <input type="text" class="form-control" name="remarks" id="" aria-describedby="helpId" placeholder="">
+              </div>
+              <div class="form-group w-50">
+                <label for="">Upload Fee Slip Template:</label>
+                <input type="file" class="form-control" id="" name="excel">
+            </div>
+             
+              <button type="submit" class="btn btn-primary d-block">Submit</button>
+        </form>
+    </div>
+    <div class="container mt-3 w-75">
+      <h3 class="text-center mt-2">Fee Cycle</h3>
+      <form action="{% url 'addFeeCycle' %}" method="GET">
+        <div class="form-group w-50">
+            <label class="pr-1" for="">Cycle:</label>
+            <select name="cycle" class="form-control mr-2" id="">
+                <option selected="true" disabled="disabled" value="a">Select</option>
+                <option value='monthly'>Monthly</option>
+                <option value='yearly'>Yearly</option>
+                <option value='quaterly'>Quaterly</option>
+            </select>
+        </div>
+          <div class="form-group">
+            <label for="">Starting Date</label>
+            <input type="date" class="form-control" name="starting_date" id="" aria-describedby="helpId" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="">Ending Date</label>
+            <input type="date" class="form-control" name="ending_date" id="" aria-describedby="helpId" placeholder="">
+          </div>
+         
+          <button type="submit" class="btn btn-primary d-block">Submit</button>
+    </form>
+    </div>
+
+    <div class="container mt-3 w-75">
+      <h3 class="text-center">Add Fee Discount</h3>
+      <form action="{% url 'addFeeDiscount' %}" method="get">
+        <div class="form-group">
+          <label for="">Admission Number</label>
+          <input type="number" class="form-control" name="add_number" id="" aria-describedby="helpId" placeholder=""min="0">
+        </div>
+        <div class="form-group">
+          <label for="">Description</label>
+          <input type="text" class="form-control" name="description" id="" aria-describedby="helpId" placeholder="">
+        </div>
+        <div class="form-group">
+          <label for="">Discount %</label>
+          <input type="number" class="form-control" name="discount" id="" aria-describedby="helpId" placeholder=""min="0">
+        </div>
+        <div class="form-group">
+          <label for="">Total Off</label>
+          <input type="number" class="form-control" name="total_off" id="" aria-describedby="helpId" placeholder=""min="0">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+</div>
+
+  <script>
+      function myFunction(){
+    checkBox = document.getElementById("my_check");
+    div = document.getElementById("select_mode");
+    if (checkBox.checked ==true){
+        div.style.display = "block"
+    }
+    else{
+        div.style.display = "none"
+    }
+}
+  </script>
+{% endblock content %}

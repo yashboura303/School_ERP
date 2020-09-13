@@ -3,28 +3,30 @@ Tables for student form
 """
 from django.db import models
 from PIL import Image
-
+from transport.models import Routes
 # Create your models here.
 
 
 class StudentInfo(models.Model):
     """Student Table"""
-    firstName = models.CharField(max_length=20)
-    lastName = models.CharField(max_length=20)
-    fullName = models.CharField(max_length=50)
-    fName = models.CharField(max_length=50)
-    gender = models.CharField(max_length=20)
-    dob = models.DateField(null=True)
-    classSection = models.CharField(max_length=20)
-    admissionNumber = models.BigIntegerField(primary_key=True, default=0)
-    mobileNumber = models.BigIntegerField(default=0)
-    religion = models.CharField(max_length=20)
-    caste = models.CharField(max_length=20)
-    tcNumber = models.BigIntegerField(default=0)
-    aadharNumber = models.BigIntegerField(default=0)
-    feeWaiverCategory = models.CharField(max_length=20)
-    siblingID = models.BigIntegerField(default=0)
-    prevSchoolName = models.CharField(max_length=20)
+    firstName = models.CharField(max_length=20,blank=True)
+    lastName = models.CharField(max_length=20,blank=True)
+    fullName = models.CharField(max_length=50,blank=True)
+    gender = models.CharField(max_length=20,blank=True)
+    dob = models.DateField(null=True,blank=True)
+    classSection = models.CharField(max_length=20,blank=True)
+    admissionNumber = models.BigIntegerField(primary_key=True)
+    mobileNumber = models.BigIntegerField(null=True,blank=True)
+    religion = models.CharField(max_length=20,blank=True)
+    caste = models.CharField(max_length=20,blank=True)
+    tcNumber = models.BigIntegerField(null=True,blank=True)
+    aadharNumber = models.BigIntegerField(null=True,blank=True)
+    feeWaiverCategory = models.CharField(max_length=20,blank=True)
+    siblingID = models.BigIntegerField(null=True,blank=True)
+    siblingID0 = models.BigIntegerField(null=True,blank=True)
+    siblingID1 = models.BigIntegerField(null=True,blank=True)
+    siblingID2 = models.BigIntegerField(null=True,blank=True)
+    prevSchoolName = models.CharField(max_length=20,blank=True)
 
     def __str__(self):
         return f"Name:{self.fullName}| Add.No: {self.admissionNumber}| Class:{self.classSection}"
@@ -34,12 +36,12 @@ class CurrentAddress(models.Model):
     """Currrent Address Table"""
     student = models.OneToOneField(
         StudentInfo, primary_key=True, on_delete=models.CASCADE)
-    Address = models.CharField(max_length=100)
-    Address1 = models.CharField(max_length=100)
-    Address2 = models.CharField(max_length=100)
-    zipCode = models.BigIntegerField(default=0)
-    state = models.CharField(max_length=20)
-    city = models.CharField(max_length=20)
+    Address = models.CharField(max_length=100,blank=True)
+    Address1 = models.CharField(max_length=100,blank=True)
+    Address2 = models.CharField(max_length=100,blank=True)
+    zipCode = models.BigIntegerField(null=True,blank=True)
+    state = models.CharField(max_length=20,blank=True)
+    city = models.CharField(max_length=20,blank=True)
 
     def __str__(self):
         return f"Name:{self.student.fullName}"
@@ -49,12 +51,12 @@ class PermanentAddress(models.Model):
     """Permanent Address Table"""
     student = models.OneToOneField(
         StudentInfo, primary_key=True, on_delete=models.CASCADE)
-    Address = models.CharField(max_length=100)
-    Address1 = models.CharField(max_length=100)
-    Address2 = models.CharField(max_length=100)
-    zipCode = models.BigIntegerField(default=0)
-    state = models.CharField(max_length=20)
-    city = models.CharField(max_length=20)
+    Address = models.CharField(max_length=100,blank=True)
+    Address1 = models.CharField(max_length=100,blank=True)
+    Address2 = models.CharField(max_length=100,blank=True)
+    zipCode = models.BigIntegerField(null=True,blank=True)
+    state = models.CharField(max_length=20,blank=True)
+    city = models.CharField(max_length=20,blank=True)
 
     def __str__(self):
         return f"Name:{self.student.fullName}"
@@ -64,18 +66,17 @@ class ParentInfo(models.Model):
     """ Parents Info Table"""
     student = models.OneToOneField(
         StudentInfo, primary_key=True, on_delete=models.CASCADE, related_name='parent')
-    fatherName = models.CharField(max_length=20)
-    motherName = models.CharField(max_length=20)
-    Fatherdob = models.DateField(null=True)
-    Motherdob = models.DateField(null=True)
-    MobileNumber = models.BigIntegerField(default=0)
-    altMobileNumber = models.BigIntegerField(default=0)
-    gaurdianName = models.CharField(max_length=30)
-    gaurdianQual = models.CharField(max_length=30)
-    guardianOccup = models.CharField(max_length=20)
-    email = models.CharField(max_length=30)
-    motherQual = models.CharField(max_length=30)
-    motherOccup = models.CharField(max_length=20)
+    fatherName = models.CharField(max_length=20,blank=True)
+    motherName = models.CharField(max_length=20,blank=True)
+    Fatherdob = models.DateField(null=True,blank=True)
+    Motherdob = models.DateField(null=True,blank=True)
+    MobileNumber = models.BigIntegerField(null=True,blank=True)
+    altMobileNumber = models.BigIntegerField(null=True,blank=True)
+    gaurdianQual = models.CharField(max_length=30,blank=True)
+    guardianOccup = models.CharField(max_length=20,blank=True)
+    email = models.CharField(max_length=30,blank=True)
+    motherQual = models.CharField(max_length=30,blank=True)
+    motherOccup = models.CharField(max_length=20,blank=True)
 
     def __str__(self):
         return f"Student:{self.student.fullName} Add.No: {self.student.admissionNumber} Father Name:{self.fatherName}"
@@ -115,3 +116,10 @@ class Documents(models.Model):
         # else ingore
         except:
             pass
+
+class StudentRoute(models.Model):
+    student = models.OneToOneField(
+        StudentInfo, primary_key=True, on_delete=models.CASCADE)
+    route_code = models.BigIntegerField(null=True,blank=True)
+    route_stoppage = models.CharField(max_length=30,blank=True)
+    shift = models.CharField(max_length=30,blank=True)

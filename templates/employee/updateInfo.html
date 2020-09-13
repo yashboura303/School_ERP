@@ -1,23 +1,37 @@
-{% extends 'base.html' %}
-
-{% block title %}Form{% endblock %}
-
+{% extends "dashboard/base.html" %}
+{% block title %}
+Update Info
+{% endblock %}
 {% block content %}
+
+{% include "message.html" %}
+
 
 <style>
         #teacher{
             display: none;
         }
     </style>
-{% include './navBar.html' %}
-{% include 'message.html' %}
+    <style>
+    /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
+}
+</style>
 <div class="container-fluid">
     <form class="container w-75" id="myForm" method="POST" action={% url 'updateEmpInfo' %}>
-
+    {% csrf_token %}
         <h3 class="my-2 text-info ">Update Employee Details</h3>
         <div class="form-group w-50">
             <label for="username" class="font-weight-bold">EmpID of Employee to Update</label>
-            <input type="number" class="form-control" id="empID" name="empID" value={{employee.empID}}>
+            <input type="number" min="0"class="form-control" id="empID" name="empID" value={{employee.empID}} required>
         </div>
         <hr>
         <div class="form-row">
@@ -45,7 +59,7 @@
             </div>
             <div class="form-group col-md-3">
                 <label for="username">Email:</label>
-                <input type="text" class="form-control" id="email" name="email" value={{employee.email}}>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" value={{employee.email}}>
             </div>
             <div class="form-group col-md-3">
                 <label for="username">Joining Date:</label>
@@ -53,7 +67,7 @@
             </div>
             <div class="form-group col-md-3">
                 <label for="username">Phone Number:</label>
-                <input type="number" class="form-control" id="phonenumber" name="phonenumber" value={{employee.mobileNumber}}>
+                <input min="0" type="number" class="form-control" id="phone_number" name="phone_number" value={{employee.mobileNumber}} onwheel="this.blur()">
             </div>
         </div>
 
@@ -62,11 +76,11 @@
 <div class="form-row mt-2">
     <div class="form-group col-md-4">
         <label for="username">Blood Group:</label>
-        <input type="text" class="form-control" id="bloodGroup" name="bloodGroup" value={{employee.bloodGroup}}>
+        <input type="text" class="form-control" id="blood_group" name="blood_group" value={{employee.bloodGroup}}>
     </div>
     <div class="form-group col-md-4">
         <label for="username">Maritial Status:</label>
-        <input type="text" class="form-control" id="maritalStatus" name="maritalStatus" value={{employee.maritalStatus}}>
+        <input type="text" class="form-control" id="marital_status" name="marital_status" value={{employee.maritalStatus}}>
     </div>
     <div class="form-group col-md-4">
         <label for="caste">Experience:</label>
@@ -76,11 +90,11 @@
 <div class="form-row mt-2">
     <div class="form-group col-md-4">
         <label for="username">Father Name:</label>
-        <input type="text" class="form-control" id="fatherName" name="fatherName" value={{employee.fatherName}}>
+        <input type="text" class="form-control" id="fatherName" name="father_name" value={{employee.fatherName}}>
     </div>
     <div class="form-group col-md-4">
         <label for="username">Mother Name:</label>
-        <input type="text" class="form-control" id="motherName" name="motherName" value={{employee.motherName}}>
+        <input type="text" class="form-control" id="motherName" name="mother_name" value={{employee.motherName}}>
     </div>
     <div class="form-group col-md-4">
         <label for="caste">Wife/Husband Name:</label>
@@ -107,7 +121,7 @@
             {{pAdd.state}}>
         </div>
         <div class="form-group col-md-2">
-            <label for="inputZip">Zip</label>
+            <label for="inputZip">Pin Code</label>
             <input type="text" class="form-control" id="inputZip" name="inputZip" value = 
             {{pAdd.zipCode}}>
         </div>
@@ -139,11 +153,11 @@
             <input type="text" class="form-control" id="perminputState" name="perminputState" value = {{cAdd.state}}>
         </div>
         <div class="form-group col-md-2">
-            <label for="inputZip">Zip</label>
+            <label for="inputZip">Pin Code</label>
             <input type="text" class="form-control" id="perminputZip" name="perminputZip" value = {{cAdd.zipCode}}>
         </div>
 <div class="form-row mt-2">
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-5">
         <label class="pr-1" for="exampleFormControlSelect2">Employee Category:</label>
         <select onchange="teacherOption()" name="empCategory" class="form-control mr-2" id="empCategory">
             <option selected="true" value="">Select</option>
@@ -157,9 +171,9 @@
             <option value="principal">Principal</option>
         </select>
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-5">
         <label for="anumber">Aadhar Number:</label>
-        <input type="number" class="form-control" id="anumber" name="anumber" alue={{employee.aadharNumber}}>
+        <input type="number" class="form-control" id="a_number" name="a_number" onwheel="this.blur()" value={{employee.aadharNumber}}>
     </div>
 </div>
 
@@ -180,7 +194,7 @@
     <div class="form-row mt-3 ">
         <div class="form-group col-md-4">
             <label for="username">Designation:</label>
-            <input type="number" class="form-control" id="designation" name="designation" value={{teacher.designation}}>
+            <input type="text" class="form-control" id="designation" name="designation" value={{teacher.designation}}>
         </div>
         <div class="form-group col-md-4">
             <label for="username">Specialization:</label>
@@ -195,6 +209,10 @@
 </div>
 
 </div>
+<div class="row justify-content-around">
+        <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
+    </div>
+
 </form>
 <script>
         function teacherOption(){
@@ -221,10 +239,6 @@
 </script>
 
 
-<div class="row justify-content-around">
-        <button type="submit" class="col-4 mt-5  container btn btn-primary">Submit</button>
-        <!-- <input type="button" class="col-4 mt-5  container  btn btn-info" onclick="printDiv('myForm')" value="Print"> -->
-    </div>
 
 
 

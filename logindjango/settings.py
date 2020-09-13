@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import django_heroku
 from django.contrib.messages import constants as messages
 
 
@@ -27,7 +28,7 @@ SECRET_KEY = '=$g_qv7&u!w#lokrs(sgtk=_aez#!3u$!%d)fo#b=ev^=d5l5y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['djangoschoolerp.herokuapp.com']
 
 
 # Application definition
@@ -36,17 +37,33 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
     'form.apps.FormConfig',
-    'marks.apps.MarksConfig',
+    'markssection.apps.MarkssectionConfig',
     'dashboard.apps.DashboardConfig',
+    'homework.apps.HomeworkConfig',
     'employeeform.apps.EmployeeformConfig',
     'classform.apps.ClassformConfig',
     'attendence.apps.AttendenceConfig',
+    'notice.apps.NoticeConfig',
+    'dailythought.apps.DailythoughtConfig',
+    'newsletter.apps.NewsletterConfig',
+    'schoolinfo.apps.SchoolinfoConfig',
+    'holiday.apps.HolidayConfig',
+    'leave.apps.LeaveConfig',
+    'visitors.apps.VisitorsConfig',
+    'fees.apps.FeesConfig',
+    'feereport.apps.FeereportConfig',
+    'transport.apps.TransportConfig',
+    'gallery.apps.GalleryConfig',
+    'timetable.apps.TimetableConfig',
+    'deletedetails.apps.DeletedetailsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django_extensions',
     'django.contrib.staticfiles',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -83,20 +100,28 @@ WSGI_APPLICATION = 'logindjango.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'jdmri',
+#         'USER': 'admin',
+#         'PASSWORD': 'admin',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'ENGINE': 'django.db.backends.mysql',
         'NAME': 'logindjango',
         'USER': 'myprojectuser',
-        # 'USER': 'root',
         'PASSWORD': 'password',
-        # 'PASSWORD': 'yash123boura',
         'HOST': 'localhost',
         'PORT': '',
-        # 'PORT': '3306',
     }
 }
+
+
 
 
 # Password validation
@@ -139,6 +164,10 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'logindjango/static')
+]
+
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -147,3 +176,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+django_heroku.settings(locals())

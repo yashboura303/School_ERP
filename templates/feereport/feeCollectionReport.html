@@ -1,0 +1,61 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Fee Report
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h2 class="display-5">Get Report</h2>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'feeCollectionReport' %}" method="GET">
+            <input class="form-control mr-sm-2" type="search" name="classSection" placeholder="Class Section"
+                aria-label="Search" value="{{values.classSection}}" >
+            <input class="form-control mr-sm-2" type="search" name="mode" placeholder="Mode of Payment"
+                aria-label="Search" value="{{values.mode}}" >
+            <input class="form-control mr-sm-2" type="search" name="month" placeholder="Month Wise"
+                aria-label="Search" value="{{values.month}}" >
+            <input class="form-control mr-sm-2" type="search" name="year" placeholder="Year"
+                aria-label="Search" value="{{values.year}}" >
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <table class="mb-5 table table-secondary table-striped">
+
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Admission Number</th>
+                <th scope="col">Father Name</th>
+                <th scope="col">Mobile Number</th>
+                <th scope="col">Class Section</th>
+                <th scope="col">Months Paid</th>
+                <th scope="col">Paid Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fee in fees %}
+            <tr>
+                <th scope="row">{{ fee.student.student.fullName}}</th>
+                <td>{{ fee.student.student.admissionNumber  }}</td>
+                <td>{{ fee.student.student.fName }}</td>
+                <td>{{ fee.student.student.mobileNumber }}</td>
+                <td>{{ fee.classSection.classSection }}</td>
+                <td>{{ fee.monthsPaid }}</td>
+                <td>{{ fee.amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Class Report
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+
+<div class="container-fluid">
+    <h3 class="text-center my-3">Get Class Report</h3>
+    <form method="GET" action="{% url 'reportClass' %}" id="" class="">
+        {% csrf_token %}
+        <div class="form-group w-50">
+            <label class="pr-1" for="">Class/Section:</label>
+            <select name="class_room" class="form-control mr-2" id="class_room">
+                <option selected="true" disabled="disabled" value="a">Select</option>
+                {% for class_room in class_rooms %}
+                <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit " class="btn btn-primary mt-3">Submit</button>
+    </form>
+     <div class="container text-center mt-5">
+                <img src="{{ image1 }}" alt="" class="img img-fluid">
+            </div>
+        <div class="container text-center mt-5">
+                <img src="{{ image2 }}" alt="" class="img img-fluid">
+            </div>
+</div>
+{% endblock %}

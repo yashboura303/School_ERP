@@ -1,0 +1,94 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+School Info
+{% endblock %}
+{% block content %}
+
+{% include "message.html" %}
+
+<div class="container">
+    <h2 class="text-center m-3 ">Add School Info</h2>
+    <div class="container mt-5">
+
+        <form method="POST" action="{% url 'addSchoolInfo' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-4">
+
+                    <label for="">School Name</label>
+                    <input type="text" class="form-control" name="school_name" id="" aria-describedby="helpId" placeholder="">
+                </div>
+                                <div class="form-group col-md-4">
+                    <label for="">Principal Name</label>
+                    <input type="text" class="form-control" name="principal_name" id="" aria-describedby="helpId" placeholder="">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="">Email ID</label>
+                    <input type="email" class="form-control" name="email" id="" aria-describedby="helpId" placeholder="">
+                </div>
+                
+            </div>
+            <div class="form-row mt-2">
+
+                <div class="form-group col-md-4">
+                    <label for="">SchoolID</label>
+                    <input type="number" class="form-control" name="school_id" id="" aria-describedby="helpId" placeholder="" min="0" onwheel="this.blur()">
+                </div>
+                <div class="form-group col-md-4"> 
+                    <label for="inputAddress">Conact Number:</label>
+                    <input type="nunumber" class="form-control" id="inputAddress" name="conact_number" placeholder=""min="0" onwheel="this.blur()">
+                </div>
+            </div>
+            <div class="form-row mt-2">
+                
+                <div class="form-group col-md-10"> 
+                    <label for="inputAddress">Current Address:</label>
+                    <input type="text" class="form-control" id="inputAddress" name="address" placeholder="">
+                </div>
+            </div>
+
+            <div class="form-row mt-2 ">
+                <div class="form-group col-md-4">
+                    <label for="inputCity">City:</label>
+                    <input type="text" class="form-control" id="inputCity" name="inputCity">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">State:</label>
+                    <input type="text" class="form-control" id="inputState" name="inputState">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputZip">Pin Code:</label>
+                    <input type="text" class="form-control" id="inputZip" name="inputZip">
+                </div>
+            </div>
+            <div class="form-row mt-2">
+                <div class="form-group col-md-4">
+                    <label for="">Website URL</label>
+                    <input type="text" class="form-control" name="web_url" id="" aria-describedby="helpId" placeholder="">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="">Longitude</label>
+                    <input type="number" class="form-control" name="longitude" id="" aria-describedby="helpId" placeholder="" min="0" onwheel="this.blur()">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="">Latitude</label>
+                    <input type="number" class="form-control" name="latitude" id="" aria-describedby="helpId" placeholder="" min="0" onwheel="this.blur()">
+                </div>
+            </div>
+            <div class="form-row mt-2">
+
+            <div class="form-group col-md-4">
+
+                    <label for="">School Img</label>
+                    <input type="file" class="form-control" name="school_img" id="" aria-describedby="helpId" placeholder="">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="">School Logo</label>
+                    <input type="file" class="form-control" name="school_logo" id="" aria-describedby="helpId" placeholder="">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "dashboard/base.html" %}
+{% block title %}
+Search Defaulters
+{% endblock %}
+{% block content %}
+
+
+
+<div class="jumbotron jumbotron-fluid">
+    {% include "message.html" %}
+    <div class="container">
+        <h2 class="display-5">Search Defaulters</h2>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'searchDefaulter'%}" method="GET">
+            <!-- <input class="form-control mr-sm-2" type="search" name="classSection" placeholder="Class Section"
+                aria-label="Search" value="{{values.classSection}}" required> -->
+                <div class="form-group">
+                    <label class="pr-1" for="">Class/Section:</label>
+                    <select name="class_room" class="form-control mr-2" id="class_room">
+                        <option selected="true" disabled="disabled" value="a">Select</option>
+                        {% for class_room in class_rooms %}
+                        <option value='{{ class_room.classSection }}'>{{ class_room.classSection }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <table class="mb-5 table table-secondary table-striped">
+
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Admission Number</th>
+                <th scope="col">Father Name</th>
+                <th scope="col">Mobile Number</th>
+                <th scope="col">Class Section</th>
+                <th scope="col">Months Unpaid</th>
+                <th scope="col">Balance</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for fee,month,balance in mylist %}
+            <tr>
+                <th scope="row">{{ fee.student.student.fullName}}</th>
+                <td>{{ fee.student.student.admissionNumber  }}</td>
+                <td>{{ fee.student.student.fName }}</td>
+                <td>{{ fee.student.student.mobileNumber }}</td>
+                <td>{{ fee.classSection.classSection }}</td>
+                <td>{{ month }}</td>
+                <td>{{ balance }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+
+{% endblock %}

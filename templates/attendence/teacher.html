@@ -1,11 +1,12 @@
-{% extends './base.html' %}
-
-{% block title %}Attendence | Teacher{% endblock %}
-{% block name %}Teacher{% endblock %}
-{% block url %}{% url 'piechartTeacher' %}{% endblock %}
-
+{% extends "dashboard/base.html" %}
+{% block title %}
+Notice Class
+{% endblock %}
 {% block content %}
+
+{% include "message.html" %}
 <div class="container">
+    <h2 class="text-center mt-2">Mark Teacher Attendence</h2>
     <form class="row" method="GET" action="{% url 'attendenceTeacher' %}">
         {% csrf_token %}
         <div class="form-group col-5">
@@ -21,6 +22,7 @@
         <button type="submit" class="btn btn-primary my-auto">Submit</button>
     </form>
 </div>
+{% if teachers %}
 <div class="container-fluid">
     <form method="POST" action="{% url 'attendenceTeacher' %}">
         {% csrf_token %}
@@ -66,5 +68,5 @@
         <button type="submit" class="btn btn-primary my-2">Update Attendence</button>
     </form>
 </div>
-
+{% endif %}
 {% endblock %}

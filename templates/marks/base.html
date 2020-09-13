@@ -1,0 +1,23 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <title> Marks</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container-fluid py-4 bg-dark">
+        <a class="text-white" href="{% url 'marksHome' %}">Add Exam</a>
+        <a class="text-white mx-md-3" href="{% url 'addMarks' %}">Add Marks</a>
+        <a class="text-white mx-md-2" href="{% url 'reportStudent' %}">Show Student Report</a>
+        <a class="text-white" href="{% url 'reportClass' %}">Show Class Report</a>
+    </div>
+{% block content %}
+
+  {% endblock %}
