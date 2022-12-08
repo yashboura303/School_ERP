@@ -1,5 +1,5 @@
 astroid==2.3.3
-certifi==2020.6.20
+certifi==2022.12.7
 cycler==0.10.0
 defusedxml==0.6.0
 diff-match-patch==20200713
